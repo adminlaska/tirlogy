@@ -2,20 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --primary: 181 100% 33%;
+  }
+
+  body {
+    @apply bg-black text-white;
+  }
+
+  input:focus,
+  textarea:focus {
+    @apply outline-none border-[#00A5A8] !important;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center px-6 py-2.5 text-sm font-medium transition-all duration-200 rounded-lg;
+  }
+
+  .btn-primary {
+    @apply bg-white/10 text-white border border-white/20 hover:bg-white/20 hover:border-white/30;
+  }
+
+  .btn-outline {
+    @apply text-white/90 border border-white/20 hover:bg-white/10 hover:border-white/30 hover:text-white;
+  }
+
+  .section {
+    @apply py-24;
+  }
+
+  .heading {
+    @apply text-3xl md:text-4xl font-bold mb-4;
+  }
+
+  .subheading {
+    @apply text-xl text-gray-400;
+  }
+
+  .technical-forest {
+    font-family: "Technical Forest", monospace;
+  }
 }

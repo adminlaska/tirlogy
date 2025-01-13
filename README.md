@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tiryaki IT Website
 
-## Getting Started
+Eine moderne, responsive Website für IT-Dienstleistungen, entwickelt mit Next.js und Tailwind CSS.
 
-First, run the development server:
+## Features
 
+- Modernes, dunkles Design
+- Responsive Layout für alle Geräte
+- Animierte UI-Elemente mit Framer Motion
+- Kontaktformular mit E-Mail-Versand
+- SEO-optimiert
+
+## Technologien
+
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Nodemailer
+- Heroicons
+
+## Installation
+
+1. Repository klonen:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd tiryaki-it
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Abhängigkeiten installieren:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Umgebungsvariablen konfigurieren:
+- Kopieren Sie die Datei `.env.local.example` zu `.env.local`
+- Tragen Sie Ihre SMTP-Konfiguration ein:
+  ```
+  SMTP_HOST=smtp.gmail.com
+  SMTP_PORT=587
+  SMTP_SECURE=false
+  SMTP_USER=your-email@gmail.com
+  SMTP_PASS=your-app-specific-password
+  CONTACT_EMAIL=your-email@gmail.com
+  ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Entwicklungsserver starten:
+```bash
+npm run dev
+```
 
-## Learn More
+Die Website ist nun unter `http://localhost:3000` verfügbar.
 
-To learn more about Next.js, take a look at the following resources:
+## E-Mail-Konfiguration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Für die E-Mail-Funktionalität benötigen Sie einen SMTP-Server. Bei Verwendung von Gmail:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Aktivieren Sie die 2-Faktor-Authentifizierung
+2. Generieren Sie ein App-Passwort
+3. Verwenden Sie dieses Passwort in der `.env.local` Datei
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Die Website kann auf verschiedenen Plattformen deployed werden:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Vercel (empfohlen):
+```bash
+npm install -g vercel
+vercel
+```
+
+2. Traditioneller Server:
+```bash
+npm run build
+npm start
+```
+
+## Lizenz
+
+MIT
