@@ -302,7 +302,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-foreground dark:text-foreground-dark">Webentwicklung</h3>
                 <p className="text-foreground/60 dark:text-foreground-dark/60 font-['Nimbus_Mono'] leading-relaxed">
-                  Moderne, responsive Websites und Webanwendungen mit Next.js, React und TypeScript. Performance und Benutzerfreundlichkeit stehen im Fokus.
+                  Maßgeschneiderte Webanwendungen mit Next.js und React. Von responsiven Websites bis zu komplexen Enterprise-Lösungen. Mit Fokus auf Performance, SEO und modernstem UI/UX-Design.
                 </p>
               </div>
             </motion.div>
@@ -317,14 +317,13 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl" />
               <div className="relative z-10">
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center backdrop-blur-sm mb-6 relative">
-                  {/* iOS Icon Container */}
-                  <div className="absolute inset-2 bg-background-dark/80 rounded-md overflow-hidden">
+                  <div className="absolute inset-2 bg-white dark:bg-background-dark/80 rounded-md overflow-hidden">
                     <IOSIcon />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-foreground dark:text-foreground-dark">Mobile Apps</h3>
                 <p className="text-foreground/60 dark:text-foreground-dark/60 font-['Nimbus_Mono'] leading-relaxed">
-                  Native iOS-Apps mit Swift und SwiftUI sowie plattformübergreifende Apps mit React Native. Optimiert für beste Performance.
+                  Professionelle iOS-Entwicklung mit Swift und SwiftUI. Native Apps mit höchster Performance und intuitivem Design. Cross-Platform-Lösungen mit React Native für maximale Reichweite.
                 </p>
               </div>
             </motion.div>
@@ -339,13 +338,13 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl" />
               <div className="relative z-10">
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center backdrop-blur-sm mb-6 relative">
-                  <div className="absolute inset-2 bg-background-dark/90 rounded-md overflow-hidden">
+                  <div className="absolute inset-2 bg-white dark:bg-background-dark/90 rounded-md overflow-hidden">
                     <BackendIcon />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-foreground dark:text-foreground-dark">Backend & APIs</h3>
                 <p className="text-foreground/60 dark:text-foreground-dark/60 font-['Nimbus_Mono'] leading-relaxed">
-                  Skalierbare Backend-Systeme und RESTful APIs mit Node.js. Sichere Authentifizierung und Datenbankanbindung.
+                  Hochskalierbare Microservices und RESTful APIs. Cloud-native Architekturen mit Node.js, Express und TypeScript. Sichere Authentifizierung und optimiertes Datenmanagement.
                 </p>
               </div>
             </motion.div>
@@ -360,13 +359,13 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl" />
               <div className="relative z-10">
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center backdrop-blur-sm mb-6 relative">
-                  <div className="absolute inset-2 bg-background-dark/80 rounded-md overflow-hidden">
+                  <div className="absolute inset-2 bg-white dark:bg-background-dark/80 rounded-md overflow-hidden">
                     <AIIcon />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-foreground dark:text-foreground-dark">KI-Entwicklung</h3>
+                <h3 className="text-xl font-bold mb-3 text-foreground dark:text-foreground-dark">KI-Integration</h3>
                 <p className="text-foreground/60 dark:text-foreground-dark/60 font-['Nimbus_Mono'] leading-relaxed">
-                  Maßgeschneiderte KI-Lösungen für Unternehmen. Von Chatbots über Prozessautomatisierung bis hin zu intelligenter Datenanalyse und Vorhersagemodellen.
+                  Integration modernster KI-Technologien in Ihre Systeme. Von intelligenten Chatbots über Prozessautomatisierung bis zu prädiktiver Analyse. Mit OpenAI, LangChain und TensorFlow.
                 </p>
               </div>
             </motion.div>
