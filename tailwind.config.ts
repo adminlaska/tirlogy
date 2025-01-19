@@ -6,17 +6,34 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        background: 'rgb(var(--background) / <alpha-value>)',
-        foreground: 'rgb(var(--foreground) / <alpha-value>)',
-        primary: 'rgb(var(--primary) / <alpha-value>)',
-        'background-light': '#111111',
+        primary: {
+          DEFAULT: '#00A5A8',
+          dark: '#0082CC',
+        },
+        background: {
+          DEFAULT: '#FFFFFF',
+          dark: '#0A0A0A',
+          light: '#F5F5F5',
+        },
+        accent: {
+          DEFAULT: '#00E5FF',
+          dark: '#00B2CC',
+        },
+        border: {
+          DEFAULT: '#E5E5E5',
+          dark: '#2A2A2A',
+        },
+        foreground: {
+          DEFAULT: '#111111',
+          dark: '#FFFFFF',
+        },
       },
       fontFamily: {
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
     },
   },

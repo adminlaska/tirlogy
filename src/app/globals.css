@@ -1,54 +1,164 @@
+@font-face {
+  font-family: 'Technical Forest';
+  src: url('/fonts/TechnicalForest.woff2') format('woff2'),
+    url('/fonts/TechnicalForest.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --primary: 181 100% 33%;
+    --background: 255 255 255;
+    --foreground: 17 17 17;
+  }
+
+  .dark {
+    --background: 10 10 10;
+    --foreground: 255 255 255;
   }
 
   body {
-    @apply bg-black text-white;
+    @apply bg-background text-foreground transition-colors duration-200;
   }
 
-  input:focus,
-  textarea:focus {
-    @apply outline-none border-[#00A5A8] !important;
+  .dark body {
+    @apply text-foreground-dark;
+  }
+
+  .dark .heading {
+    @apply text-foreground-dark;
+  }
+
+  .dark .subheading {
+    @apply text-foreground-dark/60;
+  }
+
+  .dark .nav-link {
+    @apply text-foreground-dark/70 hover:text-foreground-dark;
+  }
+}
+
+@layer utilities {
+  .technical-forest {
+    font-family: 'Technical Forest', monospace;
+    letter-spacing: 0.05em;
+    font-weight: 500;
   }
 }
 
 @layer components {
   .container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply mx-auto;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    width: min(100% - 2rem, 1200px);
   }
 
   .btn {
-    @apply inline-flex items-center px-6 py-2.5 text-sm font-medium transition-all duration-200 rounded-lg;
+    @apply px-4 sm:px-6 py-2 rounded-lg font-medium transition-all duration-200 text-sm sm:text-base w-full sm:w-auto text-center;
   }
 
   .btn-primary {
-    @apply bg-white/10 text-white border border-white/20 hover:bg-white/20 hover:border-white/30;
+    @apply bg-primary hover:bg-primary-dark text-foreground dark:text-foreground-dark;
   }
 
   .btn-outline {
-    @apply text-white/90 border border-white/20 hover:bg-white/10 hover:border-white/30 hover:text-white;
+    @apply border-2 border-primary hover:bg-primary hover:text-foreground dark:hover:text-foreground-dark;
   }
 
   .section {
-    @apply py-24;
+    @apply py-8 sm:py-12 lg:py-16;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .section-inner {
+    @apply max-w-[1200px] mx-auto w-full;
   }
 
   .heading {
-    @apply text-3xl md:text-4xl font-bold mb-4;
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6;
   }
 
   .subheading {
-    @apply text-xl text-gray-400;
+    @apply text-base sm:text-lg text-foreground/60 mb-8 sm:mb-12;
   }
 
-  .technical-forest {
-    font-family: "Technical Forest", monospace;
+  .card {
+    @apply p-4 sm:p-6 lg:p-8 rounded-lg border border-border dark:border-border-dark bg-background dark:bg-background-dark;
   }
+
+  .input {
+    @apply w-full px-3 sm:px-4 py-2 bg-background dark:bg-background-dark border border-border dark:border-border-dark rounded-lg text-sm sm:text-base;
+    @apply focus:ring-1 focus:ring-primary focus:border-primary;
+  }
+
+  /* Responsive grid layouts */
+  .grid-responsive {
+    @apply grid gap-4 sm:gap-6 lg:gap-8;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  }
+
+  /* Safe area utilities */
+  .safe-padding {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Timeline Styles */
+.glow-primary {
+  box-shadow: 0 0 15px var(--primary);
+  transition: box-shadow 0.3s ease;
+}
+
+.timeline-line {
+  transform-origin: top;
+  box-shadow: 0 0 10px var(--primary);
+  transition: box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background: var(--primary);
+  opacity: 0.3;
+}
+
+.timeline-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom,
+      var(--primary) 0%,
+      var(--primary) 100%);
+  animation: moveGradient 3s linear infinite;
+  opacity: 1;
+}
+
+@keyframes moveGradient {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(100%);
+    opacity: 0.3;
+  }
+}
+
+.particle {
+  mix-blend-mode: screen;
+  filter: blur(1px);
 }

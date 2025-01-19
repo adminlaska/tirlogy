@@ -1,32 +1,34 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import './globals.css';
+import { Inter } from 'next/font/google';
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Tiryaki IT - Webdesign & Development",
-  description: "Moderne Weblösungen für Ihr Unternehmen - Webdesign, Webanwendungen und App-Entwicklung",
-  icons: [
-    { rel: "icon", url: "/tiryaki_it_fav_logo.png" },
-    { rel: "apple-touch-icon", url: "/tiryaki_it_fav_logo.png" },
-    { rel: "shortcut icon", url: "/tiryaki_it_fav_logo.png" }
-  ]
-};
+const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="de" className="scroll-smooth">
+    <html lang="de" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/tiryaki_it_fav_logo.png" />
-        <link rel="shortcut icon" href="/tiryaki_it_fav_logo.png" />
-        <link rel="apple-touch-icon" href="/tiryaki_it_fav_logo.png" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
       </head>
-      <body className={inter.className}>
+      <body
+        className={`${inter.className} min-h-screen bg-background dark:bg-background-dark transition-colors duration-300`}
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>
