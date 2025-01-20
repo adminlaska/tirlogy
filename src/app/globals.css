@@ -162,3 +162,160 @@
   mix-blend-mode: screen;
   filter: blur(1px);
 }
+
+/* Roboter Animationen */
+.robot-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+}
+
+.robot-body {
+  filter: drop-shadow(0 4px 8px rgba(0, 242, 255, 0.1));
+}
+
+.robot-eye {
+  animation: blink 4s infinite;
+  transform-origin: center;
+  filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.5));
+}
+
+@keyframes blink {
+
+  0%,
+  45%,
+  55%,
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scaleY(0.1);
+    opacity: 0.8;
+  }
+}
+
+.robot-shadow {
+  transform-origin: center;
+  filter: blur(8px);
+  opacity: 0.2;
+}
+
+/* 3D Hintergrund Animationen */
+.bg-line {
+  animation: pulse 4s infinite;
+  stroke-dasharray: 4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 2px rgba(0, 242, 255, 0.2));
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.2;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    opacity: 0.5;
+    stroke-dashoffset: -20;
+  }
+
+  100% {
+    opacity: 0.2;
+    stroke-dashoffset: -40;
+  }
+}
+
+/* Glowing Effekte */
+.glow-effect {
+  filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.3));
+}
+
+/* Hover Effekte */
+.robot-body:hover .robot-eye {
+  animation: glow 1.5s infinite;
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 5px rgba(0, 242, 255, 0.5));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.8));
+  }
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+  .robot-container {
+    transform: scale(0.8);
+  }
+}
+
+/* 3D Transformationen */
+.robot-3d {
+  transform-style: preserve-3d;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) rotateX(0);
+  }
+
+  50% {
+    transform: translateY(-10px) rotateX(2deg);
+  }
+}
+
+/* Hintergrund Grid Animation */
+.grid-background {
+  background-image: linear-gradient(rgba(0, 242, 255, 0.03) 1px,
+      transparent 1px),
+    linear-gradient(90deg,
+      rgba(0, 242, 255, 0.03) 1px,
+      transparent 1px);
+  background-size: 20px 20px;
+  animation: gridMove 15s linear infinite;
+}
+
+@keyframes gridMove {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 20px 20px;
+  }
+}
+
+/* Smooth Transitions */
+.smooth-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Energie Puls Animation */
+.energy-pulse {
+  animation: energyPulse 4s ease-in-out infinite;
+}
+
+@keyframes energyPulse {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}

@@ -5,61 +5,41 @@ import gsap from 'gsap';
 
 export function BackendIcon() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const apiBlockRef = useRef<SVGGElement>(null);
-  const ringsRef = useRef<SVGGElement>(null);
+  const centerBlockRef = useRef<SVGGElement>(null);
+  const circuitRef = useRef<SVGGElement>(null);
 
   useEffect(() => {
-    const container = containerRef.current;
-    const apiBlock = apiBlockRef.current;
-    const rings = ringsRef.current;
+    if (!containerRef.current || !centerBlockRef.current || !circuitRef.current) return;
 
-    if (!container || !apiBlock || !rings) return;
+    gsap.killTweensOf([containerRef.current, centerBlockRef.current, circuitRef.current]);
 
-    // Verbesserte Linien-Animation
-    const ringsChildren = rings.children;
-    if (ringsChildren) {
-      // Äußerer Ring Animation - extrem langsam
-      gsap.to(ringsChildren[0], {
-        rotation: 360,
-        transformOrigin: "center",
-        duration: 60,
-        repeat: -1,
-        ease: "none"
-      });
+    // Zentrale Block Animation
+    gsap.to(centerBlockRef.current, {
+      scale: 1.03,
+      duration: 2,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
+    });
 
-      // Mittlerer Ring Animation - extrem langsam und gegenläufig
-      gsap.to(ringsChildren[1], {
-        rotation: -360,
-        transformOrigin: "center",
-        duration: 45,
-        repeat: -1,
-        ease: "none"
-      });
-
-      // Innerer Ring Animation - sehr langsam
-      gsap.to(ringsChildren[2], {
-        rotation: 360,
-        transformOrigin: "center",
-        duration: 30,
-        repeat: -1,
-        ease: "none"
-      });
-
-      // Datenlinien Animation - sehr sanft
-      const lines = [ringsChildren[3], ringsChildren[4], ringsChildren[5], ringsChildren[6]];
-      lines.forEach((line, index) => {
-        gsap.to(line, {
-          strokeDashoffset: 15,
-          duration: 6 + index * 0.8,
+    // Circuit Pfade Animation
+    const paths = circuitRef.current.children;
+    Array.from(paths).forEach((path, index) => {
+      gsap.fromTo(path,
+        { strokeDashoffset: 100 },
+        {
+          strokeDashoffset: -100,
+          duration: 25,
+          delay: index * 0.8,
           repeat: -1,
           ease: "none"
-        });
-      });
-    }
+        }
+      );
+    });
 
-    // Hover Animation
+    // Hover Animation für Container
     const handleMouseEnter = () => {
-      gsap.to(container, {
+      gsap.to(containerRef.current, {
         scale: 1.05,
         duration: 0.3,
         ease: "power2.out"
@@ -67,65 +47,115 @@ export function BackendIcon() {
     };
 
     const handleMouseLeave = () => {
-      gsap.to(container, {
+      gsap.to(containerRef.current, {
         scale: 1,
         duration: 0.3,
         ease: "power2.out"
       });
     };
 
-    container.addEventListener('mouseenter', handleMouseEnter);
-    container.addEventListener('mouseleave', handleMouseLeave);
+    containerRef.current.addEventListener('mouseenter', handleMouseEnter);
+    containerRef.current.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
-      container.removeEventListener('mouseenter', handleMouseEnter);
-      container.removeEventListener('mouseleave', handleMouseLeave);
-      gsap.killTweensOf([container, rings]);
+      containerRef.current?.removeEventListener('mouseenter', handleMouseEnter);
+      containerRef.current?.removeEventListener('mouseleave', handleMouseLeave);
+      gsap.killTweensOf([containerRef.current, centerBlockRef.current, circuitRef.current]);
     };
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-full relative">
+    <div ref={containerRef} className="w-full h-full relative cursor-pointer">
       <svg viewBox="0 0 24 24" className="w-full h-full">
-        {/* Rotierende Ringe und Datenlinien */}
-        <g ref={ringsRef}>
-          {/* Äußerer Ring */}
-          <circle cx="12" cy="12" r="11" className="fill-none stroke-primary/40" strokeWidth="1.5" strokeDasharray="6 8" />
+        <defs>
+          <linearGradient id="centerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" className="stop-primary" />
+            <stop offset="100%" className="stop-primary/80" />
+          </linearGradient>
+        </defs>
 
-          {/* Mittlerer Ring */}
-          <circle cx="12" cy="12" r="9" className="fill-none stroke-primary/40" strokeWidth="1.5" strokeDasharray="8 6" />
+        <g className="dark:opacity-90">
+          {/* Circuit Pfade */}
+          <g ref={circuitRef} className="stroke-primary/50 dark:stroke-primary/40">
+            {/* Horizontale Pfade */}
+            <path
+              d="M2 8 L6 8 Q7 8 7 9 L7 11 Q7 12 8 12 L16 12 Q17 12 17 11 L17 9 Q17 8 18 8 L22 8"
+              fill="none"
+              strokeWidth="0.8"
+              strokeDasharray="3 2"
+            />
+            <path
+              d="M2 12 L7 12 Q8 12 8 13 L8 15 Q8 16 9 16 L15 16 Q16 16 16 15 L16 13 Q16 12 17 12 L22 12"
+              fill="none"
+              strokeWidth="0.8"
+              strokeDasharray="3 2"
+            />
+            <path
+              d="M2 16 L6 16 Q7 16 7 15 L7 13 Q7 12 8 12 L16 12 Q17 12 17 13 L17 15 Q17 16 18 16 L22 16"
+              fill="none"
+              strokeWidth="0.8"
+              strokeDasharray="3 2"
+            />
 
-          {/* Innerer Ring */}
-          <circle cx="12" cy="12" r="7" className="fill-none stroke-primary/40" strokeWidth="1.5" strokeDasharray="6 6" />
+            {/* Vertikale Pfade */}
+            <path
+              d="M8 2 L8 6 Q8 7 9 7 L11 7 Q12 7 12 8 L12 16 Q12 17 11 17 L9 17 Q8 17 8 18 L8 22"
+              fill="none"
+              strokeWidth="0.8"
+              strokeDasharray="3 2"
+            />
+            <path
+              d="M16 2 L16 6 Q16 7 15 7 L13 7 Q12 7 12 8 L12 16 Q12 17 13 17 L15 17 Q16 17 16 18 L16 22"
+              fill="none"
+              strokeWidth="0.8"
+              strokeDasharray="3 2"
+            />
+          </g>
 
-          {/* Datenlinien */}
-          <path d="M12,1 C17,6 17,18 12,23" className="fill-none stroke-primary/60" strokeWidth="1.2" strokeDasharray="8 6" />
-          <path d="M23,12 C18,17 6,17 1,12" className="fill-none stroke-primary/60" strokeWidth="1.2" strokeDasharray="8 6" />
-          <path d="M4,4 C8,8 16,16 20,20" className="fill-none stroke-primary/60" strokeWidth="1.2" strokeDasharray="8 6" />
-          <path d="M20,4 C16,8 8,16 4,20" className="fill-none stroke-primary/60" strokeWidth="1.2" strokeDasharray="8 6" />
-        </g>
+          {/* Zentraler Block */}
+          <g ref={centerBlockRef}>
+            {/* Äußerer Block */}
+            <rect
+              x="5"
+              y="5"
+              width="14"
+              height="14"
+              rx="3"
+              className="fill-background stroke-primary dark:fill-background-dark"
+              strokeWidth="0.8"
+            />
 
-        {/* API Block - zentriert und fixiert */}
-        <g ref={apiBlockRef}>
-          <rect
-            x="5"
-            y="5"
-            width="14"
-            height="14"
-            rx="3"
-            className="fill-white dark:fill-background-dark stroke-primary"
-            strokeWidth="1.2"
-          />
-          <text
-            x="12"
-            y="13.8"
-            className="text-[6px] fill-primary font-mono font-bold text-center"
-            textAnchor="middle"
-          >
-            API
-          </text>
+            {/* Innerer Block */}
+            <rect
+              x="6"
+              y="6"
+              width="12"
+              height="12"
+              rx="2"
+              className="fill-primary/20 stroke-primary dark:fill-primary/30"
+              strokeWidth="0.6"
+            />
+
+            {/* API Text */}
+            <text
+              x="12"
+              y="13"
+              className="text-[4.5px] font-bold fill-primary text-center"
+              textAnchor="middle"
+            >
+              API
+            </text>
+
+            {/* Verbindungspunkte */}
+            <circle cx="12" cy="6" r="0.7" className="fill-primary/60 dark:fill-primary/50" />
+            <circle cx="12" cy="18" r="0.7" className="fill-primary/60 dark:fill-primary/50" />
+            <circle cx="6" cy="12" r="0.7" className="fill-primary/60 dark:fill-primary/50" />
+            <circle cx="18" cy="12" r="0.7" className="fill-primary/60 dark:fill-primary/50" />
+          </g>
         </g>
       </svg>
     </div>
   );
-} 
+}
+
+export default BackendIcon; 

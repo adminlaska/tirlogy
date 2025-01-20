@@ -4,131 +4,247 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
 export function AIIcon() {
-  const containerRef = useRef<SVGGElement>(null);
-  const brainRef = useRef<SVGGElement>(null);
-  const neuronsRef = useRef<SVGGElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const robotRef = useRef<SVGSVGElement>(null);
+  const bgRef = useRef<SVGSVGElement>(null);
+  const rightArmRef = useRef<SVGPathElement>(null);
+  const platformRef = useRef<SVGGElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || !brainRef.current || !neuronsRef.current) return;
+    if (!containerRef.current || !robotRef.current || !bgRef.current || !rightArmRef.current || !platformRef.current) return;
 
-    gsap.killTweensOf([containerRef.current, brainRef.current, neuronsRef.current]);
+    gsap.killTweensOf([containerRef.current, robotRef.current, bgRef.current, rightArmRef.current, platformRef.current]);
 
-    // Gehirn-Puls Animation
-    gsap.to(brainRef.current, {
-      scale: 1.03,
-      duration: 2,
+    // Minimale Schwebung für den Bot
+    gsap.to(robotRef.current, {
+      y: -3,
+      duration: 1.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut"
+    });
+
+    // Dynamische Wink-Animation
+    const winkTl = gsap.timeline({
+      repeat: -1,
+      repeatDelay: 1
+    });
+
+    // Schnelle Winkbewegung
+    winkTl.to(rightArmRef.current, {
+      rotate: -60,
+      transformOrigin: "20% 90%",
+      duration: 0.2,
+      ease: "power2.out"
+    })
+      .to(rightArmRef.current, {
+        rotate: -40,
+        duration: 0.1,
+        ease: "power2.inOut"
+      })
+      .to(rightArmRef.current, {
+        rotate: -60,
+        duration: 0.1,
+        ease: "power2.inOut"
+      })
+      .to(rightArmRef.current, {
+        rotate: -40,
+        duration: 0.1,
+        ease: "power2.inOut"
+      })
+      .to(rightArmRef.current, {
+        rotate: 0,
+        duration: 0.2,
+        ease: "back.out(2)"
+      });
+
+    // Plattform-Animation
+    gsap.to(platformRef.current, {
+      scaleX: 1.1,
+      scaleY: 0.9,
+      duration: 1.5,
       repeat: -1,
       yoyo: true,
       ease: "sine.inOut"
     });
 
-    // Neuronale Verbindungen Animation
-    const neurons = neuronsRef.current.children;
-    Array.from(neurons).forEach((neuron, index) => {
-      gsap.fromTo(neuron,
-        { strokeDashoffset: 100 },
-        {
-          strokeDashoffset: -100,
-          duration: 25,
-          delay: index * 0.8,
-          repeat: -1,
-          ease: "none"
-        }
-      );
+    // Animierte Bodenlinien
+    gsap.utils.toArray('.grid-line').forEach((line: any, i) => {
+      gsap.to(line, {
+        strokeDashoffset: -30,
+        duration: 2,
+        repeat: -1,
+        ease: "none",
+        delay: i * 0.1
+      });
     });
 
+    // Hover-Animation
+    const handleMouseEnter = () => {
+      gsap.to(robotRef.current, {
+        scale: 1.1,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    };
+
+    const handleMouseLeave = () => {
+      gsap.to(robotRef.current, {
+        scale: 1,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    };
+
+    containerRef.current.addEventListener('mouseenter', handleMouseEnter);
+    containerRef.current.addEventListener('mouseleave', handleMouseLeave);
+
     return () => {
-      gsap.killTweensOf([containerRef.current, brainRef.current, neuronsRef.current]);
+      containerRef.current?.removeEventListener('mouseenter', handleMouseEnter);
+      containerRef.current?.removeEventListener('mouseleave', handleMouseLeave);
+      gsap.killTweensOf([containerRef.current, robotRef.current, bgRef.current, rightArmRef.current, platformRef.current]);
     };
   }, []);
 
   return (
-    <svg viewBox="0 0 24 24" className="w-full h-full">
-      <defs>
-        <linearGradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" className="stop-primary" />
-          <stop offset="100%" className="stop-primary/80" />
-        </linearGradient>
-      </defs>
+    <div ref={containerRef} className="w-full h-full relative cursor-pointer flex items-center justify-center">
+      {/* Animierter 3D Boden */}
+      <svg ref={bgRef} viewBox="0 0 240 280" className="absolute w-full h-full">
+        <defs>
+          <linearGradient id="gridGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#0D9488" stopOpacity="0.2" />
+            <stop offset="100%" stopColor="#0D9488" stopOpacity="0" />
+          </linearGradient>
+        </defs>
 
-      <g ref={containerRef} className="dark:opacity-90">
-        {/* Neuronale Verbindungen */}
-        <g ref={neuronsRef} className="stroke-primary/50 dark:stroke-primary/40">
-          {/* Linke Gehirnhälfte Verbindungen */}
-          <path
-            d="M4 12 C6 8, 8 6, 12 6"
-            fill="none"
-            strokeWidth="0.8"
-            strokeDasharray="3 2"
+        {/* Grid-Linien - an der weißen Linie nach unten */}
+        {[...Array(20)].map((_, i) => (
+          <line
+            key={`grid-h-${i}`}
+            className="grid-line"
+            x1="0"
+            y1={260 + i * 2}
+            x2="240"
+            y2={260 + i * 2}
+            stroke="url(#gridGradient)"
+            strokeWidth="1"
+            strokeDasharray="5 3"
           />
-          <path
-            d="M4 14 C7 12, 9 10, 12 10"
-            fill="none"
-            strokeWidth="0.8"
-            strokeDasharray="3 2"
+        ))}
+        {[...Array(12)].map((_, i) => (
+          <line
+            key={`grid-v-${i}`}
+            className="grid-line"
+            x1={20 + i * 20}
+            y1="260"
+            x2={20 + i * 20 + 40}
+            y2="300"
+            stroke="url(#gridGradient)"
+            strokeWidth="1"
+            strokeDasharray="5 3"
           />
-          <path
-            d="M4 16 C8 16, 10 14, 12 14"
-            fill="none"
-            strokeWidth="0.8"
-            strokeDasharray="3 2"
-          />
+        ))}
 
-          {/* Rechte Gehirnhälfte Verbindungen */}
-          <path
-            d="M20 12 C18 8, 16 6, 12 6"
-            fill="none"
-            strokeWidth="0.8"
-            strokeDasharray="3 2"
+        {/* Schwebende Plattform - an neue Position angepasst */}
+        <g ref={platformRef} transform="translate(120, 265)">
+          <ellipse
+            cx="0"
+            cy="0"
+            rx="70"
+            ry="15"
+            fill="#0D9488"
+            fillOpacity="0.2"
           />
-          <path
-            d="M20 14 C17 12, 15 10, 12 10"
-            fill="none"
-            strokeWidth="0.8"
-            strokeDasharray="3 2"
+          <ellipse
+            cx="0"
+            cy="-2"
+            rx="60"
+            ry="12"
+            fill="#0D9488"
+            fillOpacity="0.15"
           />
-          <path
-            d="M20 16 C16 16, 14 14, 12 14"
-            fill="none"
-            strokeWidth="0.8"
-            strokeDasharray="3 2"
+          <ellipse
+            cx="0"
+            cy="-4"
+            rx="50"
+            ry="8"
+            fill="#0D9488"
+            fillOpacity="0.1"
           />
         </g>
+      </svg>
 
-        {/* Gehirn */}
-        <g ref={brainRef}>
-          {/* Linke Gehirnhälfte */}
-          <path
-            d="M6 8 C4 10, 4 14, 6 16 C8 18, 11 18, 12 16"
-            className="fill-background stroke-primary dark:fill-background-dark"
-            strokeWidth="0.8"
-          />
+      {/* Bot */}
+      <svg ref={robotRef} viewBox="0 0 240 280" className="relative z-10 w-4/5 h-4/5">
+        {/* Kopf */}
+        <path
+          d="M60 80 
+             C60 60 180 60 180 80
+             L180 160
+             C180 180 60 180 60 160
+             Z"
+          fill="#0D9488"
+          stroke="#0D9488"
+          strokeWidth="2"
+        />
 
-          {/* Rechte Gehirnhälfte */}
-          <path
-            d="M18 8 C20 10, 20 14, 18 16 C16 18, 13 18, 12 16"
-            className="fill-background stroke-primary dark:fill-background-dark"
-            strokeWidth="0.8"
-          />
+        {/* Gesicht */}
+        <path
+          d="M70 90
+             C70 70 170 70 170 90
+             L170 150
+             C170 170 70 170 70 150
+             Z"
+          fill="#0F766E"
+        />
 
-          {/* Zentrale Verbindung */}
-          <rect
-            x="11"
-            y="8"
-            width="2"
-            height="8"
-            className="fill-primary/20 stroke-primary dark:fill-primary/30"
-            strokeWidth="0.6"
-          />
+        {/* Augen */}
+        <circle cx="105" cy="110" r="8" fill="#2DD4BF" />
+        <circle cx="135" cy="110" r="8" fill="#2DD4BF" />
 
-          {/* Neuronale Knotenpunkte */}
-          <circle cx="12" cy="6" r="0.7" className="fill-primary/60 dark:fill-primary/50" />
-          <circle cx="12" cy="10" r="0.7" className="fill-primary/60 dark:fill-primary/50" />
-          <circle cx="12" cy="14" r="0.7" className="fill-primary/60 dark:fill-primary/50" />
-          <circle cx="8" cy="12" r="0.7" className="fill-primary/60 dark:fill-primary/50" />
-          <circle cx="16" cy="12" r="0.7" className="fill-primary/60 dark:fill-primary/50" />
-        </g>
-      </g>
-    </svg>
+        {/* Mund */}
+        <path
+          d="M100 130 Q120 138 140 130"
+          fill="none"
+          stroke="#2DD4BF"
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
+
+        {/* Körper */}
+        <path
+          d="M90 180 
+             C90 170 150 170 150 180
+             L150 240
+             C150 260 90 260 90 240
+             Z"
+          fill="#0D9488"
+          stroke="#0D9488"
+          strokeWidth="2"
+        />
+
+        {/* Linker Arm */}
+        <path
+          d="M85 190 Q65 200 70 220"
+          fill="#0D9488"
+          stroke="#0D9488"
+          strokeWidth="12"
+          strokeLinecap="round"
+        />
+
+        {/* Rechter Arm (winkend) - längerer Pfad */}
+        <path
+          ref={rightArmRef}
+          d="M155 190 Q195 195 205 155"
+          fill="#0D9488"
+          stroke="#0D9488"
+          strokeWidth="12"
+          strokeLinecap="round"
+        />
+      </svg>
+    </div>
   );
-} 
+}
+
+export default AIIcon;
+
