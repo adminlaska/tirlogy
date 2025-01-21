@@ -175,7 +175,7 @@ export function AIIcon() {
       </svg>
 
       {/* Bot */}
-      <svg ref={robotRef} viewBox="0 0 240 280" className="relative z-10 w-4/5 h-4/5">
+      <svg ref={robotRef} viewBox="0 0 240 280" className="relative z-10 w-[95%] h-[95%]">
         {/* Kopf */}
         <path
           d="M60 80 
@@ -183,8 +183,8 @@ export function AIIcon() {
              L180 160
              C180 180 60 180 60 160
              Z"
-          fill="#0D9488"
-          stroke="#0D9488"
+          fill="#14B8A6"
+          stroke="#14B8A6"
           strokeWidth="2"
         />
 
@@ -195,19 +195,19 @@ export function AIIcon() {
              L170 150
              C170 170 70 170 70 150
              Z"
-          fill="#0F766E"
+          fill="#115E59"
         />
 
         {/* Augen */}
-        <circle cx="105" cy="110" r="8" fill="#2DD4BF" />
-        <circle cx="135" cy="110" r="8" fill="#2DD4BF" />
+        <circle cx="105" cy="110" r="8" fill="#5EEAD4" />
+        <circle cx="135" cy="110" r="8" fill="#5EEAD4" />
 
         {/* Mund */}
         <path
-          d="M100 130 Q120 138 140 130"
+          d="M100 130 Q120 142 140 130"
           fill="none"
-          stroke="#2DD4BF"
-          strokeWidth="3"
+          stroke="#5EEAD4"
+          strokeWidth="5"
           strokeLinecap="round"
         />
 
@@ -218,16 +218,16 @@ export function AIIcon() {
              L150 240
              C150 260 90 260 90 240
              Z"
-          fill="#0D9488"
-          stroke="#0D9488"
+          fill="#14B8A6"
+          stroke="#14B8A6"
           strokeWidth="2"
         />
 
         {/* Linker Arm */}
         <path
           d="M85 190 Q65 200 70 220"
-          fill="#0D9488"
-          stroke="#0D9488"
+          fill="#14B8A6"
+          stroke="#14B8A6"
           strokeWidth="12"
           strokeLinecap="round"
         />
@@ -236,8 +236,8 @@ export function AIIcon() {
         <path
           ref={rightArmRef}
           d="M155 190 Q195 195 205 155"
-          fill="#0D9488"
-          stroke="#0D9488"
+          fill="#14B8A6"
+          stroke="#14B8A6"
           strokeWidth="12"
           strokeLinecap="round"
         />

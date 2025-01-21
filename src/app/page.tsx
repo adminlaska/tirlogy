@@ -28,7 +28,7 @@ function Footer() {
       <div className="section-inner">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <p className="nav-link text-foreground/60 dark:text-foreground-dark/60 text-sm">
-            © {new Date().getFullYear()} Tiryaki IT. Alle Rechte vorbehalten.
+            © {new Date().getFullYear()} Tirlogy. Alle Rechte vorbehalten.
           </p>
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 w-full sm:w-auto">
             <ThemeSwitcher />
@@ -135,7 +135,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark">
+    <main className="min-h-screen bg-[#0A0A0A] text-foreground dark:text-foreground-dark">
       {/* Navigation */}
       <nav className="fixed w-full z-50 top-0 sm:top-6 safe-padding">
         <motion.div
@@ -154,14 +154,14 @@ export default function Home() {
               <div className="w-8 h-8 flex items-center justify-center transition-transform duration-700 ease-[0.4,0,0.2,1] group-hover:rotate-[360deg]">
                 <Image
                   src="/tiryaki_it_fav_logo.png"
-                  alt="Tiryaki IT Logo"
+                  alt="Tirlogy Logo"
                   width={32}
                   height={32}
                   className="w-full h-full"
                 />
               </div>
               <span className="text-lg tracking-wide technical-forest">
-                Tiryaki IT
+                Tirlogy
               </span>
             </Link>
             <div className="flex-1" />
@@ -202,7 +202,7 @@ export default function Home() {
                 priority
                 quality={100}
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/90 via-[#0A0A0A]/60 to-transparent" />
             </div>
             <div className="relative w-full py-12 sm:py-20 lg:py-32 px-4 sm:px-12 lg:px-20">
               <motion.div
@@ -258,7 +258,7 @@ export default function Home() {
       </section>
 
       {/* Services Preview */}
-      <section id="services" className="section bg-background dark:bg-background-dark">
+      <section id="services" className="section">
         <div className="section-inner">
           <div className="relative flex justify-center mb-8 sm:mb-12">
             <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[120px] w-full sm:w-[500px] mx-auto">
@@ -266,7 +266,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-[#00A5A8] opacity-[0.1] blur-[65px]" />
             </div>
             <h2 className="heading text-2xl sm:text-3xl lg:text-4xl text-center relative z-10 font-['Neue_Haas_Grotesk_Display_Pro_65_Medium']">
-              Meine Dienstleistungen
+              Professionelle IT-Lösungen
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -275,13 +275,13 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="group relative bg-background-light/10 dark:bg-background-dark/10 rounded-2xl p-6 backdrop-blur-lg border border-primary/10 hover:border-primary/30 transition-all duration-300"
+              className="group relative bg-[#0A0A0A]/10 rounded-2xl p-6 backdrop-blur-lg border border-white/5 hover:border-white/10 transition-all duration-300"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl" />
               <div className="relative z-10">
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center backdrop-blur-sm mb-6 relative overflow-hidden">
                   {/* Browser Controls - kleiner und in der Ecke */}
-                  <div className="absolute inset-2 bg-white dark:bg-background-dark/80 rounded-md overflow-hidden">
+                  <div className="absolute inset-2 bg-[#0A0A0A]/80 rounded-md overflow-hidden">
                     <div className="absolute top-0.5 left-0.5 flex space-x-0.5">
                       <div className="w-0.5 h-0.5 rounded-full bg-red-500/80" />
                       <div className="w-0.5 h-0.5 rounded-full bg-yellow-500/80" />
@@ -312,12 +312,12 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="group relative bg-background-light/10 dark:bg-background-dark/10 rounded-2xl p-6 backdrop-blur-lg border border-primary/10 hover:border-primary/30 transition-all duration-300"
+              className="group relative bg-[#0A0A0A]/10 rounded-2xl p-6 backdrop-blur-lg border border-white/5 hover:border-white/10 transition-all duration-300"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl" />
               <div className="relative z-10">
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center backdrop-blur-sm mb-6 relative">
-                  <div className="absolute inset-2 bg-white dark:bg-background-dark/80 rounded-md overflow-hidden">
+                  <div className="absolute inset-2 bg-[#0A0A0A]/80 rounded-md overflow-hidden">
                     <IOSIcon />
                   </div>
                 </div>
@@ -333,12 +333,12 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="group relative bg-background-light/10 dark:bg-background-dark/10 rounded-2xl p-6 backdrop-blur-lg border border-primary/10 hover:border-primary/30 transition-all duration-300"
+              className="group relative bg-[#0A0A0A]/10 rounded-2xl p-6 backdrop-blur-lg border border-white/5 hover:border-white/10 transition-all duration-300"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl" />
               <div className="relative z-10">
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center backdrop-blur-sm mb-6 relative">
-                  <div className="absolute inset-2 bg-white dark:bg-background-dark/90 rounded-md overflow-hidden">
+                  <div className="absolute inset-2 bg-[#0A0A0A]/80 rounded-md overflow-hidden">
                     <BackendIcon />
                   </div>
                 </div>
@@ -354,12 +354,12 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="group relative bg-background-light/10 dark:bg-background-dark/10 rounded-2xl p-6 backdrop-blur-lg border border-primary/10 hover:border-primary/30 transition-all duration-300"
+              className="group relative bg-[#0A0A0A]/10 rounded-2xl p-6 backdrop-blur-lg border border-white/5 hover:border-white/10 transition-all duration-300"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl" />
               <div className="relative z-10">
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center backdrop-blur-sm mb-6 relative">
-                  <div className="absolute inset-2 bg-white dark:bg-background-dark/80 rounded-md overflow-hidden">
+                  <div className="absolute inset-2 bg-[#0A0A0A]/80 rounded-md overflow-hidden">
                     <AIIcon />
                   </div>
                 </div>
@@ -378,12 +378,11 @@ export default function Home() {
         <div className="section-inner">
           <div className="relative rounded-3xl overflow-hidden">
             {/* Dark background with blur */}
-            <div className="absolute inset-0 bg-background-light/75 dark:bg-[#0A0A0A] backdrop-blur-lg" />
+            <div className="absolute inset-0 bg-[#0A0A0A] backdrop-blur-lg" />
 
             {/* Gradient overlays */}
             <div className="absolute inset-0">
-              <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-[#0A0A0A] opacity-90" />
             </div>
 
             {/* Content */}
@@ -449,10 +448,10 @@ export default function Home() {
                       whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
                       transition={{ duration: 0.5, delay: 0.3 }}
                       viewport={{ once: true }}
-                      className="group relative p-6 rounded-xl bg-background-light dark:bg-background-dark border border-border dark:border-border-dark overflow-hidden"
+                      className="group relative p-6 rounded-xl bg-background-light dark:bg-background-dark border border-border dark:border-border-dark overflow-hidden relative"
                     >
                       {/* Animated gradient background */}
-                      <div className="absolute inset-0 bg-gradient-to-bl from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-[#0A0A0A] opacity-90" />
 
                       {/* Animated circle decoration */}
                       <div className="absolute -left-4 -top-4 w-20 h-20">
@@ -539,7 +538,16 @@ export default function Home() {
       </section>
 
       {/* Process Timeline Section */}
-      <section className="section bg-background dark:bg-background-dark relative overflow-hidden min-h-screen py-20">
+      <section className="section relative overflow-hidden min-h-screen py-20">
+        {/* Animated Background Effects */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A] via-[#0A0A0A] to-[#0A0A0A] opacity-100" />
+          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.02]" />
+
+          {/* Floating Particles */}
+          <div className="particles-container absolute inset-0" id="particles-container" />
+        </div>
+
         <div className="section-inner max-w-[1200px]" id="timeline-container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -593,7 +601,7 @@ export default function Home() {
                     {/* Content Card */}
                     <div className={`w-[calc(50%-2rem)] ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
                       <div className="timeline-card transform-gpu perspective-1000 hover:scale-[1.02] transition-all duration-300 ease-out">
-                        <div className="relative bg-background-light/10 dark:bg-background-dark/10 rounded-2xl p-8 backdrop-blur-lg border border-primary/10 transform-gpu preserve-3d">
+                        <div className="relative bg-gradient-to-l from-[#00A5A8]/20 via-[#00A5A8]/5 to-[#0F0F0F] rounded-2xl p-8 backdrop-blur-lg border border-white/5 transform-gpu preserve-3d">
                           {/* Glowing Number */}
                           <div className="absolute -top-6 -left-6 w-16 h-16 bg-primary rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg timeline-number">
                             {item.step}
@@ -636,15 +644,6 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </div>
-
-        {/* Animated Background Effects */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent opacity-30" />
-          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.02]" />
-
-          {/* Floating Particles */}
-          <div className="particles-container absolute inset-0" id="particles-container" />
         </div>
 
         <style jsx global>{`
@@ -986,7 +985,7 @@ export default function Home() {
         <div className="section-inner">
           <div className="relative rounded-3xl overflow-hidden">
             {/* Dark background with blur */}
-            <div className="absolute inset-0 bg-background-light/75 dark:bg-[#0A0A0A] backdrop-blur-lg" />
+            <div className="absolute inset-0 bg-[#0A0A0A]/75 backdrop-blur-lg" />
 
             {/* Gradient overlays */}
             <div className="absolute inset-0">
@@ -1041,7 +1040,7 @@ export default function Home() {
                   {/* Email Card */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="group p-6 bg-card rounded-xl border border-border dark:border-border-dark overflow-hidden relative"
+                    className="group p-6 bg-[#0A0A0A] rounded-xl border border-border dark:border-border-dark overflow-hidden relative"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className="relative z-10">
@@ -1063,7 +1062,7 @@ export default function Home() {
                   {/* Phone Card */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="group p-6 bg-card rounded-xl border border-border dark:border-border-dark overflow-hidden relative"
+                    className="group p-6 bg-[#0A0A0A] rounded-xl border border-border dark:border-border-dark overflow-hidden relative"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className="relative z-10">
@@ -1084,7 +1083,7 @@ export default function Home() {
                   {/* WhatsApp Card */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="group p-6 bg-card rounded-xl border border-border dark:border-border-dark overflow-hidden relative"
+                    className="group p-6 bg-[#0A0A0A] rounded-xl border border-border dark:border-border-dark overflow-hidden relative"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className="relative z-10">
@@ -1354,7 +1353,7 @@ function ServiceCard({ icon, title, description }: { icon: React.ReactNode; titl
   return (
     <div
       ref={cardRef}
-      className="relative min-h-[350px] p-8 rounded-2xl bg-gradient-to-br from-background-light/20 via-background-light/10 to-transparent dark:from-background-dark/20 dark:via-background-dark/10 dark:to-transparent backdrop-blur-lg border border-primary/10 overflow-hidden cursor-pointer transform-gpu"
+      className="relative min-h-[350px] p-8 rounded-2xl bg-gradient-to-br from-background-light/20 via-background-light/10 to-transparent dark:from-background-dark/20 dark:via-background-dark/10 dark:to-transparent backdrop-blur-lg border border-white/5 overflow-hidden cursor-pointer transform-gpu"
       style={{ transformStyle: 'preserve-3d' }}
     >
       {/* Hintergrund-Effekte */}
@@ -1447,7 +1446,7 @@ function SkillBar({ skill, level }: { skill: string; level: number }) {
         <span className="text-sm text-foreground/80 dark:text-foreground-dark/80 font-['Nimbus_Mono']">{skill}</span>
         <span className="text-sm text-primary font-['Nimbus_Mono']">{level}%</span>
       </div>
-      <div className="h-2 bg-background-light dark:bg-background-dark rounded-full overflow-hidden">
+      <div className="h-2 bg-[#0A0A0A] rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: `${level}%` }}
