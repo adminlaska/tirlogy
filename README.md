@@ -1,30 +1,45 @@
-# Tiryaki IT Website
+# Tirlogy - Moderne IT-Dienstleistungen
 
-Eine moderne, responsive Website für IT-Dienstleistungen, entwickelt mit Next.js und Tailwind CSS.
+Eine moderne, responsive Website für IT-Dienstleistungen, entwickelt mit Next.js 14, TypeScript und Tailwind CSS. Inklusive KI-gestütztem Chat-Support.
 
-## Features
+## 🚀 Features
 
-- Modernes, dunkles Design
-- Responsive Layout für alle Geräte
-- Animierte UI-Elemente mit Framer Motion
-- Kontaktformular mit E-Mail-Versand
-- SEO-optimiert
+- **Modernes Design**
+  - Responsive Layout für alle Geräte
+  - Dark/Light Mode
+  - Animierte UI-Elemente mit Framer Motion
+  - Interaktive 3D-Elemente
 
-## Technologien
+- **KI-Integration**
+  - Intelligenter Chat-Support
+  - Deutschsprachige KI-Assistenz
+  - Hugging Face Integration
+  - Automatische Spracherkennung
+
+- **Technische Features**
+  - SEO-optimiert
+  - TypeScript
+  - Tailwind CSS
+  - GSAP Animationen
+  - API-Routes
+
+## 🛠 Technologie-Stack
 
 - Next.js 14
 - TypeScript
 - Tailwind CSS
 - Framer Motion
-- Nodemailer
+- GSAP
+- Hugging Face AI
+- React Three Fiber
 - Heroicons
 
-## Installation
+## 📦 Installation
 
 1. Repository klonen:
 ```bash
-git clone <repository-url>
-cd tiryaki-it
+git clone https://github.com/IhrUsername/tirlogy.git
+cd tirlogy
 ```
 
 2. Abhängigkeiten installieren:
@@ -33,48 +48,112 @@ npm install
 ```
 
 3. Umgebungsvariablen konfigurieren:
-- Kopieren Sie die Datei `.env.local.example` zu `.env.local`
-- Tragen Sie Ihre SMTP-Konfiguration ein:
-  ```
-  SMTP_HOST=smtp.gmail.com
-  SMTP_PORT=587
-  SMTP_SECURE=false
-  SMTP_USER=your-email@gmail.com
-  SMTP_PASS=your-app-specific-password
-  CONTACT_EMAIL=your-email@gmail.com
-  ```
+```bash
+# .env.local erstellen
+cp .env.example .env.local
+
+# Hugging Face API-Key eintragen
+# Kostenlos erhältlich unter: https://huggingface.co/settings/tokens
+```
 
 4. Entwicklungsserver starten:
 ```bash
 npm run dev
 ```
 
-Die Website ist nun unter `http://localhost:3000` verfügbar.
+## 🤖 KI-Integration
 
-## E-Mail-Konfiguration
+Die Website nutzt die Hugging Face API für intelligenten Chat-Support:
 
-Für die E-Mail-Funktionalität benötigen Sie einen SMTP-Server. Bei Verwendung von Gmail:
+- Deutschsprachige KI-Assistenz
+- Kostenlose API-Nutzung
+- Automatische Spracherkennung
+- Fallback-Mechanismen
 
-1. Aktivieren Sie die 2-Faktor-Authentifizierung
-2. Generieren Sie ein App-Passwort
-3. Verwenden Sie dieses Passwort in der `.env.local` Datei
+## 🎨 Design-System
 
-## Deployment
+- Konsistentes Farbschema
+- Responsive Typography
+- Custom Animationen
+- Interaktive Komponenten
+- Dark/Light Mode Support
 
-Die Website kann auf verschiedenen Plattformen deployed werden:
+## 📱 Responsive Design
 
-1. Vercel (empfohlen):
-```bash
-npm install -g vercel
-vercel
-```
+- Mobile-First Ansatz
+- Tablet-optimiert
+- Desktop-optimiert
+- Adaptive Layouts
 
-2. Traditioneller Server:
+## 🔧 Konfiguration
+
+### Tailwind
+
+Anpassungen in `tailwind.config.js`:
+- Custom Colors
+- Responsive Breakpoints
+- Typography Scale
+- Animations
+
+### Next.js
+
+Konfiguration in `next.config.js`:
+- Image Optimization
+- API Routes
+- Webpack Optimierungen
+- Build Optimierungen
+
+## 📈 Performance
+
+- Optimierte Bilder
+- Code Splitting
+- Lazy Loading
+- SSR/SSG Support
+- Caching Strategien
+
+## 🚀 Deployment
+
+1. Build erstellen:
 ```bash
 npm run build
+```
+
+2. Produktionsversion starten:
+```bash
 npm start
 ```
 
-## Lizenz
+### Deployment Plattformen
+
+- Vercel (empfohlen)
+- Netlify
+- AWS
+- Docker Support
+
+## 🔒 Sicherheit
+
+- HTTPS enforced
+- API-Key Schutz
+- Rate Limiting
+- XSS Protection
+- CORS Konfiguration
+
+## 🤝 Beitragen
+
+1. Fork erstellen
+2. Feature Branch erstellen
+3. Änderungen committen
+4. Push zum Branch
+5. Pull Request öffnen
+
+## 📝 Lizenz
 
 MIT
+
+## 🙋‍♂️ Support
+
+Bei Fragen oder Problemen:
+- GitHub Issues
+- E-Mail Support
+- Dokumentation
+- Community Discord

@@ -1,7 +1,5 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
+import './animations.css';
 
 export default function RootLayout({
   children,
@@ -17,7 +15,9 @@ export default function RootLayout({
               try {
                 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                   document.documentElement.classList.add('dark');
+                  document.documentElement.classList.remove('light');
                 } else {
+                  document.documentElement.classList.add('light');
                   document.documentElement.classList.remove('dark');
                 }
               } catch (_) {}
@@ -26,7 +26,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.className} min-h-screen bg-background dark:bg-background-dark transition-colors duration-300`}
+        className="min-h-screen bg-background text-foreground transition-colors duration-300"
         suppressHydrationWarning
       >
         {children}

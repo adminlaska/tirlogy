@@ -1,0 +1,402 @@
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-animate {
+  background-size: 200% 200%;
+  animation: gradientFlow 15s ease infinite;
+}
+
+/* Timeline Card Animations */
+.timeline-card {
+  transform-style: preserve-3d;
+  transition: all 0.5s cubic-bezier(0.21, 0.45, 0.32, 0.9);
+}
+
+.timeline-dot {
+  box-shadow: 0 0 20px var(--primary-color);
+}
+
+.timeline-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}
+
+.particles-container {
+  pointer-events: none;
+}
+
+/* Browser Animation */
+@keyframes browserLine1 {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  40% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  60% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  100% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+}
+
+.animate-browserLine1 {
+  animation: browserLine1 4s infinite ease-in-out;
+}
+
+.animate-browserLine2 {
+  animation: browserLine1 4s infinite ease-in-out;
+  animation-delay: 2s;
+}
+
+.animate-browserLine3 {
+  animation: browserLine1 4s infinite ease-in-out;
+  animation-delay: 2.4s;
+}
+
+.animate-browserLine4 {
+  animation: browserLine1 4s infinite ease-in-out;
+  animation-delay: 2.8s;
+}
+
+.animate-browserLine5 {
+  animation: browserLine1 4s infinite ease-in-out;
+  animation-delay: 3.2s;
+}
+
+/* Mobile App Animation */
+@keyframes appLine {
+  0% {
+    transform: translateX(-100%) scaleX(0);
+  }
+
+  50% {
+    transform: translateX(0) scaleX(1);
+  }
+
+  100% {
+    transform: translateX(100%) scaleX(0);
+  }
+}
+
+/* Terminal Animation */
+@keyframes terminalLine {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+/* Neural Network Animation */
+@keyframes neuralDot {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}
+
+.animate-browserLine {
+  animation: browserLine 2s infinite linear;
+}
+
+.animate-appLine {
+  animation: appLine 3s infinite ease-in-out;
+}
+
+.animate-terminalLine {
+  animation: terminalLine 2s infinite ease-in-out;
+}
+
+.animate-neuralDot {
+  animation: neuralDot 2s infinite ease-in-out;
+}
+
+/* Mobile App Icon Animation */
+@keyframes appIcon {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.8) rotate(-10deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  100% {
+    opacity: 0.8;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.animate-appIcon {
+  animation: appIcon 0.5s forwards ease-out;
+  opacity: 0;
+}
+
+/* Menu Line Animations */
+@keyframes menuLine1 {
+
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateX(1px);
+    opacity: 0.8;
+  }
+}
+
+@keyframes menuLine2 {
+
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translateX(-1px);
+    opacity: 0.6;
+  }
+}
+
+@keyframes menuLine3 {
+
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateX(1px);
+    opacity: 0.8;
+  }
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}
+
+.animate-menuLine1 {
+  animation: menuLine1 3s infinite ease-in-out;
+}
+
+.animate-menuLine2 {
+  animation: menuLine2 3s infinite ease-in-out;
+}
+
+.animate-menuLine3 {
+  animation: menuLine3 3s infinite ease-in-out;
+}
+
+.animate-glow {
+  animation: glow 2s infinite ease-in-out;
+}
+
+/* Swift Animations */
+@keyframes swiftBird {
+  0% {
+    transform: scale(0.95) rotate(-10deg) translateY(2px);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.05) rotate(10deg) translateY(-2px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.95) rotate(-10deg) translateY(2px);
+    opacity: 0.7;
+  }
+}
+
+@keyframes swiftGlow {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.9);
+    filter: blur(10px);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(1.1);
+    filter: blur(15px);
+  }
+
+  100% {
+    opacity: 0.2;
+    transform: scale(0.9);
+    filter: blur(10px);
+  }
+}
+
+.animate-swiftBird {
+  animation: swiftBird 3s infinite ease-in-out;
+  transform-origin: center;
+}
+
+.animate-swiftGlow {
+  animation: swiftGlow 3s infinite ease-in-out;
+}
+
+/* Wing Animations */
+@keyframes wingLeft {
+
+  0%,
+  100% {
+    transform: rotate(-20deg) translateX(-5px);
+  }
+
+  50% {
+    transform: rotate(20deg) translateX(5px);
+  }
+}
+
+@keyframes wingRight {
+
+  0%,
+  100% {
+    transform: rotate(20deg) translateX(5px);
+  }
+
+  50% {
+    transform: rotate(-20deg) translateX(-5px);
+  }
+}
+
+.animate-wingLeft {
+  animation: wingLeft 1s infinite ease-in-out;
+}
+
+.animate-wingRight {
+  animation: wingRight 1s infinite ease-in-out;
+}
+
+@keyframes wing {
+  0% {
+    transform: scale(0.95) rotate(-5deg);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: scale(1.05) rotate(5deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.95) rotate(-5deg);
+    opacity: 0.6;
+  }
+}
+
+.animate-wing {
+  animation: wing 2s infinite ease-in-out;
+}
+
+@keyframes swiftWing {
+  0% {
+    transform: scale(0.9) rotate(-15deg) translateY(2px);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: scale(1.1) rotate(15deg) translateY(-2px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.9) rotate(-15deg) translateY(2px);
+    opacity: 0.6;
+  }
+}
+
+.animate-swiftWing {
+  animation: swiftWing 1.5s infinite ease-in-out;
+  transform-origin: center;
+}

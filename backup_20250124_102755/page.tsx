@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useRef, useEffect, useCallback, useState } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { motion, useScroll } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { CodeBracketIcon, CommandLineIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import gsap from 'gsap';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -61,17 +61,6 @@ export default function Home() {
     type: 'success' | 'error' | null;
     message: string;
   }>({ type: null, message: '' });
-
-  // KI-Chat States
-  const [chatMessages, setChatMessages] = useState<Array<{ role: 'assistant' | 'user', content: string }>>([
-    {
-      role: 'assistant',
-      content: 'Hallo! Ich bin dein KI-Assistent. Wie kann ich dir helfen?'
-    }
-  ]);
-  const [chatInput, setChatInput] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Check initial theme
@@ -155,62 +144,6 @@ export default function Home() {
       setIsSubmitting(false);
     }
   }, []);
-
-  // Chat Funktionen
-  const scrollToBottom = () => {
-    const chatContainer = document.querySelector('#chat-messages');
-    if (chatContainer) {
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
-  };
-
-  useEffect(() => {
-    const lastMessage = chatMessages[chatMessages.length - 1];
-    if (lastMessage?.role === 'assistant' && !isTyping && lastMessage.content.length > 0) {
-      setTimeout(() => {
-        scrollToBottom();
-      }, 100);
-    }
-  }, [chatMessages, isTyping]);
-
-  const handleChatSubmit = async () => {
-    if (!chatInput.trim()) return;
-
-    const userMessage = chatInput.trim();
-    setChatInput('');
-    setChatMessages(prev => [...prev, { role: 'user', content: userMessage }]);
-    setIsTyping(true);
-
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          messages: [
-            ...chatMessages,
-            { role: 'user', content: userMessage }
-          ]
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('API-Anfrage fehlgeschlagen');
-      }
-
-      const data = await response.json();
-      setChatMessages(prev => [...prev, data]);
-    } catch (error) {
-      console.error('Chat Error:', error);
-      setChatMessages(prev => [...prev, {
-        role: 'assistant',
-        content: 'Entschuldigung, es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.'
-      }]);
-    } finally {
-      setIsTyping(false);
-    }
-  };
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
@@ -371,7 +304,7 @@ export default function Home() {
               <div className="relative z-10">
                 <div className="w-12 h-12 mb-6 rounded-xl service-icon flex items-center justify-center">
                   <WebDevIcon className="w-6 h-6 text-primary" />
-                    </div>
+                </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground dark:text-white font-['Neue_Haas_Grotesk_Display_Pro_65_Medium']">
                   Webentwicklung
                 </h3>
@@ -385,7 +318,7 @@ export default function Home() {
               <div className="relative z-10">
                 <div className="w-12 h-12 mb-6 rounded-xl service-icon flex items-center justify-center">
                   <IOSIcon className="w-6 h-6 text-primary" />
-                  </div>
+                </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground dark:text-white font-['Neue_Haas_Grotesk_Display_Pro_65_Medium']">
                   Mobile Apps
                 </h3>
@@ -399,7 +332,7 @@ export default function Home() {
               <div className="relative z-10">
                 <div className="w-12 h-12 mb-6 rounded-xl service-icon flex items-center justify-center">
                   <BackendIcon className="w-6 h-6 text-primary" />
-                  </div>
+                </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground dark:text-white font-['Neue_Haas_Grotesk_Display_Pro_65_Medium']">
                   Backend & APIs
                 </h3>
@@ -413,7 +346,7 @@ export default function Home() {
               <div className="relative z-10">
                 <div className="w-12 h-12 mb-6 rounded-xl service-icon flex items-center justify-center">
                   <AIIcon className="w-6 h-6 text-primary" />
-                  </div>
+                </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground dark:text-white font-['Neue_Haas_Grotesk_Display_Pro_65_Medium']">
                   KI-Integration
                 </h3>
@@ -591,243 +524,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Code Lab Section */}
-      <section className="section">
-        <div className="section-inner">
-          <div className="grid grid-cols-1 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="relative rounded-2xl overflow-hidden bg-[#1E1E1E] border border-primary/10"
-            >
-              {/* Editor Header */}
-              <div className="flex items-center justify-between px-4 py-2 bg-[#2D2D2D] border-b border-primary/10">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                  <div className="w-3 h-3 rounded-full bg-green-500" />
-                </div>
-                <span className="text-white/60 text-sm font-['Nimbus_Mono']">Create Innovation</span>
-                <div className="w-20" />
-              </div>
-
-              {/* Editor Content */}
-              <div className="p-6">
-                <div className="space-y-4">
-                  {(() => {
-                    const code = [
-                      'const innovate = async () => {',
-                      '  const result = await createInnovation();',
-                      '  return {',
-                      "    success: 'Innovation created!'",
-                      '  };',
-                      '}'
-                    ];
-
-                    const [text, setText] = useState('');
-                    const [currentLine, setCurrentLine] = useState(0);
-                    const [currentChar, setCurrentChar] = useState(0);
-                    const [isRunning, setIsRunning] = useState(false);
-                    const [output, setOutput] = useState<string | null>(null);
-
-                    useEffect(() => {
-                      if (currentLine >= code.length) return;
-
-                      const timer = setTimeout(() => {
-                        if (currentChar < code[currentLine].length) {
-                          setText(prev => prev + code[currentLine][currentChar]);
-                          setCurrentChar(prev => prev + 1);
-                        } else {
-                          setText(prev => prev + '\n');
-                          setCurrentLine(prev => prev + 1);
-                          setCurrentChar(0);
-                        }
-                      }, 50);
-
-                      return () => clearTimeout(timer);
-                    }, [currentLine, currentChar]);
-
-                    const handleRunCode = () => {
-                      setIsRunning(true);
-                      setOutput(null);
-
-                      // Simuliere Code-Ausführung
-                      setTimeout(() => {
-                        setOutput(JSON.stringify({ success: 'Innovation created!' }, null, 2));
-                        setIsRunning(false);
-                      }, 1500);
-                    };
-
-                    const lines = text.split('\n');
-
-                    return (
-                      <>
-                        {lines.map((line, index) => (
-                          <motion.div
-                            key={index}
-                            className="flex items-start gap-4"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <div className="text-white/30 font-mono text-sm w-4 text-right">
-                              {index + 1}
-        </div>
-                            <div className="flex-1 font-mono relative">
-                              {Array.from(line).map((char, charIndex) => (
-                                <span
-                                  key={charIndex}
-                                  className={
-                                    line.startsWith('const') && charIndex < 5 ? 'text-[#569CD6]' :
-                                      line.includes('async') && line.substring(charIndex, charIndex + 5) === 'async' ? 'text-[#C586C0]' :
-                                        line.includes('await') && line.substring(charIndex, charIndex + 5) === 'await' ? 'text-[#569CD6]' :
-                                          line.includes('return') && line.substring(charIndex, charIndex + 6) === 'return' ? 'text-[#C586C0]' :
-                                            line.includes('success') && line.substring(charIndex, charIndex + 7) === 'success' ? 'text-[#9CDCFE]' :
-                                              (char === "'" || line.includes("'") && line[charIndex - 1] === "'") ? 'text-[#CE9178]' :
-                                                'text-white'
-                                  }
-                                >
-                                  {char}
-                                </span>
-                              ))}
-                              {index === currentLine && (
-                                <motion.span
-                                  className="inline-block w-[2px] h-[1.2em] bg-primary ml-[1px] relative top-[2px]"
-                                  animate={{ opacity: [1, 0] }}
-                                  transition={{
-                                    duration: 0.8,
-                                    repeat: Infinity,
-                                    ease: "linear"
-                                  }}
-                                />
-                              )}
-                            </div>
-                          </motion.div>
-                        ))}
-
-                        {/* Output Section */}
-                        {output && (
-                          <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="mt-4 p-4 bg-[#1E1E1E] rounded-lg border border-primary/20"
-                          >
-                            <div className="font-mono text-[#9CDCFE]">Output:</div>
-                            <pre className="font-mono text-[#CE9178] mt-2">{output}</pre>
-                          </motion.div>
-                        )}
-
-                        {/* Run Button */}
-                        <motion.button
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          onClick={handleRunCode}
-                          disabled={isRunning}
-                          className="mt-6 px-6 py-2 bg-primary/10 text-primary border border-primary/20 rounded-lg font-['Nimbus_Mono'] text-sm hover:bg-primary/20 transition-colors relative overflow-hidden"
-                        >
-                          {isRunning ? (
-                            <>
-                              <div className="absolute inset-0 bg-primary/20 animate-pulse" />
-                              <span className="relative">Running...</span>
-                            </>
-                          ) : (
-                            'Run Code'
-                          )}
-                        </motion.button>
-                      </>
-                    );
-                  })()}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* KI-Playground Section */}
-      <section className="section">
-        <div className="section-inner">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="relative rounded-2xl overflow-hidden bg-[#1E1E1E] border border-primary/10 p-8"
-          >
-            <h2 className="text-2xl font-bold text-white mb-8 text-center">KI-Playground</h2>
-            <div className="bg-[#2D2D2D] rounded-lg p-6">
-              <div id="chat-messages" className="space-y-4 max-h-[300px] overflow-y-auto mb-4 scroll-smooth" style={{ scrollBehavior: 'smooth' }}>
-                {chatMessages.map((message, index) => (
-                  <div key={index} className="flex gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                      {message.role === 'assistant' ? (
-                        <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                        </svg>
-                      ) : (
-                        <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                      )}
-                    </div>
-                    <div className="flex-1 bg-white/5 rounded-lg p-4">
-                      <p className="text-white/90 font-['Nimbus_Mono']">{message.content}</p>
-                    </div>
-                  </div>
-                ))}
-                {isTyping && (
-                  <div className="flex gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                      <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                      </svg>
-                    </div>
-                    <div className="flex-1 bg-white/5 rounded-lg p-4">
-                      <div className="flex gap-1">
-                        <motion.div
-                          className="w-2 h-2 bg-primary/40 rounded-full"
-                          animate={{ scale: [1, 1.2, 1] }}
-                          transition={{ duration: 0.6, repeat: Infinity }}
-                        />
-                        <motion.div
-                          className="w-2 h-2 bg-primary/40 rounded-full"
-                          animate={{ scale: [1, 1.2, 1] }}
-                          transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                        />
-                        <motion.div
-                          className="w-2 h-2 bg-primary/40 rounded-full"
-                          animate={{ scale: [1, 1.2, 1] }}
-                          transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-                <div ref={chatEndRef} />
-              </div>
-              <div className="relative">
-                <input
-                  type="text"
-                  value={chatInput}
-                  onChange={(e) => setChatInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleChatSubmit()}
-                  placeholder="Stelle eine Frage..."
-                  className="w-full px-4 py-3 bg-white/5 border border-primary/20 rounded-lg text-white/90 placeholder-white/40 focus:ring-2 focus:ring-primary focus:border-primary transition-all font-['Nimbus_Mono']"
-                />
-                <button
-                  onClick={handleChatSubmit}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 hover:scale-110 transition-transform"
-                >
-                  <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Process Timeline Section */}
       <section className="section relative overflow-hidden min-h-screen py-20 bg-transparent">
         <div className="section-inner max-w-[1200px]" id="timeline-container">
@@ -890,29 +586,29 @@ export default function Home() {
                     {/* Content Card */}
                     <div className={`w-[calc(50%-2rem)] ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
                       <div className="timeline-card rounded-2xl p-8">
-                          {/* Glowing Number */}
-                          <div className="absolute -top-6 -left-6 w-16 h-16 bg-primary rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg timeline-number">
-                            {item.step}
-                          </div>
+                        {/* Glowing Number */}
+                        <div className="absolute -top-6 -left-6 w-16 h-16 bg-primary rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg timeline-number">
+                          {item.step}
+                        </div>
 
                         <div className="mt-4">
-                            <div className="flex flex-col gap-6">
-                              {/* Icon */}
+                          <div className="flex flex-col gap-6">
+                            {/* Icon */}
                             <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center backdrop-blur-sm">
-                                {getStepIcon(item.step)}
-                              </div>
+                              {getStepIcon(item.step)}
+                            </div>
 
-                              {/* Content */}
-                              <div className="space-y-4">
+                            {/* Content */}
+                            <div className="space-y-4">
                               <h3 className="text-2xl font-bold">
-                                  {item.title}
-                                </h3>
+                                {item.title}
+                              </h3>
                               <p className="text-base leading-relaxed font-['Nimbus_Mono']">
-                                  {item.description}
-                                </p>
-                              </div>
+                                {item.description}
+                              </p>
                             </div>
                           </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -921,6 +617,339 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        <style jsx global>{`
+          .timeline-card {
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.21, 0.45, 0.32, 0.9);
+          }
+
+          .timeline-dot {
+            box-shadow: 0 0 20px var(--primary-color);
+          }
+
+          .timeline-pulse {
+            animation: pulse 2s infinite;
+          }
+
+          @keyframes pulse {
+            0% {
+              transform: scale(1);
+              opacity: 0.5;
+            }
+            50% {
+              transform: scale(1.5);
+              opacity: 0.2;
+            }
+            100% {
+              transform: scale(1);
+              opacity: 0.5;
+            }
+          }
+
+          .particles-container {
+            pointer-events: none;
+          }
+
+          /* Browser Animation mit optimiertem Timing */
+          @keyframes browserLine1 {
+            0% { transform: scaleX(0); transform-origin: left; }
+            40% { transform: scaleX(1); transform-origin: left; }
+            60% { transform: scaleX(1); transform-origin: left; }
+            100% { transform: scaleX(0); transform-origin: left; }
+          }
+
+          .animate-browserLine1 {
+            animation: browserLine1 4s infinite ease-in-out;
+          }
+          .animate-browserLine2 {
+            animation: browserLine1 4s infinite ease-in-out;
+            animation-delay: 2s;
+          }
+          .animate-browserLine3 {
+            animation: browserLine1 4s infinite ease-in-out;
+            animation-delay: 2.4s;
+          }
+          .animate-browserLine4 {
+            animation: browserLine1 4s infinite ease-in-out;
+            animation-delay: 2.8s;
+          }
+          .animate-browserLine5 {
+            animation: browserLine1 4s infinite ease-in-out;
+            animation-delay: 3.2s;
+          }
+
+          /* Mobile App Animation */
+          @keyframes appLine {
+            0% { transform: translateX(-100%) scaleX(0); }
+            50% { transform: translateX(0) scaleX(1); }
+            100% { transform: translateX(100%) scaleX(0); }
+          }
+
+          /* Terminal Animation */
+          @keyframes terminalLine {
+            0% { transform: scaleX(0); opacity: 0; }
+            50% { transform: scaleX(1); opacity: 1; }
+            100% { transform: scaleX(0); opacity: 0; }
+          }
+
+          /* Neural Network Animation */
+          @keyframes neuralDot {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.5); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.5; }
+          }
+
+          .animate-browserLine {
+            animation: browserLine 2s infinite linear;
+          }
+          .animate-appLine {
+            animation: appLine 3s infinite ease-in-out;
+          }
+          .animate-terminalLine {
+            animation: terminalLine 2s infinite ease-in-out;
+          }
+          .animate-neuralDot {
+            animation: neuralDot 2s infinite ease-in-out;
+          }
+
+          /* Mobile App Icon Animation */
+          @keyframes appIcon {
+            0% { opacity: 0.3; transform: scale(0.8) rotate(-10deg); }
+            50% { opacity: 1; transform: scale(1.1) rotate(5deg); }
+            100% { opacity: 0.8; transform: scale(1) rotate(0deg); }
+          }
+
+          .animate-appIcon {
+            animation: appIcon 0.5s forwards ease-out;
+            opacity: 0;
+          }
+
+          @keyframes menuLine1 {
+            0%, 100% { transform: translateX(0); opacity: 0.4; }
+            50% { transform: translateX(1px); opacity: 0.8; }
+          }
+          @keyframes menuLine2 {
+            0%, 100% { transform: translateX(0); opacity: 0.3; }
+            50% { transform: translateX(-1px); opacity: 0.6; }
+          }
+          @keyframes menuLine3 {
+            0%, 100% { transform: translateX(0); opacity: 0.4; }
+            50% { transform: translateX(1px); opacity: 0.8; }
+          }
+          @keyframes glow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+          }
+
+          .animate-menuLine1 {
+            animation: menuLine1 3s infinite ease-in-out;
+          }
+          .animate-menuLine2 {
+            animation: menuLine2 3s infinite ease-in-out;
+          }
+          .animate-menuLine3 {
+            animation: menuLine3 3s infinite ease-in-out;
+          }
+          .animate-glow {
+            animation: glow 2s infinite ease-in-out;
+          }
+
+          @keyframes appPulse {
+            0% { opacity: 0.3; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0.3; transform: scale(0.95); }
+          }
+
+          .animate-appPulse {
+            animation: appPulse 2s infinite ease-in-out;
+          }
+
+          @keyframes blueprintLine {
+            0% { opacity: 0; transform: scaleX(0); }
+            50% { opacity: 1; transform: scaleX(1); }
+            100% { opacity: 0; transform: scaleX(0); }
+          }
+
+          @keyframes appIconFly {
+            0% { opacity: 0; transform: translate(-10px, -10px); }
+            50% { opacity: 1; transform: translate(0, 0); }
+            100% { opacity: 0.4; transform: translate(0, 0); }
+          }
+
+          .animate-blueprintLine {
+            animation: blueprintLine 3s infinite ease-in-out;
+            transform-origin: left;
+          }
+
+          .animate-appIconFly {
+            animation: appIconFly 2s infinite ease-out;
+          }
+
+          @keyframes pixelFade {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.8; transform: scale(1); }
+          }
+
+          @keyframes codeFade {
+            0% { opacity: 0; transform: translateY(5px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+
+          .animate-pixelFade {
+            animation: pixelFade 0.5s forwards ease-out;
+            opacity: 0;
+          }
+
+          .animate-codeFade {
+            animation: codeFade 0.5s forwards ease-out;
+            opacity: 0;
+          }
+
+          @keyframes gradientMove {
+            0% { opacity: 0; transform: translateX(-100%) rotate(-45deg); }
+            50% { opacity: 0.5; transform: translateX(0%) rotate(-45deg); }
+            100% { opacity: 0; transform: translateX(100%) rotate(-45deg); }
+          }
+
+          @keyframes codeFloat {
+            0% { opacity: 0; transform: translateY(5px); }
+            50% { opacity: 1; transform: translateY(-2px); }
+            100% { opacity: 0; transform: translateY(-5px); }
+          }
+
+          .animate-gradientMove {
+            animation: gradientMove 3s infinite ease-in-out;
+          }
+
+          .animate-codeFloat {
+            animation: codeFloat 2s infinite ease-in-out;
+          }
+
+          @keyframes floatingIcon {
+            0% { transform: translate(0, 0) scale(0.8); opacity: 0.4; }
+            50% { transform: translate(-2px, -2px) scale(1.1); opacity: 1; }
+            100% { transform: translate(0, 0) scale(0.8); opacity: 0.4; }
+          }
+
+          @keyframes floatingDot {
+            0% { transform: translate(0, 0) scale(0.8); opacity: 0.3; }
+            50% { transform: translate(2px, 2px) scale(1.2); opacity: 0.8; }
+            100% { transform: translate(0, 0) scale(0.8); opacity: 0.3; }
+          }
+
+          @keyframes swiftFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-2px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+          }
+
+          @keyframes lineGrow {
+            0% { transform: scaleX(0); opacity: 0; }
+            50% { transform: scaleX(1); opacity: 0.8; }
+            100% { transform: scaleX(0); opacity: 0; }
+          }
+
+          @keyframes gradientPulse {
+            0% { opacity: 0.3; transform: scale(0.95); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+            100% { opacity: 0.3; transform: scale(0.95); }
+          }
+
+          .animate-floatingIcon {
+            animation: floatingIcon 3s infinite ease-in-out;
+          }
+
+          .animate-floatingDot {
+            animation: floatingDot 3s infinite ease-in-out;
+          }
+
+          .animate-swiftFloat {
+            animation: swiftFloat 3s infinite ease-in-out;
+          }
+
+          .animate-lineGrow {
+            animation: lineGrow 4s infinite ease-in-out;
+          }
+
+          .animate-gradientPulse {
+            animation: gradientPulse 4s infinite ease-in-out;
+          }
+
+          @keyframes swiftBird {
+            0% { transform: scale(0.95) rotate(-10deg) translateY(2px); opacity: 0.7; }
+            50% { transform: scale(1.05) rotate(10deg) translateY(-2px); opacity: 1; }
+            100% { transform: scale(0.95) rotate(-10deg) translateY(2px); opacity: 0.7; }
+          }
+
+          @keyframes swiftGlow {
+            0% { opacity: 0.2; transform: scale(0.9); filter: blur(10px); }
+            50% { opacity: 0.4; transform: scale(1.1); filter: blur(15px); }
+            100% { opacity: 0.2; transform: scale(0.9); filter: blur(10px); }
+          }
+
+          .animate-swiftBird {
+            animation: swiftBird 3s infinite ease-in-out;
+            transform-origin: center;
+          }
+
+          .animate-swiftGlow {
+            animation: swiftGlow 3s infinite ease-in-out;
+          }
+
+          @keyframes wingLeft {
+            0%, 100% { transform: rotate(-20deg) translateX(-5px); }
+            50% { transform: rotate(20deg) translateX(5px); }
+          }
+
+          @keyframes wingRight {
+            0%, 100% { transform: rotate(20deg) translateX(5px); }
+            50% { transform: rotate(-20deg) translateX(-5px); }
+          }
+
+          @keyframes glow {
+            0%, 100% { opacity: 0.2; transform: scale(0.9); }
+            50% { opacity: 0.4; transform: scale(1.1); }
+          }
+
+          .animate-wingLeft {
+            animation: wingLeft 1s infinite ease-in-out;
+          }
+
+          .animate-wingRight {
+            animation: wingRight 1s infinite ease-in-out;
+          }
+
+          .animate-glow {
+            animation: glow 3s infinite ease-in-out;
+          }
+
+          @keyframes wing {
+            0% { transform: scale(0.95) rotate(-5deg); opacity: 0.6; }
+            50% { transform: scale(1.05) rotate(5deg); opacity: 1; }
+            100% { transform: scale(0.95) rotate(-5deg); opacity: 0.6; }
+          }
+
+          .animate-wing {
+            animation: wing 2s infinite ease-in-out;
+          }
+
+          .animate-glow {
+            animation: glow 3s infinite ease-in-out;
+          }
+
+          @keyframes swiftWing {
+            0% { transform: scale(0.9) rotate(-15deg) translateY(2px); opacity: 0.6; }
+            50% { transform: scale(1.1) rotate(15deg) translateY(-2px); opacity: 1; }
+            100% { transform: scale(0.9) rotate(-15deg) translateY(2px); opacity: 0.6; }
+          }
+
+          .animate-swiftWing {
+            animation: swiftWing 1.5s infinite ease-in-out;
+            transform-origin: center;
+          }
+        `}</style>
       </section>
 
       {/* Contact Section */}
@@ -1033,7 +1062,7 @@ export default function Home() {
                       <div className="flex items-center gap-4 mb-3">
                         <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.48-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 9h.01M8 15h.01M16 9h.01M16 15h.01" />
                           </svg>
                         </div>
@@ -1244,10 +1273,10 @@ function ServiceCard({ icon, title, description }: { icon: React.ReactNode; titl
       const cardBg = card.querySelector('.card-bg');
       if (cardBg) {
         gsap.to(cardBg, {
-        opacity: 1,
-        scale: 1.1,
-        duration: 0.4
-      });
+          opacity: 1,
+          scale: 1.1,
+          duration: 0.4
+        });
       }
     };
 
@@ -1266,18 +1295,18 @@ function ServiceCard({ icon, title, description }: { icon: React.ReactNode; titl
 
       if (cardBg) {
         gsap.to(cardBg, {
-        opacity: 0,
-        scale: 1,
-        duration: 0.4
-      });
+          opacity: 0,
+          scale: 1,
+          duration: 0.4
+        });
       }
 
       if (glare) {
         gsap.to(glare, {
-        opacity: 0,
-        scale: 1,
-        duration: 0.4
-      });
+          opacity: 0,
+          scale: 1,
+          duration: 0.4
+        });
       }
     };
 
@@ -1407,7 +1436,7 @@ function getStepDescription(step: number) {
 function getStepIcon(step: number) {
   const icons = {
     1: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />,
-    2: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01M9 15h.01M16 9h.01M16 15h.01" />,
+    2: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />,
     3: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />,
     4: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />,
     5: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
