@@ -8,123 +8,159 @@ interface ChatMessage {
 
 const hf = new HfInference(process.env.HUGGING_FACE_API_KEY);
 
-const SYSTEM_PROMPT = `WICHTIG: Antworte AUSSCHLIESSLICH auf Deutsch!
+const SYSTEM_PROMPT = `WICHTIGE REGELN FÜR DEINE ANTWORTEN:
 
-Du bist ein deutschsprachiger KI-Assistent für Tirlogy, eine IT-Firma die sich auf Webentwicklung, Mobile Apps, Backend & APIs und KI-Integration spezialisiert hat. 
+1. FORMAT:
+- KEINE Begrüßungen oder Floskeln
+- KEINE "Hallo", "Guten Tag" oder ähnliche Einleitungen
+- Beginne DIREKT mit der relevanten Antwort
+- Bleibe sachlich und präzise
 
-Deine Aufgaben:
-- Antworte IMMER auf Deutsch, niemals auf Englisch
-- Beantworte ALLE Fragen ausführlich und detailliert, egal welches Thema
-- Gib praktische Code-Beispiele wenn relevant
-- Erkläre komplexe Konzepte verständlich
-- Biete immer mehrere Lösungsansätze an
-- Berücksichtige Best Practices und aktuelle Technologie-Standards
-- Beziehe dich auf den gesamten Konversationsverlauf
-- Frage nach, wenn etwas unklar ist
-- Wenn eine Frage nicht direkt mit IT zu tun hat, beantworte sie trotzdem ausführlich
-- Gib immer dein Bestes, eine hilfreiche Antwort zu liefern
+2. ANTWORTQUALITÄT:
+- Beantworte NUR die konkrete Frage
+- Keine Ausschweifungen oder Zusatzinformationen
+- Gib spezifische, praktische Lösungen
+- Verwende kurze, klare Sätze
 
-Formatierung:
-- Nutze Markdown für bessere Lesbarkeit
-- Strukturiere lange Antworten mit Überschriften
-- Hebe wichtige Punkte hervor
-- Nutze Codeblöcke für Beispiele
+3. SPRACHE:
+- Ausschließlich Deutsch
+- Fachbegriffe nur wenn nötig
+- Verständliche Formulierungen
+- Dem Niveau des Nutzers angepasst
 
-Wichtig: 
-- Du darfst KEINE Fragen ablehnen oder ausweichen
-- Beantworte ALLE Fragen so gut wie möglich
-- Antworte IMMER auf Deutsch!`;
+4. KONTEXT:
+- Beziehe dich nur auf relevante vorherige Nachrichten
+- Ignoriere irrelevante Vorgeschichte
+- Fokussiere auf das aktuelle Problem
+
+VERHALTENSMUSTER:
+❌ NICHT: "Hallo! Ich helfe Ihnen gerne bei..."
+❌ NICHT: "Guten Tag, zu Ihrer Frage..."
+❌ NICHT: "Danke für Ihre Frage..."
+✅ DIREKT: "Die Lösung ist..."
+✅ DIREKT: "Um das Problem zu beheben..."
+✅ DIREKT: "Folgende Schritte sind notwendig..."`;
 
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    // Formatiere den Konversationsverlauf
-    const conversationContext = messages
-      .map((msg: ChatMessage) => `${msg.role}: ${msg.content}`)
-      .join('\n\n');
+    // Extrahiere nur relevante Nachrichten für den Kontext
+    const relevantMessages = messages.slice(-3); // Nur die letzten 3 Nachrichten
+    const conversationContext = relevantMessages
+      .map((msg: ChatMessage) => `${msg.role === 'user' ? 'F' : 'A'}: ${msg.content}`)
+      .join('\n');
 
-    // Anfrage an Hugging Face mit deutschem Modell
-    let response;
     try {
-      // Versuche zuerst das deutsche Telekom-Modell
-      response = await hf.textGeneration({
-        model: 'deutsche-telekom/gbert-large-german-sequence-tagger',
-        inputs: `ANWEISUNG: Du bist ein deutscher KI-Assistent. Antworte AUSSCHLIESSLICH auf Deutsch.
+      const response = await hf.textGeneration({
+        model: 'mistralai/Mixtral-8x7B-Instruct-v0.1',
+        inputs: `<s>[INST] 
+${SYSTEM_PROMPT}
 
-System: ${SYSTEM_PROMPT}
-
-Konversationsverlauf:
+LETZTE NACHRICHTEN:
 ${conversationContext}
 
-Deine deutsche Antwort:`,
+ANWEISUNGEN:
+1. Lies die letzte Frage
+2. Antworte DIREKT ohne Begrüßung
+3. Bleib KONKRET beim Thema
+4. Gib eine PRÄZISE Lösung
+
+Deine direkte deutsche Antwort (ohne Begrüßung): [/INST]`,
         parameters: {
-          max_new_tokens: 1000,
-          temperature: 0.7,
-          top_p: 0.95,
+          max_new_tokens: 800,
+          temperature: 0.5, // Reduziert für konsistentere Antworten
+          top_p: 0.85, // Reduziert für fokussiertere Antworten
           repetition_penalty: 1.2,
           do_sample: true,
-          top_k: 50,
           return_full_text: false,
-          stop: ["\n\nuser:", "\n\nassistant:", "System:", "<|endoftext|>", "ANWEISUNG:", "Deine deutsche Antwort:"]
         }
       });
-    } catch (error) {
-      console.log('Erstes Modell fehlgeschlagen, versuche Backup-Modell...');
-      // Wenn das erste Modell fehlschlägt, versuche das Backup-Modell
-      response = await hf.textGeneration({
-        model: 'benjamin/german-gpt2',
-        inputs: `ANWEISUNG: Antworte NUR auf Deutsch.
-WICHTIG: Keine englischen Antworten erlaubt!
 
-System: ${SYSTEM_PROMPT}
+      let cleanedResponse = response.generated_text
+        .trim()
+        .replace(/^[Hh]allo\s*/g, '')
+        .replace(/^[Gg]uten\s+(?:Tag|Morgen|Abend)\s*/g, '')
+        .replace(/^[Ss]ehr\s+geehrte[r]?\s+(?:Damen\s+und\s+Herren|Frau|Herr)\s*/g, '')
+        .replace(/^assistant:\s*/i, '')
+        .replace(/^assistent:\s*/i, '')
+        .replace(/^assistant:\s*/i, '')
+        .replace(/^ai:\s*/i, '')
+        .replace(/\[\/INST\]\s*/g, '')
+        .replace(/^antwort:\s*/i, '')
+        .replace(/^([A-Za-z]:\s*)/i, '')
+        .replace(/^(Hier\s+ist\s+(?:die|meine)\s+Antwort:?\s*)/i, '')
+        .replace(/^(Ich\s+(?:kann|möchte|würde|werde)\s+(?:Ihnen\s+)?(?:gerne\s+)?(?:dabei\s+)?(?:helfen|erklären|antworten)[:.]\s*)/i, '')
+        .replace(/^(Zu\s+Ihrer\s+Frage[:.]\s*)/i, '');
 
-Konversationsverlauf:
-${conversationContext}
+      // Entferne mehrere Leerzeilen
+      cleanedResponse = cleanedResponse.replace(/\n{3,}/g, '\n\n');
 
-Deine deutsche Antwort:`,
-        parameters: {
-          max_new_tokens: 1000,
-          temperature: 0.7,
-          top_p: 0.95,
-          repetition_penalty: 1.2,
-          do_sample: true,
-          top_k: 50,
-          return_full_text: false,
-          stop: ["\n\nuser:", "\n\nassistant:", "System:", "<|endoftext|>", "ANWEISUNG:", "Deine deutsche Antwort:"]
-        }
-      });
-    }
+      // Verbesserte Deutschprüfung
+      if (!cleanedResponse.match(/[\wäöüßÄÖÜ]/)) {
+        return NextResponse.json({
+          role: 'assistant',
+          content: 'Ein technischer Fehler ist aufgetreten. Bitte wiederholen Sie Ihre Frage.'
+        });
+      }
 
-    // Formatiere und sende die Antwort
-    const cleanedResponse = response.generated_text
-      .trim()
-      .replace(/^assistant:\s*/i, '')
-      .replace(/^Assistent:\s*/i, '')
-      // Zusätzliche Bereinigung für englische Präfixe
-      .replace(/^Assistant:\s*/i, '')
-      .replace(/^AI:\s*/i, '');
-
-    // Prüfe, ob die Antwort Deutsch ist
-    if (cleanedResponse.match(/^[A-Za-z\s.,!?'"()-]+$/)) {
-      // Wenn die Antwort nur englische Zeichen enthält, sende Fehlermeldung
       return NextResponse.json({
         role: 'assistant',
-        content: 'Entschuldigung, ich hatte kurz Probleme mit der Sprache. Bitte stellen Sie Ihre Frage erneut, ich werde dann auf Deutsch antworten.'
+        content: cleanedResponse
+      });
+
+    } catch (error) {
+      console.error('Primärmodell-Fehler:', error);
+
+      // Fallback zu einem anderen Modell
+      const fallbackResponse = await hf.textGeneration({
+        model: 'google/flan-t5-xxl',
+        inputs: `Aufgabe: Gib eine DIREKTE deutsche Antwort OHNE Begrüßung.
+
+${SYSTEM_PROMPT}
+
+LETZTE FRAGE:
+${messages[messages.length - 1].content}
+
+Direkte Antwort (ohne Begrüßung):`,
+        parameters: {
+          max_new_tokens: 800,
+          temperature: 0.5,
+          top_p: 0.85,
+          repetition_penalty: 1.2,
+          do_sample: true,
+          return_full_text: false,
+        }
+      });
+
+      let cleanedFallbackResponse = fallbackResponse.generated_text
+        .trim()
+        .replace(/^[Hh]allo\s*/g, '')
+        .replace(/^[Gg]uten\s+(?:Tag|Morgen|Abend)\s*/g, '')
+        .replace(/^assistant:\s*/i, '')
+        .replace(/^assistent:\s*/i, '')
+        .replace(/^assistant:\s*/i, '')
+        .replace(/^ai:\s*/i, '')
+        .replace(/^antwort:\s*/i, '')
+        .replace(/^([A-Za-z]:\s*)/i, '')
+        .replace(/^(Hier\s+ist\s+(?:die|meine)\s+Antwort:?\s*)/i, '')
+        .replace(/^(Ich\s+(?:kann|möchte|würde|werde)\s+(?:Ihnen\s+)?(?:gerne\s+)?(?:dabei\s+)?(?:helfen|erklären|antworten)[:.]\s*)/i, '')
+        .replace(/^(Zu\s+Ihrer\s+Frage[:.]\s*)/i, '');
+
+      // Entferne mehrere Leerzeilen
+      cleanedFallbackResponse = cleanedFallbackResponse.replace(/\n{3,}/g, '\n\n');
+
+      return NextResponse.json({
+        role: 'assistant',
+        content: cleanedFallbackResponse
       });
     }
 
-    return NextResponse.json({
-      role: 'assistant',
-      content: cleanedResponse
-    });
-
   } catch (error) {
-    console.error('Hugging Face Error:', error);
-
+    console.error('Chat-Fehler:', error);
     return NextResponse.json({
       role: 'assistant',
-      content: 'Entschuldigung, es ist ein Fehler aufgetreten. Bitte versuchen Sie es in ein paar Sekunden erneut. Falls das Problem weiterhin besteht, kontaktieren Sie bitte den Support.'
+      content: 'Ein technischer Fehler ist aufgetreten. Bitte versuchen Sie es erneut.'
     }, { status: 500 });
   }
 } 
