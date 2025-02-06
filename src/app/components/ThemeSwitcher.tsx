@@ -51,8 +51,8 @@ export function ThemeSwitcher() {
   const getButtonClasses = (buttonTheme: Theme) => {
     const isActive = theme === buttonTheme;
     return `p-2 rounded-md transition-colors ${isActive
-      ? 'text-primary-light bg-gray-100 dark:text-primary dark:bg-gray-800'
-      : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300'
+      ? 'text-primary bg-primary/10 ring-1 ring-primary/20'
+      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:bg-gray-800'
       }`;
   };
 

@@ -276,6 +276,12 @@ export default function Home() {
                 DIENSTLEISTUNGEN
               </Link>
               <Link
+                href="/ki-modelle"
+                className="nav-link text-sm font-mono transition-all px-4 py-2 rounded-full hover:bg-foreground/10 dark:hover:bg-foreground-dark/10 font-['Nimbus_Mono']"
+              >
+                KI-MODELLE
+              </Link>
+              <Link
                 href="#contact"
                 className="nav-link text-sm font-mono transition-all px-4 py-2 rounded-full hover:bg-foreground/10 dark:hover:bg-foreground-dark/10 font-['Nimbus_Mono']"
               >
@@ -599,132 +605,136 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="relative rounded-2xl overflow-hidden bg-[#1E1E1E] border border-primary/10"
+              className="relative rounded-2xl overflow-hidden bg-white dark:bg-[#1E1E1E] border border-primary/10"
             >
               {/* Editor Header */}
-              <div className="flex items-center justify-between px-4 py-2 bg-[#2D2D2D] border-b border-primary/10">
+              <div className="flex items-center justify-between px-4 py-2 bg-gray-100 dark:bg-[#2D2D2D] border-b border-primary/10">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500" />
                   <div className="w-3 h-3 rounded-full bg-yellow-500" />
                   <div className="w-3 h-3 rounded-full bg-green-500" />
                 </div>
-                <span className="text-white/60 text-sm font-['Nimbus_Mono']">Create Innovation</span>
+                <span className="text-gray-600 dark:text-white/60 text-sm font-['Nimbus_Mono']">Create Innovation</span>
                 <div className="w-20" />
               </div>
 
               {/* Editor Content */}
-              <div className="p-6">
-                <div className="space-y-4">
-                  {(() => {
-                    const code = [
-                      'const innovate = async () => {',
-                      '  const result = await createInnovation();',
-                      '  return {',
-                      "    success: 'Innovation created!'",
-                      '  };',
-                      '}'
-                    ];
+              <div className="p-6 relative h-[500px] flex flex-col">
+                {(() => {
+                  const code = [
+                    'const innovate = async () => {',
+                    '  const result = await createInnovation();',
+                    '  return {',
+                    "    success: 'Innovation created!'",
+                    '  };',
+                    '}'
+                  ];
 
-                    const [text, setText] = useState('');
-                    const [currentLine, setCurrentLine] = useState(0);
-                    const [currentChar, setCurrentChar] = useState(0);
-                    const [isRunning, setIsRunning] = useState(false);
-                    const [output, setOutput] = useState<string | null>(null);
+                  const [text, setText] = useState('');
+                  const [currentLine, setCurrentLine] = useState(0);
+                  const [currentChar, setCurrentChar] = useState(0);
+                  const [isRunning, setIsRunning] = useState(false);
+                  const [output, setOutput] = useState<string | null>(null);
 
-                    useEffect(() => {
-                      if (currentLine >= code.length) return;
+                  useEffect(() => {
+                    if (currentLine >= code.length) return;
 
-                      const timer = setTimeout(() => {
-                        if (currentChar < code[currentLine].length) {
-                          setText(prev => prev + code[currentLine][currentChar]);
-                          setCurrentChar(prev => prev + 1);
-                        } else {
-                          setText(prev => prev + '\n');
-                          setCurrentLine(prev => prev + 1);
-                          setCurrentChar(0);
-                        }
-                      }, 50);
+                    const timer = setTimeout(() => {
+                      if (currentChar < code[currentLine].length) {
+                        setText(prev => prev + code[currentLine][currentChar]);
+                        setCurrentChar(prev => prev + 1);
+                      } else {
+                        setText(prev => prev + '\n');
+                        setCurrentLine(prev => prev + 1);
+                        setCurrentChar(0);
+                      }
+                    }, 50);
 
-                      return () => clearTimeout(timer);
-                    }, [currentLine, currentChar]);
+                    return () => clearTimeout(timer);
+                  }, [currentLine, currentChar]);
 
-                    const handleRunCode = () => {
-                      setIsRunning(true);
-                      setOutput(null);
+                  const handleRunCode = () => {
+                    setIsRunning(true);
+                    setOutput(null);
 
-                      // Simuliere Code-Ausführung
-                      setTimeout(() => {
-                        setOutput(JSON.stringify({ success: 'Innovation created!' }, null, 2));
-                        setIsRunning(false);
-                      }, 1500);
-                    };
+                    // Simuliere Code-Ausführung
+                    setTimeout(() => {
+                      setOutput(JSON.stringify({ success: 'Innovation created!' }, null, 2));
+                      setIsRunning(false);
+                    }, 1500);
+                  };
 
-                    const lines = text.split('\n');
+                  const lines = text.split('\n');
 
-                    return (
-                      <>
-                        {lines.map((line, index) => (
-                          <motion.div
-                            key={index}
-                            className="flex items-start gap-4"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <div className="text-white/30 font-mono text-sm w-4 text-right">
-                              {index + 1}
-                            </div>
-                            <div className="flex-1 font-mono relative">
-                              {Array.from(line).map((char, charIndex) => (
-                                <span
-                                  key={charIndex}
-                                  className={
-                                    line.startsWith('const') && charIndex < 5 ? 'text-[#569CD6]' :
-                                      line.includes('async') && line.substring(charIndex, charIndex + 5) === 'async' ? 'text-[#C586C0]' :
-                                        line.includes('await') && line.substring(charIndex, charIndex + 5) === 'await' ? 'text-[#569CD6]' :
-                                          line.includes('return') && line.substring(charIndex, charIndex + 6) === 'return' ? 'text-[#C586C0]' :
-                                            line.includes('success') && line.substring(charIndex, charIndex + 7) === 'success' ? 'text-[#9CDCFE]' :
-                                              (char === "'" || line.includes("'") && line[charIndex - 1] === "'") ? 'text-[#CE9178]' :
-                                                'text-white'
-                                  }
-                                >
-                                  {char}
-                                </span>
-                              ))}
-                              {index === currentLine && (
-                                <motion.span
-                                  className="inline-block w-[2px] h-[1.2em] bg-primary ml-[1px] relative top-[2px]"
-                                  animate={{ opacity: [1, 0] }}
-                                  transition={{
-                                    duration: 0.8,
-                                    repeat: Infinity,
-                                    ease: "linear"
-                                  }}
-                                />
-                              )}
-                            </div>
-                          </motion.div>
-                        ))}
+                  return (
+                    <>
+                      <div className="flex-1 overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
+                        <div className="space-y-4">
+                          {lines.map((line, index) => (
+                            <motion.div
+                              key={index}
+                              className="flex items-start gap-4"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <div className="text-gray-400 dark:text-white/30 font-mono text-sm w-4 text-right select-none">
+                                {index + 1}
+                              </div>
+                              <div className="flex-1 font-mono relative">
+                                {Array.from(line).map((char, charIndex) => (
+                                  <span
+                                    key={charIndex}
+                                    className={
+                                      line.startsWith('const') && charIndex < 5 ? 'text-blue-600 dark:text-[#569CD6]' :
+                                        line.includes('async') && line.substring(charIndex, charIndex + 5) === 'async' ? 'text-purple-600 dark:text-[#C586C0]' :
+                                          line.includes('await') && line.substring(charIndex, charIndex + 5) === 'await' ? 'text-blue-600 dark:text-[#569CD6]' :
+                                            line.includes('return') && line.substring(charIndex, charIndex + 6) === 'return' ? 'text-purple-600 dark:text-[#C586C0]' :
+                                              line.includes('success') && line.substring(charIndex, charIndex + 7) === 'success' ? 'text-cyan-600 dark:text-[#9CDCFE]' :
+                                                (char === "'" || line.includes("'") && line[charIndex - 1] === "'") ? 'text-orange-600 dark:text-[#CE9178]' :
+                                                  'text-gray-800 dark:text-white'
+                                    }
+                                  >
+                                    {char}
+                                  </span>
+                                ))}
+                                {index === currentLine && (
+                                  <motion.span
+                                    className="inline-block w-[2px] h-[1.2em] bg-primary ml-[1px] relative top-[2px]"
+                                    animate={{ opacity: [1, 0] }}
+                                    transition={{
+                                      duration: 0.8,
+                                      repeat: Infinity,
+                                      ease: "linear"
+                                    }}
+                                  />
+                                )}
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
 
                         {/* Output Section */}
                         {output && (
                           <motion.div
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="mt-4 p-4 bg-[#1E1E1E] rounded-lg border border-primary/20"
+                            className="mt-4 p-4 bg-gray-50 dark:bg-[#1E1E1E] rounded-lg border border-primary/20"
                           >
-                            <div className="font-mono text-[#9CDCFE]">Output:</div>
-                            <pre className="font-mono text-[#CE9178] mt-2">{output}</pre>
+                            <div className="font-mono text-cyan-600 dark:text-[#9CDCFE]">Output:</div>
+                            <pre className="font-mono text-orange-600 dark:text-[#CE9178] mt-2">{output}</pre>
                           </motion.div>
                         )}
+                      </div>
 
-                        {/* Run Button */}
+                      {/* Run Button - Now fixed at bottom */}
+                      <div className="pt-4 mt-auto border-t border-primary/10">
                         <motion.button
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={handleRunCode}
                           disabled={isRunning}
-                          className="mt-6 px-6 py-2 bg-primary/10 text-primary border border-primary/20 rounded-lg font-['Nimbus_Mono'] text-sm hover:bg-primary/20 transition-colors relative overflow-hidden"
+                          className="w-full px-6 py-2 bg-primary/10 text-primary border border-primary/20 rounded-lg font-['Nimbus_Mono'] text-sm hover:bg-primary/20 transition-colors relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {isRunning ? (
                             <>
@@ -735,10 +745,10 @@ export default function Home() {
                             'Run Code'
                           )}
                         </motion.button>
-                      </>
-                    );
-                  })()}
-                </div>
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             </motion.div>
           </div>
@@ -790,8 +800,8 @@ export default function Home() {
                 {chatMessages.map((message, index) => (
                   <div key={index} className={`flex gap-3 ${message.role === 'assistant' ? '' : 'flex-row-reverse'}`}>
                     <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden ${message.role === 'assistant'
-                        ? 'bg-gradient-to-br from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 ring-1 ring-primary/10 dark:ring-primary/20'
-                        : 'bg-zinc-100 dark:bg-zinc-800'
+                      ? 'bg-gradient-to-br from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 ring-1 ring-primary/10 dark:ring-primary/20'
+                      : 'bg-zinc-100 dark:bg-zinc-800'
                       }`}>
                       {message.role === 'assistant' ? (
                         <Image
@@ -809,8 +819,8 @@ export default function Home() {
                       )}
                     </div>
                     <div className={`flex-1 ${message.role === 'assistant'
-                        ? 'bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800'
-                        : 'bg-primary/5 dark:bg-primary/10'
+                      ? 'bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800'
+                      : 'bg-primary/5 dark:bg-primary/10'
                       } rounded-2xl px-4 py-3 shadow-sm`}>
                       <p className="text-zinc-700 dark:text-zinc-300 text-[15px] leading-relaxed">{message.content}</p>
                     </div>
