@@ -1,0 +1,312 @@
+[
+    {
+        "Hersteller": "OpenAI",
+        "Modelle": [
+            "GPT-4 Turbo",
+            "GPT-4",
+            "GPT-3.5"
+        ],
+        "Einsatzgebiete": [
+            "Textgenerierung",
+            "Code-Generierung",
+            "Chatbots"
+        ],
+        "Besonderheiten": [
+            "Plugins & Web-Suche",
+            "Multi-Turn-Gedächtnis"
+        ],
+        "URL": "https://openai.com/research/gpt-4"
+    },
+    {
+        "Hersteller": "Anthropic",
+        "Modelle": [
+            "Claude 3 Opus",
+            "Claude 3 Sonnet",
+            "Claude 3 Haiku"
+        ],
+        "Einsatzgebiete": [
+            "Logisches Denken",
+            "Technische Texte"
+        ],
+        "Besonderheiten": [
+            "Optimiert für lange Dokumente",
+            "Hohe KI-Sicherheit"
+        ],
+        "URL": "https://www.anthropic.com/claude"
+    },
+    {
+        "Hersteller": "Google DeepMind",
+        "Modelle": [
+            "Gemini 1.5 Pro",
+            "Gemini 1.5 Flash",
+            "Gemini 1.0 Ultra"
+        ],
+        "Einsatzgebiete": [
+            "Multimodale Verarbeitung",
+            "Google-Suche"
+        ],
+        "Besonderheiten": [
+            "Unterstützt Text, Bilder, Audio, Video"
+        ],
+        "URL": "https://deepmind.google/technologies/gemini"
+    },
+    {
+        "Hersteller": "Mistral AI",
+        "Modelle": [
+            "Mistral 7B",
+            "Mixtral 8x7B"
+        ],
+        "Einsatzgebiete": [
+            "Open-Source KI",
+            "Code-Generierung"
+        ],
+        "Besonderheiten": [
+            "Kostengünstige Alternative zu GPT"
+        ],
+        "URL": "https://mistral.ai/"
+    },
+    {
+        "Hersteller": "Meta",
+        "Modelle": [
+            "LLaMA 2 (7B, 13B, 70B)",
+            "LLaMA 3"
+        ],
+        "Einsatzgebiete": [
+            "Forschung",
+            "Open-Source KI"
+        ],
+        "Besonderheiten": [
+            "Läuft auch auf kleineren Servern"
+        ],
+        "URL": "https://ai.meta.com/llama/"
+    },
+    {
+        "Hersteller": "Cohere",
+        "Modelle": [
+            "Command R+"
+        ],
+        "Einsatzgebiete": [
+            "Suchmaschinen",
+            "Wissensmanagement"
+        ],
+        "Besonderheiten": [
+            "Optimiert für Unternehmenslösungen"
+        ],
+        "URL": "https://cohere.com/command"
+    },
+    {
+        "Hersteller": "AI21 Labs",
+        "Modelle": [
+            "Jurassic-2"
+        ],
+        "Einsatzgebiete": [
+            "Juristische & wissenschaftliche Texte"
+        ],
+        "Besonderheiten": [
+            "Alternative zu GPT für hochwertige Texte"
+        ]
+    },
+    {
+        "Hersteller": "Hugging Face",
+        "Modelle": [
+            "BLOOM",
+            "Falcon-40B"
+        ],
+        "Einsatzgebiete": [
+            "Open-Source KI"
+        ],
+        "Besonderheiten": [
+            "Freie Nutzung und Anpassung"
+        ],
+        "URL": "https://huggingface.co/"
+    },
+    {
+        "Hersteller": "Aleph Alpha",
+        "Modelle": [
+            "Luminous"
+        ],
+        "Einsatzgebiete": [
+            "Europäischer Markt",
+            "Datenschutz"
+        ],
+        "Besonderheiten": [
+            "Optimiert für europäische Datenschutzstandards"
+        ],
+        "URL": "https://www.aleph-alpha.com/"
+    },
+    {
+        "Hersteller": "You.com",
+        "Modelle": [
+            "YouChat"
+        ],
+        "Einsatzgebiete": [
+            "Suchmaschine mit KI"
+        ],
+        "Besonderheiten": [
+            "Kombination aus Chatbot & Websuche"
+        ],
+        "URL": "https://you.com/"
+    },
+    {
+        "Hersteller": "Perplexity AI",
+        "Modelle": [
+            "Perplexity AI"
+        ],
+        "Einsatzgebiete": [
+            "KI-gestützte Suche"
+        ],
+        "Besonderheiten": [
+            "Antworten mit Quellenangaben"
+        ],
+        "URL": "https://www.perplexity.ai/"
+    },
+    {
+        "Hersteller": "DGPT",
+        "Modelle": [
+            "DeutschlandGPT"
+        ],
+        "Einsatzgebiete": [
+            "Datenschutzkonforme KI"
+        ],
+        "Besonderheiten": [
+            "Spezialisiert auf europäische Sprachen"
+        ]
+    },
+    {
+        "Hersteller": "Midjourney",
+        "Modelle": [
+            "Midjourney"
+        ],
+        "Einsatzgebiete": [
+            "Bildgenerierung"
+        ],
+        "Besonderheiten": [
+            "Erzeugt kreative Bilder"
+        ],
+        "URL": "https://www.midjourney.com/"
+    },
+    {
+        "Hersteller": "Stability AI",
+        "Modelle": [
+            "Stable Diffusion"
+        ],
+        "Einsatzgebiete": [
+            "Open-Source Bildgenerierung"
+        ],
+        "Besonderheiten": [
+            "Beliebt für Kunst & Design"
+        ],
+        "URL": "https://stability.ai/"
+    },
+    {
+        "Hersteller": "Synthesia",
+        "Modelle": [
+            "Synthesia AI"
+        ],
+        "Einsatzgebiete": [
+            "KI-gestützte Videogenerierung",
+            "Virtuelle Avatare"
+        ],
+        "Besonderheiten": [
+            "Erzeugt realistische Videos aus Text",
+            "Beliebt für Unternehmenspräsentationen"
+        ],
+        "URL": "https://www.synthesia.io/"
+    },
+    {
+        "Hersteller": "EleutherAI",
+        "Modelle": [
+            "GPT-NeoX-20B",
+            "Pythia"
+        ],
+        "Einsatzgebiete": [
+            "Open-Source KI"
+        ],
+        "Besonderheiten": [
+            "Frei verfügbare Modelle für Forschung"
+        ],
+        "URL": "https://www.eleuther.ai/"
+    },
+    {
+        "Hersteller": "NVIDIA",
+        "Modelle": [
+            "Megatron-Turing NLG 530B"
+        ],
+        "Einsatzgebiete": [
+            "Hochleistungs-Sprach-KI"
+        ],
+        "Besonderheiten": [
+            "Eines der größten Modelle weltweit"
+        ],
+        "URL": "https://developer.nvidia.com/blog/megatron-turing-nlg-530b-the-worlds-largest-and-most-powerful-generative-language-model/"
+    },
+    {
+        "Hersteller": "Alibaba",
+        "Modelle": [
+            "Tongyi Qianwen"
+        ],
+        "Einsatzgebiete": [
+            "Asiatische Sprachen",
+            "Unternehmenslösungen"
+        ],
+        "Besonderheiten": [
+            "Integration in Alibaba Cloud"
+        ],
+        "URL": "https://tongyi.aliyun.com/"
+    },
+    {
+        "Hersteller": "Huawei",
+        "Modelle": [
+            "PanGu-Σ"
+        ],
+        "Einsatzgebiete": [
+            "Chinesische Sprach-KI"
+        ],
+        "Besonderheiten": [
+            "Starke Übersetzungsfähigkeiten"
+        ],
+        "URL": "https://www.huaweicloud.com/intl/en-us/product/pangu.html"
+    },
+    {
+        "Hersteller": "Salesforce",
+        "Modelle": [
+            "CodeGen"
+        ],
+        "Einsatzgebiete": [
+            "Code-Generierung"
+        ],
+        "Besonderheiten": [
+            "Spezialisiert auf Softwareentwicklung"
+        ],
+        "URL": "https://blog.salesforceairesearch.com/codegen/"
+    },
+    {
+        "Hersteller": "DeepSeek",
+        "Modelle": [
+            "DeepSeek LLM"
+        ],
+        "Einsatzgebiete": [
+            "Sprachverarbeitung",
+            "KI-Übersetzungen"
+        ],
+        "Besonderheiten": [
+            "Starke Leistung für asiatische Sprachen"
+        ],
+        "URL": "https://deepseek.com/"
+    },
+    {
+        "Hersteller": "Cursor AI",
+        "Modelle": [
+            "Cursor AI"
+        ],
+        "Einsatzgebiete": [
+            "KI-gestützte Entwicklungsumgebung",
+            "Code-Vervollständigung"
+        ],
+        "Besonderheiten": [
+            "Optimiert für Softwareentwicklung",
+            "Integration mit gängigen IDEs"
+        ],
+        "URL": "https://cursor.sh/"
+    }
+]

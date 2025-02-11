@@ -181,11 +181,20 @@ const ModelSection = ({ title, description, inputPlaceholder, onSubmit, isLoadin
 };
 
 // Neue Komponente für die KI-Modell-Karte
-const AIModelCard = ({ hersteller, modelle, einsatzgebiete, besonderheiten }: {
+interface KIModell {
+  Hersteller: string;
+  Modelle: string[];
+  Einsatzgebiete: string[];
+  Besonderheiten: string[];
+  URL?: string;
+}
+
+const AIModelCard = ({ hersteller, modelle, einsatzgebiete, besonderheiten, url }: {
   hersteller: string;
   modelle: string[];
   einsatzgebiete: string[];
   besonderheiten: string[];
+  url?: string;
 }) => {
   const getHerstellerIcon = (name: string) => {
     switch (name) {
@@ -410,75 +419,58 @@ const AIModelCard = ({ hersteller, modelle, einsatzgebiete, besonderheiten }: {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      whileHover={{
-        scale: 1.02,
-        rotateX: 2,
-        rotateY: 2,
-        translateZ: 10,
-      }}
-      className="bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 hover:border-primary/20 dark:hover:border-primary/20 transition-all duration-300 transform-gpu hover:shadow-[0_20px_50px_-30px_rgba(0,165,168,0.4)] dark:hover:shadow-[0_20px_50px_-30px_rgba(0,165,168,0.6)] hover:backdrop-brightness-105 dark:hover:backdrop-brightness-150 group"
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`relative group overflow-hidden rounded-xl border border-border dark:border-border-dark bg-card-light dark:bg-card-dark backdrop-blur-sm p-6 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 ${url ? 'cursor-pointer' : ''}`}
+      onClick={() => url && window.open(url, '_blank')}
     >
-      <div className="p-6 relative overflow-hidden">
-        {/* Glowing Orb Effect */}
-        <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/10 dark:group-hover:bg-primary/20 transition-all duration-500 group-hover:scale-150"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-gradient-radial from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        {/* Header */}
-        <div className="flex items-start justify-between mb-4 relative">
-          <div>
-            <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-1 group-hover:text-primary transition-colors duration-300">
-              {hersteller}
-            </h3>
+      <div className="relative z-10 flex justify-between items-start space-x-4">
+        <div className="flex-1">
+          <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100 group-hover:text-primary transition-colors duration-300">{hersteller}</h3>
+
+          <div className="space-y-4">
             <div className="flex flex-wrap gap-2">
-              {modelle.map((modell, index) => (
+              {modelle.map((model, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 text-xs font-medium text-primary bg-primary/5 dark:bg-primary/10 rounded-full ring-1 ring-primary/20 group-hover:bg-primary/10 dark:group-hover:bg-primary/20 group-hover:ring-primary/30 transition-all duration-300"
+                  className="px-2 py-1 rounded-md text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 group-hover:bg-primary/10 group-hover:text-primary group-hover:ring-1 group-hover:ring-primary/30 transition-all duration-300"
                 >
-                  {modell}
+                  {model}
                 </span>
               ))}
             </div>
-          </div>
-          <div className="w-10 h-10 rounded-xl bg-primary/10 dark:bg-primary/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
-            {getHerstellerIcon(hersteller)}
+
+            <div className="space-y-2">
+              {einsatzgebiete.map((area, index) => (
+                <div
+                  key={index}
+                  className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 group-hover:text-primary/80 transition-colors duration-300"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-600 group-hover:bg-primary/60 transition-colors duration-300" />
+                  <span>{area}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-1">
+              {besonderheiten.map((feature, index) => (
+                <div
+                  key={index}
+                  className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-500 group-hover:text-primary/70 transition-all duration-300"
+                >
+                  <span className="text-xs">•</span>
+                  <span>{feature}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Einsatzgebiete */}
-        <div className="mb-4 relative">
-          <h4 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2 group-hover:text-primary/80 transition-colors duration-300">
-            Einsatzgebiete
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {einsatzgebiete.map((gebiet, index) => (
-              <span
-                key={index}
-                className="px-2 py-1 text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-lg group-hover:bg-zinc-200 dark:group-hover:bg-zinc-700 transition-all duration-300"
-              >
-                {gebiet}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Besonderheiten */}
-        <div className="relative">
-          <h4 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2 group-hover:text-primary/80 transition-colors duration-300">
-            Besonderheiten
-          </h4>
-          <ul className="space-y-1">
-            {besonderheiten.map((besonderheit, index) => (
-              <li
-                key={index}
-                className="flex items-center text-sm text-zinc-600 dark:text-zinc-400 group-hover:translate-x-1 transition-transform duration-300"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mr-2 group-hover:scale-125 transition-transform duration-300" />
-                {besonderheit}
-              </li>
-            ))}
-          </ul>
+        <div className="w-12 h-12 rounded-xl bg-primary/10 dark:bg-primary/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-12 group-hover:bg-primary/20 transition-all duration-300">
+          {getHerstellerIcon(hersteller)}
         </div>
       </div>
     </motion.div>
@@ -486,126 +478,146 @@ const AIModelCard = ({ hersteller, modelle, einsatzgebiete, besonderheiten }: {
 };
 
 // Füge die KI-Modelle Daten hinzu
-const kiModelle = [
+const kiModelle: KIModell[] = [
   {
     "Hersteller": "OpenAI",
     "Modelle": ["GPT-4 Turbo", "GPT-4", "GPT-3.5"],
     "Einsatzgebiete": ["Textgenerierung", "Code-Generierung", "Chatbots"],
-    "Besonderheiten": ["Plugins & Web-Suche", "Multi-Turn-Gedächtnis"]
+    "Besonderheiten": ["Plugins & Web-Suche", "Multi-Turn-Gedächtnis"],
+    "URL": "https://openai.com"
   },
   {
     "Hersteller": "Anthropic",
     "Modelle": ["Claude 3 Opus", "Claude 3 Sonnet", "Claude 3 Haiku"],
     "Einsatzgebiete": ["Logisches Denken", "Technische Texte"],
-    "Besonderheiten": ["Optimiert für lange Dokumente", "Hohe KI-Sicherheit"]
+    "Besonderheiten": ["Optimiert für lange Dokumente", "Hohe KI-Sicherheit"],
+    "URL": "https://anthropic.com"
   },
   {
     "Hersteller": "Google DeepMind",
     "Modelle": ["Gemini 1.5 Pro", "Gemini 1.5 Flash", "Gemini 1.0 Ultra", "AlphaCode"],
     "Einsatzgebiete": ["Multimodale Verarbeitung", "Code-Generierung", "Algorithmische Herausforderungen"],
-    "Besonderheiten": ["Unterstützt Text, Bilder, Audio, Video", "Optimiert für komplexe Programmieraufgaben"]
+    "Besonderheiten": ["Unterstützt Text, Bilder, Audio, Video", "Optimiert für komplexe Programmieraufgaben"],
+    "URL": "https://deepmind.com"
   },
   {
     "Hersteller": "Mistral AI",
     "Modelle": ["Mistral 7B", "Mixtral 8x7B"],
     "Einsatzgebiete": ["Open-Source KI", "Code-Generierung"],
-    "Besonderheiten": ["Kostengünstige Alternative zu GPT"]
+    "Besonderheiten": ["Kostengünstige Alternative zu GPT"],
+    "URL": "https://mistral.ai"
   },
   {
     "Hersteller": "Meta",
     "Modelle": ["LLaMA 2 (7B, 13B, 70B)", "LLaMA 3"],
     "Einsatzgebiete": ["Forschung", "Open-Source KI"],
-    "Besonderheiten": ["Läuft auch auf kleineren Servern"]
+    "Besonderheiten": ["Läuft auch auf kleineren Servern"],
+    "URL": "https://meta.com"
   },
   {
     "Hersteller": "Cohere",
     "Modelle": ["Command R+"],
     "Einsatzgebiete": ["Suchmaschinen", "Wissensmanagement"],
-    "Besonderheiten": ["Optimiert für Unternehmenslösungen"]
+    "Besonderheiten": ["Optimiert für Unternehmenslösungen"],
+    "URL": "https://cohere.com"
   },
   {
     "Hersteller": "Hugging Face",
     "Modelle": ["BLOOM", "Falcon-40B"],
     "Einsatzgebiete": ["Open-Source KI"],
-    "Besonderheiten": ["Freie Nutzung und Anpassung"]
+    "Besonderheiten": ["Freie Nutzung und Anpassung"],
+    "URL": "https://huggingface.co"
   },
   {
     "Hersteller": "Aleph Alpha",
     "Modelle": ["Luminous"],
     "Einsatzgebiete": ["Europäischer Markt", "Datenschutz"],
-    "Besonderheiten": ["Optimiert für europäische Datenschutzstandards"]
+    "Besonderheiten": ["Optimiert für europäische Datenschutzstandards"],
+    "URL": "https://aleph-alpha.com"
   },
   {
     "Hersteller": "You.com",
     "Modelle": ["YouChat"],
     "Einsatzgebiete": ["Suchmaschine mit KI"],
-    "Besonderheiten": ["Kombination aus Chatbot & Websuche"]
+    "Besonderheiten": ["Kombination aus Chatbot & Websuche"],
+    "URL": "https://you.com"
   },
   {
     "Hersteller": "Perplexity AI",
     "Modelle": ["Perplexity AI"],
     "Einsatzgebiete": ["KI-gestützte Suche"],
-    "Besonderheiten": ["Antworten mit Quellenangaben"]
+    "Besonderheiten": ["Antworten mit Quellenangaben"],
+    "URL": "https://perplexity.ai"
   },
   {
     "Hersteller": "Cursor AI",
     "Modelle": ["Cursor AI"],
     "Einsatzgebiete": ["KI-gestützte Entwicklungsumgebung", "Code-Vervollständigung"],
-    "Besonderheiten": ["Optimiert für Softwareentwicklung", "Integration mit gängigen IDEs"]
+    "Besonderheiten": ["Optimiert für Softwareentwicklung", "Integration mit gängigen IDEs"],
+    "URL": "https://cursor.ai"
   },
   {
     "Hersteller": "Midjourney",
     "Modelle": ["Midjourney"],
     "Einsatzgebiete": ["Bildgenerierung"],
-    "Besonderheiten": ["Erzeugt kreative Bilder"]
+    "Besonderheiten": ["Erzeugt kreative Bilder"],
+    "URL": "https://midjourney.com"
   },
   {
     "Hersteller": "Stability AI",
     "Modelle": ["Stable Diffusion"],
     "Einsatzgebiete": ["Open-Source Bildgenerierung"],
-    "Besonderheiten": ["Beliebt für Kunst & Design"]
+    "Besonderheiten": ["Beliebt für Kunst & Design"],
+    "URL": "https://stability.ai"
   },
   {
     "Hersteller": "Synthesia",
     "Modelle": ["Synthesia AI"],
     "Einsatzgebiete": ["KI-gestützte Videogenerierung", "Virtuelle Avatare"],
-    "Besonderheiten": ["Erzeugt realistische Videos aus Text", "Beliebt für Unternehmenspräsentationen"]
+    "Besonderheiten": ["Erzeugt realistische Videos aus Text", "Beliebt für Unternehmenspräsentationen"],
+    "URL": "https://synthesia.io"
   },
   {
     "Hersteller": "EleutherAI",
     "Modelle": ["GPT-NeoX-20B", "Pythia"],
     "Einsatzgebiete": ["Open-Source KI"],
-    "Besonderheiten": ["Frei verfügbare Modelle für Forschung"]
+    "Besonderheiten": ["Frei verfügbare Modelle für Forschung"],
+    "URL": "https://eleuther.ai"
   },
   {
     "Hersteller": "NVIDIA",
     "Modelle": ["Megatron-Turing NLG 530B"],
     "Einsatzgebiete": ["Hochleistungs-Sprach-KI"],
-    "Besonderheiten": ["Eines der größten Modelle weltweit"]
+    "Besonderheiten": ["Eines der größten Modelle weltweit"],
+    "URL": "https://nvidia.com"
   },
   {
     "Hersteller": "Alibaba",
     "Modelle": ["Tongyi Qianwen"],
     "Einsatzgebiete": ["Asiatische Sprachen", "Unternehmenslösungen"],
-    "Besonderheiten": ["Integration in Alibaba Cloud"]
+    "Besonderheiten": ["Integration in Alibaba Cloud"],
+    "URL": "https://alibaba.com"
   },
   {
     "Hersteller": "Huawei",
     "Modelle": ["PanGu-Σ"],
     "Einsatzgebiete": ["Chinesische Sprach-KI"],
-    "Besonderheiten": ["Starke Übersetzungsfähigkeiten"]
+    "Besonderheiten": ["Starke Übersetzungsfähigkeiten"],
+    "URL": "https://huawei.com"
   },
   {
     "Hersteller": "Salesforce",
     "Modelle": ["CodeGen"],
     "Einsatzgebiete": ["Code-Generierung"],
-    "Besonderheiten": ["Spezialisiert auf Softwareentwicklung"]
+    "Besonderheiten": ["Spezialisiert auf Softwareentwicklung"],
+    "URL": "https://salesforce.com"
   },
   {
     "Hersteller": "DeepSeek",
     "Modelle": ["DeepSeek LLM"],
     "Einsatzgebiete": ["Sprachverarbeitung", "KI-Übersetzungen"],
-    "Besonderheiten": ["Starke Leistung für asiatische Sprachen"]
+    "Besonderheiten": ["Starke Leistung für asiatische Sprachen"],
+    "URL": "https://deepseek.com"
   }
 ];
 
@@ -816,13 +828,14 @@ export default function KIModelle() {
             className="mb-16"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {kiModelle.map((modell, index) => (
+              {kiModelle.map((modell) => (
                 <AIModelCard
-                  key={index}
+                  key={modell.Hersteller}
                   hersteller={modell.Hersteller}
                   modelle={modell.Modelle}
                   einsatzgebiete={modell.Einsatzgebiete}
                   besonderheiten={modell.Besonderheiten}
+                  url={modell.URL}
                 />
               ))}
             </div>

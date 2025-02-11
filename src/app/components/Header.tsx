@@ -9,8 +9,8 @@ export function Header({ activePage }: { activePage?: string }) {
   const { scrollY } = useScroll();
   const [hasScrolled, setHasScrolled] = useState(false);
 
-  const headerHeight = useTransform(scrollY, [0, 100], [140, 80]);
-  const headerPadding = useTransform(scrollY, [0, 100], [48, 16]);
+  const headerHeight = useTransform(scrollY, [0, 100], [100, 80]);
+  const headerPadding = useTransform(scrollY, [0, 100], [24, 16]);
   const logoScale = useTransform(scrollY, [0, 100], [1, 0.8]);
 
   useEffect(() => {
@@ -46,20 +46,20 @@ export function Header({ activePage }: { activePage?: string }) {
           <div className="flex items-center justify-between h-full">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-3 group">
-              <motion.div style={{ scale: logoScale }} className="relative w-8 h-8">
+              <motion.div style={{ scale: logoScale }} className="relative w-12 h-12">
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/40 to-primary/0 rounded-xl blur-xl transition-all duration-500 group-hover:blur-2xl group-hover:scale-150" />
                 <div className="relative w-full h-full flex items-center justify-center transition-transform duration-700 ease-[0.4,0,0.2,1] group-hover:rotate-[360deg]">
                   <Image
                     src="/tiryaki_it_fav_logo.png"
                     alt="Tirlogy Logo"
-                    width={32}
-                    height={32}
+                    width={48}
+                    height={48}
                     className="w-full h-full"
                     priority
                   />
                 </div>
               </motion.div>
-              <span className="text-lg tracking-wide technical-forest text-white">
+              <span className="text-xl tracking-wide technical-forest text-white">
                 Tirlogy
               </span>
             </Link>

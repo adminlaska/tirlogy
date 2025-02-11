@@ -12,6 +12,7 @@
     "@gsap/react": "^2.1.2",
     "@heroicons/react": "^2.2.0",
     "@huggingface/inference": "^3.1.2",
+    "@lobehub/icons": "^1.68.0",
     "@react-spring/three": "^9.7.5",
     "@react-three/drei": "^9.121.3",
     "@react-three/fiber": "^8.17.12",
