@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { Header } from '../components/Header';
+import { MainNav } from '../components/MainNav';
+import { Footer } from '../components/Footer';
 
 // Komponente für ein einzelnes KI-Modell
 const ModelCard = ({ title, description, features, icon }: {
@@ -481,9 +483,9 @@ const AIModelCard = ({ hersteller, modelle, einsatzgebiete, besonderheiten, url 
 const kiModelle: KIModell[] = [
   {
     "Hersteller": "OpenAI",
-    "Modelle": ["GPT-4 Turbo", "GPT-4", "GPT-3.5"],
-    "Einsatzgebiete": ["Textgenerierung", "Code-Generierung", "Chatbots"],
-    "Besonderheiten": ["Plugins & Web-Suche", "Multi-Turn-Gedächtnis"],
+    "Modelle": ["GPT-4 Turbo", "GPT-4", "GPT-3.5", "DALL-E", "Sora"],
+    "Einsatzgebiete": ["Textgenerierung", "Code-Generierung", "Chatbots", "Bildgenerierung", "Videogenerierung"],
+    "Besonderheiten": ["Plugins & Web-Suche", "Multi-Turn-Gedächtnis", "Fotorealistische Bilder", "Realistische Videos"],
     "URL": "https://openai.com"
   },
   {
@@ -735,88 +737,23 @@ export default function KIModelle() {
   ];
 
   return (
-    <main className="min-h-screen bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark">
-      {/* Navigation */}
-      <nav className="fixed w-full z-50 top-0 sm:top-6 safe-padding">
-        <motion.div
-          className="w-[90%] max-w-[1600px] mx-auto"
-          animate={{
-            backgroundColor: isScrolled
-              ? isDark
-                ? 'rgba(10, 10, 10, 0.6)'
-                : 'rgba(255, 255, 255, 0.6)'
-              : 'transparent',
-            backdropFilter: isScrolled ? 'blur(12px)' : 'none',
-            borderRadius: isScrolled ? '24px' : '0px',
-            boxShadow: isScrolled
-              ? isDark
-                ? '0 0 30px 0 rgba(0, 165, 168, 0.2)'
-                : '0 0 30px 0 rgba(0, 165, 168, 0.1)'
-              : 'none',
-            padding: isScrolled ? '8px 24px' : '0px',
-          }}
-          transition={{ duration: 0.2 }}
-        >
-          <div className="flex items-center h-16 w-full mx-auto">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="w-12 h-12 flex items-center justify-center transition-transform duration-700 ease-[0.4,0,0.2,1] group-hover:rotate-[360deg]">
-                <Image
-                  src="/tiryaki_it_fav_logo.png"
-                  alt="Tirlogy Logo"
-                  width={48}
-                  height={48}
-                  className="w-full h-full"
-                />
-              </div>
-              <span className="text-xl tracking-wide technical-forest text-foreground dark:text-foreground-dark">
-                Tirlogy
-              </span>
-            </Link>
-            <div className="flex-1" />
-            <div className="hidden md:flex items-center space-x-6">
-              <Link
-                href="/#about"
-                className="nav-link text-sm font-mono transition-all px-4 py-2 rounded-full hover:bg-foreground/10 dark:hover:bg-foreground-dark/10 font-['Nimbus_Mono']"
-              >
-                ÜBER MICH
-              </Link>
-              <Link
-                href="/#services"
-                className="nav-link text-sm font-mono transition-all px-4 py-2 rounded-full hover:bg-foreground/10 dark:hover:bg-foreground-dark/10 font-['Nimbus_Mono']"
-              >
-                DIENSTLEISTUNGEN
-              </Link>
-              <Link
-                href="/ki-modelle"
-                className="nav-link text-sm font-mono transition-all px-4 py-2 rounded-full bg-primary/10 text-primary font-['Nimbus_Mono']"
-              >
-                KI-MODELLE
-              </Link>
-              <Link
-                href="/#contact"
-                className="nav-link text-sm font-mono transition-all px-4 py-2 rounded-full hover:bg-foreground/10 dark:hover:bg-foreground-dark/10 font-['Nimbus_Mono']"
-              >
-                KONTAKT
-              </Link>
-            </div>
-          </div>
-        </motion.div>
-      </nav>
+    <div className="min-h-screen flex flex-col bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark">
+      <MainNav activePage="ki-modelle" />
 
       {/* Content */}
-      <div className="pt-32 pb-20 safe-padding">
-        <div className="w-[90%] max-w-[1600px] mx-auto">
+      <main className="flex-grow">
+        <div className="w-[90%] max-w-[1600px] mx-auto pt-32 pb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.5 }}
             className="mb-12"
           >
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground dark:text-foreground-dark font-['Neue_Haas_Grotesk_Display_Pro_65_Medium']">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-foreground dark:text-foreground-dark font-['Neue_Haas_Grotesk_Display_Pro_65_Medium']">
               KI-Modelle im Überblick
             </h1>
             <p className="text-lg text-foreground/70 dark:text-foreground-dark/70 max-w-3xl font-['Nimbus_Mono']">
-              Entdecken Sie die führenden KI-Modelle und ihre spezifischen Einsatzgebiete. Von Sprachmodellen bis hin zu multimodalen Systemen - hier finden Sie einen umfassenden Überblick.
+              Entdecken Sie die führenden KI-Modelle und ihre spezifischen Einsatzgebiete. Von Sprachmodellen bis zu Bildgenerierung - hier finden Sie die passende KI-Lösung für Ihre Anforderungen.
             </p>
           </motion.div>
 
@@ -878,33 +815,9 @@ export default function KIModelle() {
             />
           </div>
         </div>
-      </div>
+      </main>
 
-      {/* Footer */}
-      <footer className="py-8 border-t border-border dark:border-border-dark">
-        <div className="w-[90%] max-w-[1600px] mx-auto">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <p className="text-foreground/60 dark:text-foreground-dark/60 text-sm">
-              © {new Date().getFullYear()} Tirlogy. Alle Rechte vorbehalten.
-            </p>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-              <ThemeSwitcher />
-              <Link
-                href="/datenschutz"
-                className="text-sm text-foreground/60 dark:text-foreground-dark/60 hover:text-foreground dark:hover:text-foreground-dark transition-colors"
-              >
-                Datenschutzerklärung
-              </Link>
-              <Link
-                href="/impressum"
-                className="text-sm text-foreground/60 dark:text-foreground-dark/60 hover:text-foreground dark:hover:text-foreground-dark transition-colors"
-              >
-                Impressum
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </main>
+      <Footer />
+    </div>
   );
 } 

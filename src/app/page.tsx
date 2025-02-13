@@ -16,41 +16,11 @@ import { BackendIcon } from './components/BackendIcon';
 import { WebDevIcon } from './components/WebDevIcon';
 import { IOSIcon } from './components/IOSIcon';
 import { AIIcon } from './components/AIIcon';
+import { MainNav } from './components/MainNav';
+import { Footer } from './components/Footer';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-}
-
-// Separate client component for the footer
-function Footer() {
-  return (
-    <footer className="py-8 border-t border-border dark:border-border-dark safe-padding">
-      <div className="section-inner">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <p className="nav-link text-foreground/60 dark:text-foreground-dark/60 text-sm">
-            © {new Date().getFullYear()} Tirlogy. Alle Rechte vorbehalten.
-          </p>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 w-full sm:w-auto">
-            <ThemeSwitcher />
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-              <Link
-                href="/datenschutz"
-                className="nav-link text-sm text-foreground/60 dark:text-foreground-dark/60 hover:text-foreground dark:hover:text-foreground-dark transition-colors"
-              >
-                Datenschutzerklärung
-              </Link>
-              <Link
-                href="/impressum"
-                className="nav-link text-sm text-foreground/60 dark:text-foreground-dark/60 hover:text-foreground dark:hover:text-foreground-dark transition-colors"
-              >
-                Impressum
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
 }
 
 export default function Home() {
@@ -224,73 +194,8 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark">
-      {/* Navigation */}
-      <nav className="fixed w-full z-50 top-0 sm:top-6 safe-padding">
-        <motion.div
-          className="w-[90%] max-w-[1600px] mx-auto"
-          animate={{
-            backgroundColor: isScrolled
-              ? isDark
-                ? 'rgba(10, 10, 10, 0.6)'
-                : 'rgba(255, 255, 255, 0.6)'
-              : 'transparent',
-            backdropFilter: isScrolled ? 'blur(12px)' : 'none',
-            borderRadius: isScrolled ? '24px' : '0px',
-            boxShadow: isScrolled
-              ? isDark
-                ? '0 0 30px 0 rgba(0, 165, 168, 0.2)'
-                : '0 0 30px 0 rgba(0, 165, 168, 0.1)'
-              : 'none',
-            padding: isScrolled ? '8px 24px' : '0px',
-          }}
-          transition={{ duration: 0.2 }}
-        >
-          <div className="flex items-center h-16 w-full mx-auto">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="w-8 h-8 flex items-center justify-center transition-transform duration-700 ease-[0.4,0,0.2,1] group-hover:rotate-[360deg]">
-                <Image
-                  src="/tiryaki_it_fav_logo.png"
-                  alt="Tirlogy Logo"
-                  width={32}
-                  height={32}
-                  className="w-full h-full"
-                />
-              </div>
-              <span className="text-lg tracking-wide technical-forest text-foreground dark:text-foreground-dark">
-                Tirlogy
-              </span>
-            </Link>
-            <div className="flex-1" />
-            <div className="hidden md:flex items-center space-x-6">
-              <Link
-                href="#about"
-                className="nav-link text-sm font-mono transition-all px-4 py-2 rounded-full hover:bg-foreground/10 dark:hover:bg-foreground-dark/10 font-['Nimbus_Mono']"
-              >
-                ÜBER MICH
-              </Link>
-              <Link
-                href="#services"
-                className="nav-link text-sm font-mono transition-all px-4 py-2 rounded-full hover:bg-foreground/10 dark:hover:bg-foreground-dark/10 font-['Nimbus_Mono']"
-              >
-                DIENSTLEISTUNGEN
-              </Link>
-              <Link
-                href="/ki-modelle"
-                className="nav-link text-sm font-mono transition-all px-4 py-2 rounded-full hover:bg-foreground/10 dark:hover:bg-foreground-dark/10 font-['Nimbus_Mono']"
-              >
-                KI-MODELLE
-              </Link>
-              <Link
-                href="#contact"
-                className="nav-link text-sm font-mono transition-all px-4 py-2 rounded-full hover:bg-foreground/10 dark:hover:bg-foreground-dark/10 font-['Nimbus_Mono']"
-              >
-                KONTAKT
-              </Link>
-            </div>
-          </div>
-        </motion.div>
-      </nav>
+    <div className="min-h-screen flex flex-col">
+      <MainNav />
 
       {/* Hero Section */}
       <section className="min-h-screen flex items-center pt-20 sm:pt-32 section">
@@ -1237,7 +1142,7 @@ export default function Home() {
       </section>
 
       <Footer />
-    </main>
+    </div>
   );
 }
 
@@ -1414,24 +1319,7 @@ function ServiceCard({ icon, title, description }: { icon: React.ReactNode; titl
   );
 }
 
-function TechItem({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex items-center space-x-2">
-      <div className="w-1.5 h-1.5 rounded-full bg-[#00A5A8]" />
-      <span className="text-foreground/60 dark:text-foreground-dark/80 font-['Nimbus_Mono']">{children}</span>
-    </div>
-  );
-}
-
-function BenefitItem({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <h4 className="font-bold text-[#00A5A8] mb-1">{title}</h4>
-      <p className="text-gray-400 font-['Nimbus_Mono']">{children}</p>
-    </div>
-  );
-}
-
+// Skill Bar Component
 function SkillBar({ skill, level }: { skill: string; level: number }) {
   return (
     <div className="space-y-1">
@@ -1447,6 +1335,25 @@ function SkillBar({ skill, level }: { skill: string; level: number }) {
           className="h-full bg-primary rounded-full"
         />
       </div>
+    </div>
+  );
+}
+
+// Tech Item Component
+function TechItem({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center space-x-2">
+      <div className="w-1.5 h-1.5 rounded-full bg-[#00A5A8]" />
+      <span className="text-foreground/60 dark:text-foreground-dark/80 font-['Nimbus_Mono']">{children}</span>
+    </div>
+  );
+}
+
+function BenefitItem({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <h4 className="font-bold text-[#00A5A8] mb-1">{title}</h4>
+      <p className="text-gray-400 font-['Nimbus_Mono']">{children}</p>
     </div>
   );
 }
@@ -1474,6 +1381,7 @@ function getStepDescription(step: number) {
   return descriptions[step as keyof typeof descriptions];
 }
 
+// Helper function for step icons
 function getStepIcon(step: number) {
   const icons = {
     1: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />,
