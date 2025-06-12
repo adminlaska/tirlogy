@@ -16,6 +16,7 @@ import { BackendIcon } from './components/BackendIcon';
 import { WebDevIcon } from './components/WebDevIcon';
 import { IOSIcon } from './components/IOSIcon';
 import { AIIcon } from './components/AIIcon';
+import { ModernWorkplaceIcon } from './components/ModernWorkplaceIcon';
 import { MainNav } from './components/MainNav';
 import { Footer } from './components/Footer';
 
@@ -42,6 +43,13 @@ export default function Home() {
   const [chatInput, setChatInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Code Lab States
+  const [isRunning, setIsRunning] = useState(false);
+  const [output, setOutput] = useState<string | null>(null);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [typedCode, setTypedCode] = useState('');
+  const [showCursor, setShowCursor] = useState(true);
 
   useEffect(() => {
     // Check initial theme
@@ -89,6 +97,41 @@ export default function Home() {
     return () => {
       if (cleanup) cleanup();
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
+
+  useEffect(() => {
+    const codeString = `async function createInnovation() {
+      // Fetch innovation data
+      try {
+        const response = await fetch('https://api.tirlogy.com/innovation');
+        const data = await response.json();
+        // Log the result
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }`;
+
+    let currentIndex = 0;
+    const typingInterval = setInterval(() => {
+      if (currentIndex < codeString.length) {
+        setTypedCode(codeString.slice(0, currentIndex + 1));
+        currentIndex++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, 50);
+
+    // Cursor blinken
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 530);
+
+    return () => {
+      clearInterval(typingInterval);
+      clearInterval(cursorInterval);
     };
   }, []);
 
@@ -193,6 +236,23 @@ export default function Home() {
     }
   };
 
+  // Code Lab Functions
+  const handleRunCode = () => {
+    if (isCompleted) {
+      window.open('https://tirlogy.de/vision', '_blank');
+      return;
+    }
+
+    setIsRunning(true);
+    setOutput(null);
+
+    setTimeout(() => {
+      setOutput(JSON.stringify({ success: 'Innovation created!' }, null, 2));
+      setIsRunning(false);
+      setIsCompleted(true);
+    }, 1500);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <MainNav />
@@ -268,15 +328,6 @@ export default function Home() {
       {/* Services Preview */}
       <section id="services" className="section">
         <div className="section-inner">
-          <div className="relative flex justify-center mb-8 sm:mb-12">
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[120px] w-full sm:w-[500px] mx-auto">
-              <div className="absolute inset-0 bg-foreground opacity-[0.03] blur-[130px]" />
-              <div className="absolute inset-0 bg-[#00A5A8] opacity-[0.1] blur-[65px]" />
-            </div>
-            <h2 className="heading text-2xl sm:text-3xl lg:text-4xl text-center relative z-10 font-['Neue_Haas_Grotesk_Display_Pro_65_Medium']">
-              Professionelle IT-Lösungen
-            </h2>
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="group service-card rounded-2xl p-8 animate-float">
               <div className="relative z-10">
@@ -309,13 +360,13 @@ export default function Home() {
             <div className="group service-card rounded-2xl p-8 animate-float" style={{ animationDelay: '0.2s' }}>
               <div className="relative z-10">
                 <div className="w-12 h-12 mb-6 rounded-xl service-icon flex items-center justify-center">
-                  <BackendIcon className="w-6 h-6 text-primary" />
+                  <ModernWorkplaceIcon className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground dark:text-white font-['Neue_Haas_Grotesk_Display_Pro_65_Medium']">
-                  Backend & APIs
+                  ModernWorkplace
                 </h3>
                 <p className="text-sm text-foreground/70 dark:text-white/70 font-['Nimbus_Mono']">
-                  Hochskalierbare Microservices und RESTful APIs. Cloud-native Architekturen mit Node.js, Express und TypeScript. Sichere Authentifizierung und optimiertes Datenmanagement.
+                  Transformation zu digitalen Arbeitsplätzen der Zukunft. Microsoft 365 Integration, Cloud-Migration und moderne Collaboration-Tools. Effiziente Remote-Work-Lösungen für maximale Produktivität und Flexibilität.
                 </p>
               </div>
             </div>
@@ -337,325 +388,97 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="section">
-        <div className="section-inner">
-          <div className="relative rounded-3xl overflow-hidden">
-            {/* Background with blur */}
-            <div className="absolute inset-0 bg-white/95 dark:bg-[#0A0A0A]/50 backdrop-blur-lg" />
+      {/* Process Timeline Section */}
+      <section className="section relative overflow-hidden min-h-screen py-20 bg-transparent">
+        <div className="section-inner max-w-[1200px]" id="timeline-container">
+          {/* Timeline Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-16 relative z-10"
+          >
+            <h2 className="heading text-2xl sm:text-3xl lg:text-4xl mb-4 font-['Neue_Haas_Grotesk_Display_Pro_65_Medium'] text-foreground dark:text-foreground-dark">
+              Von der Idee zur Realität
+            </h2>
+            <p className="text-base sm:text-lg text-foreground/60 dark:text-foreground-dark/60 max-w-2xl mx-auto font-['Nimbus_Mono']">
+              Ein strukturierter Prozess für erfolgreiche Projekte
+            </p>
+          </motion.div>
 
-            {/* Gradient overlays */}
-            <div className="absolute inset-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent opacity-80" />
-              <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
-            </div>
-
-            {/* Content */}
-            <div className="relative z-10 p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-16">
-                {/* Left Column */}
-                <div className="lg:col-span-5 space-y-6">
-                  <div className="relative">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      viewport={{ once: true }}
-                    >
-                      <h2 className="heading text-2xl sm:text-3xl lg:text-4xl font-['Neue_Haas_Grotesk_Display_Pro_65_Medium'] mb-2">
-                        Über mich
-                      </h2>
-                      <div className="w-20 h-1 bg-primary rounded-full mb-6" />
-                      <p className="text-base sm:text-lg text-foreground/80 dark:text-foreground-dark/80 font-['Nimbus_Mono'] leading-relaxed">
-                        Als Full-Stack Entwickler mit Fokus auf moderne Webtechnologien
-                        unterstütze ich Unternehmen dabei, ihre digitale Präsenz auf das
-                        nächste Level zu bringen.
-                      </p>
-                    </motion.div>
-                  </div>
-
-                  {/* Experience Cards */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      viewport={{ once: true }}
-                      className="group relative p-6 rounded-xl bg-white/50 dark:bg-background-dark border border-primary/10 dark:border-border-dark overflow-hidden"
-                    >
-                      {/* Animated gradient background */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                      {/* Animated circle decoration */}
-                      <div className="absolute -right-4 -top-4 w-20 h-20">
-                        <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" />
-                        <div className="absolute inset-2 bg-primary/5 rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
+          {/* 3D Timeline Container */}
+          <div className="relative">
+            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/0 via-primary to-primary/0 transform -translate-x-1/2" id="timeline-line" />
+            <div className="relative space-y-24">
+              {[
+                {
+                  step: 1,
+                  title: "Vision & Discovery",
+                  description: "In intensiven Gesprächen tauchen wir tief in Deine Vision ein. Wir analysieren Deine Zielgruppe, definieren Kernfunktionen und identifizieren technische Anforderungen. Hier entstehen die Grundpfeiler Deines erfolgreichen digitalen Produkts."
+                },
+                {
+                  step: 2,
+                  title: "Strategie & Architektur",
+                  description: "Mit modernsten Tools entwickeln wir eine maßgeschneiderte Strategie. Die Systemarchitektur wird auf Skalierbarkeit und Zukunftssicherheit ausgelegt. Technologie-Stack und Entwicklungs-Roadmap werden präzise auf Deine Anforderungen abgestimmt."
+                },
+                {
+                  step: 3,
+                  title: "Design & Entwicklung",
+                  description: "Dein Projekt nimmt Gestalt an. Modernste Frameworks und eine zukunftssichere Architektur bilden das Fundament. Agile Entwicklungszyklen ermöglichen kontinuierliches Feedback. State-of-the-Art UI/UX-Design sorgt für begeisterte Nutzer."
+                },
+                {
+                  step: 4,
+                  title: "Testing & Optimierung",
+                  description: "Umfassende Tests garantieren Dir höchste Qualität. Performance-Optimierung und Sicherheitsaudits schaffen eine robuste Basis. Usability-Tests mit echten Nutzern verfeinern Deine User Experience. Code-Reviews und automatisierte Tests sichern Deine technische Exzellenz."
+                },
+                {
+                  step: 5,
+                  title: "Launch & Evolution",
+                  description: "Der Go-Live ist erst der Anfang. Kontinuierliche Updates, proaktives Monitoring und schneller Support halten Dein Produkt an der Spitze. Analysen und Nutzer-Feedback treiben die stetige Evolution voran. Dein Erfolg ist unser gemeinsames Ziel."
+                }
+              ].map((item, index) => (
+                <div key={item.step} className="timeline-step" data-step={item.step}>
+                  <div className={`relative flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
+                    {/* Timeline Point */}
+                    <div className="absolute left-1/2 top-1/2 w-4 h-4 transform -translate-x-1/2 -translate-y-1/2">
+                      <div className="relative w-full h-full">
+                        <div className="absolute inset-0 bg-primary rounded-full animate-pulse" />
+                        <div className="absolute inset-[-4px] bg-primary/30 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
                       </div>
-
-                      <div className="relative z-10">
-                        <motion.h4
-                          className="text-2xl font-bold text-primary mb-3"
-                          whileHover={{ scale: 1.05 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          5+
-                        </motion.h4>
-                        <p className="text-sm text-foreground/60 dark:text-foreground-dark/60 font-['Nimbus_Mono']">
-                          Jahre Erfahrung in der Webentwicklung
-                        </p>
-                      </div>
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-                      transition={{ duration: 0.5, delay: 0.3 }}
-                      viewport={{ once: true }}
-                      className="group relative p-6 rounded-xl bg-white/50 dark:bg-background-dark border border-primary/10 dark:border-border-dark overflow-hidden"
-                    >
-                      {/* Animated gradient background */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                      {/* Animated circle decoration */}
-                      <div className="absolute -left-4 -top-4 w-20 h-20">
-                        <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
-                        <div className="absolute inset-2 bg-primary/5 rounded-full animate-pulse" style={{ animationDelay: '450ms' }} />
-                      </div>
-
-                      <div className="relative z-10">
-                        <motion.h4
-                          className="text-2xl font-bold text-primary mb-3"
-                          whileHover={{ scale: 1.05 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          50+
-                        </motion.h4>
-                        <p className="text-sm text-foreground/60 dark:text-foreground-dark/60 font-['Nimbus_Mono']">
-                          Erfolgreich abgeschlossene Projekte
-                        </p>
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
-
-                {/* Right Column */}
-                <div className="lg:col-span-7 space-y-8">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    viewport={{ once: true }}
-                  >
-                    <h3 className="text-xl font-bold mb-4 text-primary font-['Neue_Haas_Grotesk_Display_Pro_65_Medium']">
-                      Expertise
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <div className="space-y-4">
-                        <h4 className="font-['Nimbus_Mono'] text-foreground/80 dark:text-foreground-dark/80">Frontend Development</h4>
-                        <div className="space-y-2">
-                          <SkillBar skill="React/Next.js" level={95} />
-                          <SkillBar skill="TypeScript" level={90} />
-                          <SkillBar skill="UI/UX Design" level={85} />
+                    </div>
+                    {/* Content Card */}
+                    <div className={`w-[calc(50%-2rem)] ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
+                      <div className="timeline-card rounded-2xl p-8">
+                        {/* Glowing Number */}
+                        <div className="absolute -top-6 -left-6 w-16 h-16 bg-primary rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg timeline-number">
+                          {item.step}
                         </div>
-                      </div>
-                      <div className="space-y-4">
-                        <h4 className="font-['Nimbus_Mono'] text-foreground/80 dark:text-foreground-dark/80">Backend Development</h4>
-                        <div className="space-y-2">
-                          <SkillBar skill="Node.js" level={90} />
-                          <SkillBar skill="REST APIs" level={95} />
-                          <SkillBar skill="Datenbanken" level={85} />
+
+                        <div className="mt-4">
+                          <div className="flex flex-col gap-6">
+                            {/* Icon */}
+                            <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center backdrop-blur-sm">
+                              {getStepIcon(item.step)}
+                            </div>
+
+                            {/* Content */}
+                            <div className="space-y-4">
+                              <h3 className="text-2xl font-bold">
+                                {item.title}
+                              </h3>
+                              <p className="text-base leading-relaxed font-['Nimbus_Mono']">
+                                {item.description}
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true }}
-                  >
-                    <h3 className="text-xl font-bold mb-4 text-primary font-['Neue_Haas_Grotesk_Display_Pro_65_Medium']">
-                      Technologie-Stack
-                    </h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                      <TechItem>Next.js</TechItem>
-                      <TechItem>React</TechItem>
-                      <TechItem>TypeScript</TechItem>
-                      <TechItem>Node.js</TechItem>
-                      <TechItem>Swift</TechItem>
-                      <TechItem>SwiftUI</TechItem>
-                      <TechItem>TensorFlow</TechItem>
-                      <TechItem>PyTorch</TechItem>
-                      <TechItem>OpenAI API</TechItem>
-                      <TechItem>LangChain</TechItem>
-                      <TechItem>REST APIs</TechItem>
-                      <TechItem>GSAP</TechItem>
-                    </div>
-                  </motion.div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Code Lab Section */}
-      <section className="section">
-        <div className="section-inner">
-          <div className="grid grid-cols-1 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="relative rounded-2xl overflow-hidden bg-white dark:bg-[#1E1E1E] border border-primary/10"
-            >
-              {/* Editor Header */}
-              <div className="flex items-center justify-between px-4 py-2 bg-gray-100 dark:bg-[#2D2D2D] border-b border-primary/10">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                  <div className="w-3 h-3 rounded-full bg-green-500" />
-                </div>
-                <span className="text-gray-600 dark:text-white/60 text-sm font-['Nimbus_Mono']">Create Innovation</span>
-                <div className="w-20" />
-              </div>
-
-              {/* Editor Content */}
-              <div className="p-6 relative h-[500px] flex flex-col">
-                {(() => {
-                  const code = [
-                    'const innovate = async () => {',
-                    '  const result = await createInnovation();',
-                    '  return {',
-                    "    success: 'Innovation created!'",
-                    '  };',
-                    '}'
-                  ];
-
-                  const [text, setText] = useState('');
-                  const [currentLine, setCurrentLine] = useState(0);
-                  const [currentChar, setCurrentChar] = useState(0);
-                  const [isRunning, setIsRunning] = useState(false);
-                  const [output, setOutput] = useState<string | null>(null);
-
-                  useEffect(() => {
-                    if (currentLine >= code.length) return;
-
-                    const timer = setTimeout(() => {
-                      if (currentChar < code[currentLine].length) {
-                        setText(prev => prev + code[currentLine][currentChar]);
-                        setCurrentChar(prev => prev + 1);
-                      } else {
-                        setText(prev => prev + '\n');
-                        setCurrentLine(prev => prev + 1);
-                        setCurrentChar(0);
-                      }
-                    }, 50);
-
-                    return () => clearTimeout(timer);
-                  }, [currentLine, currentChar]);
-
-                  const handleRunCode = () => {
-                    setIsRunning(true);
-                    setOutput(null);
-
-                    // Simuliere Code-Ausführung
-                    setTimeout(() => {
-                      setOutput(JSON.stringify({ success: 'Innovation created!' }, null, 2));
-                      setIsRunning(false);
-                    }, 1500);
-                  };
-
-                  const lines = text.split('\n');
-
-                  return (
-                    <>
-                      <div className="flex-1 overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
-                        <div className="space-y-4">
-                          {lines.map((line, index) => (
-                            <motion.div
-                              key={index}
-                              className="flex items-start gap-4"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              <div className="text-gray-400 dark:text-white/30 font-mono text-sm w-4 text-right select-none">
-                                {index + 1}
-                              </div>
-                              <div className="flex-1 font-mono relative">
-                                {Array.from(line).map((char, charIndex) => (
-                                  <span
-                                    key={charIndex}
-                                    className={
-                                      line.startsWith('const') && charIndex < 5 ? 'text-blue-600 dark:text-[#569CD6]' :
-                                        line.includes('async') && line.substring(charIndex, charIndex + 5) === 'async' ? 'text-purple-600 dark:text-[#C586C0]' :
-                                          line.includes('await') && line.substring(charIndex, charIndex + 5) === 'await' ? 'text-blue-600 dark:text-[#569CD6]' :
-                                            line.includes('return') && line.substring(charIndex, charIndex + 6) === 'return' ? 'text-purple-600 dark:text-[#C586C0]' :
-                                              line.includes('success') && line.substring(charIndex, charIndex + 7) === 'success' ? 'text-cyan-600 dark:text-[#9CDCFE]' :
-                                                (char === "'" || line.includes("'") && line[charIndex - 1] === "'") ? 'text-orange-600 dark:text-[#CE9178]' :
-                                                  'text-gray-800 dark:text-white'
-                                    }
-                                  >
-                                    {char}
-                                  </span>
-                                ))}
-                                {index === currentLine && (
-                                  <motion.span
-                                    className="inline-block w-[2px] h-[1.2em] bg-primary ml-[1px] relative top-[2px]"
-                                    animate={{ opacity: [1, 0] }}
-                                    transition={{
-                                      duration: 0.8,
-                                      repeat: Infinity,
-                                      ease: "linear"
-                                    }}
-                                  />
-                                )}
-                              </div>
-                            </motion.div>
-                          ))}
-                        </div>
-
-                        {/* Output Section */}
-                        {output && (
-                          <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="mt-4 p-4 bg-gray-50 dark:bg-[#1E1E1E] rounded-lg border border-primary/20"
-                          >
-                            <div className="font-mono text-cyan-600 dark:text-[#9CDCFE]">Output:</div>
-                            <pre className="font-mono text-orange-600 dark:text-[#CE9178] mt-2">{output}</pre>
-                          </motion.div>
-                        )}
-                      </div>
-
-                      {/* Run Button - Now fixed at bottom */}
-                      <div className="pt-4 mt-auto border-t border-primary/10">
-                        <motion.button
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          onClick={handleRunCode}
-                          disabled={isRunning}
-                          className="w-full px-6 py-2 bg-primary/10 text-primary border border-primary/20 rounded-lg font-['Nimbus_Mono'] text-sm hover:bg-primary/20 transition-colors relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          {isRunning ? (
-                            <>
-                              <div className="absolute inset-0 bg-primary/20 animate-pulse" />
-                              <span className="relative">Running...</span>
-                            </>
-                          ) : (
-                            'Run Code'
-                          )}
-                        </motion.button>
-                      </div>
-                    </>
-                  );
-                })()}
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>
@@ -803,339 +626,94 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Process Timeline Section */}
-      <section className="section relative overflow-hidden min-h-screen py-20 bg-transparent">
-        <div className="section-inner max-w-[1200px]" id="timeline-container">
-          {/* Timeline Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-16 relative z-10"
-          >
-            <h2 className="heading text-2xl sm:text-3xl lg:text-4xl mb-4 font-['Neue_Haas_Grotesk_Display_Pro_65_Medium'] text-foreground dark:text-foreground-dark">
-              Von der Idee zur Realität
-            </h2>
-            <p className="text-base sm:text-lg text-foreground/60 dark:text-foreground-dark/60 max-w-2xl mx-auto font-['Nimbus_Mono']">
-              Ein strukturierter Prozess für erfolgreiche Projekte
-            </p>
-          </motion.div>
-
-          {/* 3D Timeline Container */}
-          <div className="relative">
-            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/0 via-primary to-primary/0 transform -translate-x-1/2" id="timeline-line" />
-            <div className="relative space-y-24">
-              {[
-                {
-                  step: 1,
-                  title: "Vision & Discovery",
-                  description: "In intensiven Gesprächen tauchen wir tief in Ihre Vision ein. Wir analysieren Ihre Zielgruppe, definieren Kernfunktionen und identifizieren technische Anforderungen. Hier entstehen die Grundpfeiler Ihres erfolgreichen digitalen Produkts."
-                },
-                {
-                  step: 2,
-                  title: "Strategie & Architektur",
-                  description: "Mit modernsten Tools entwickeln wir eine maßgeschneiderte Strategie. Die Systemarchitektur wird auf Skalierbarkeit und Zukunftssicherheit ausgelegt. Technologie-Stack und Entwicklungs-Roadmap werden präzise auf Ihre Anforderungen abgestimmt."
-                },
-                {
-                  step: 3,
-                  title: "Design & Entwicklung",
-                  description: "Ihr Projekt nimmt Gestalt an. Modernste Frameworks und eine zukunftssichere Architektur bilden das Fundament. Agile Entwicklungszyklen ermöglichen kontinuierliches Feedback. State-of-the-Art UI/UX-Design sorgt für begeisterte Nutzer."
-                },
-                {
-                  step: 4,
-                  title: "Testing & Optimierung",
-                  description: "Umfassende Tests garantieren höchste Qualität. Performance-Optimierung und Sicherheitsaudits schaffen eine robuste Basis. Usability-Tests mit echten Nutzern verfeinern die User Experience. Code-Reviews und automatisierte Tests sichern die technische Exzellenz."
-                },
-                {
-                  step: 5,
-                  title: "Launch & Evolution",
-                  description: "Der Go-Live ist erst der Anfang. Kontinuierliche Updates, proaktives Monitoring und schneller Support halten Ihr Produkt an der Spitze. Analysen und Nutzer-Feedback treiben die stetige Evolution voran. Ihr Erfolg ist unser gemeinsames Ziel."
-                }
-              ].map((item, index) => (
-                <div key={item.step} className="timeline-step" data-step={item.step}>
-                  <div className={`relative flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
-                    {/* Timeline Point */}
-                    <div className="absolute left-1/2 top-1/2 w-4 h-4 transform -translate-x-1/2 -translate-y-1/2">
-                      <div className="relative w-full h-full">
-                        <div className="absolute inset-0 bg-primary rounded-full animate-pulse" />
-                        <div className="absolute inset-[-4px] bg-primary/30 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
-                      </div>
-                    </div>
-                    {/* Content Card */}
-                    <div className={`w-[calc(50%-2rem)] ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
-                      <div className="timeline-card rounded-2xl p-8">
-                        {/* Glowing Number */}
-                        <div className="absolute -top-6 -left-6 w-16 h-16 bg-primary rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg timeline-number">
-                          {item.step}
-                        </div>
-
-                        <div className="mt-4">
-                          <div className="flex flex-col gap-6">
-                            {/* Icon */}
-                            <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center backdrop-blur-sm">
-                              {getStepIcon(item.step)}
-                            </div>
-
-                            {/* Content */}
-                            <div className="space-y-4">
-                              <h3 className="text-2xl font-bold">
-                                {item.title}
-                              </h3>
-                              <p className="text-base leading-relaxed font-['Nimbus_Mono']">
-                                {item.description}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+      {/* Code Lab Section */}
+      <section className="section relative overflow-hidden py-10 bg-transparent">
+        <div className="section-inner max-w-[1200px] mx-auto">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-lg shadow-xl overflow-hidden border border-zinc-200 dark:border-zinc-800">
+            {/* Window Controls */}
+            <div className="flex items-center justify-between p-2 bg-zinc-50 dark:bg-[#1E1E1E] border-b border-zinc-200 dark:border-zinc-800">
+              <div className="flex items-center space-x-2">
+                <div className="flex space-x-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500/90" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/90" />
+                  <div className="w-3 h-3 rounded-full bg-green-500/90" />
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="section">
-        <div className="section-inner">
-          <div className="relative rounded-3xl overflow-hidden">
-            {/* Background with blur */}
-            <div className="absolute inset-0 bg-white/75 dark:bg-[#0A0A0A]/75 backdrop-blur-lg" />
-
-            {/* Gradient overlays */}
-            <div className="absolute inset-0">
-              <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-transparent" />
-            </div>
-
-            {/* Content */}
-            <div className="relative z-10 p-8">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="relative mb-16"
-              >
-                {/* Content */}
-                <div className="relative">
-                  <div className="flex flex-col items-start">
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                    >
-                      <h2 className="heading text-2xl sm:text-3xl lg:text-4xl mb-2 font-['Neue_Haas_Grotesk_Display_Pro_65_Medium']">
-                        Lassen Sie uns über Ihr Projekt sprechen
-                      </h2>
-                      <div className="w-20 h-1 bg-primary rounded-full mb-6" />
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.3 }}
-                      className="max-w-xl"
-                    >
-                      <p className="text-base sm:text-lg text-foreground/80 dark:text-foreground-dark/80 font-['Nimbus_Mono'] leading-relaxed">
-                        Ich freue mich darauf, mehr über Ihre Ideen zu erfahren und gemeinsam die perfekte Lösung zu entwickeln.
-                      </p>
-                    </motion.div>
-                  </div>
+                <div className="flex items-center ml-2">
+                  <Image
+                    src="/tiryaki_it_ki_playground.png"
+                    alt="Logo"
+                    width={16}
+                    height={16}
+                    className="w-4 h-4 mr-2 brightness-0 dark:invert"
+                  />
+                  <span className="text-sm text-zinc-600 dark:text-gray-400">Create Innovation</span>
                 </div>
-              </motion.div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-12">
-                {/* Contact Info Cards */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="lg:col-span-2 space-y-4"
-                >
-                  {/* Email Card */}
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="group p-6 bg-white dark:bg-[#0A0A0A] rounded-xl border border-border dark:border-border-dark overflow-hidden relative hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="relative z-10">
-                      <div className="flex items-center gap-4 mb-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                          </svg>
-                        </div>
-                        <h3 className="text-lg font-bold">E-Mail</h3>
-                      </div>
-                      <a href="mailto:kontakt@tiryaki.eu" className="text-foreground/60 dark:text-foreground-dark/60 hover:text-primary transition-colors font-['Nimbus_Mono']">
-                        kontakt@tiryaki.eu
-                      </a>
-                    </div>
-                  </motion.div>
-
-                  {/* Phone Card */}
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="group p-6 bg-white dark:bg-[#0A0A0A] rounded-xl border border-border dark:border-border-dark overflow-hidden relative hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="relative z-10">
-                      <div className="flex items-center gap-4 mb-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.042 11.042 0 005.516 5.516l.774-1.548a1 1 0 011.21-.502l4.435.74a1 1 0 01.836.986V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                          </svg>
-                        </div>
-                        <h3 className="text-lg font-bold">Telefon</h3>
-                      </div>
-                      <a href="tel:01634895658" className="text-foreground/60 dark:text-foreground-dark/60 hover:text-primary transition-colors font-['Nimbus_Mono']">
-                        0163 489 5658
-                      </a>
-                    </div>
-                  </motion.div>
-
-                  {/* WhatsApp Card */}
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="group p-6 bg-white dark:bg-[#0A0A0A] rounded-xl border border-border dark:border-border-dark overflow-hidden relative hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="relative z-10">
-                      <div className="flex items-center gap-4 mb-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.48-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 9h.01M8 15h.01M16 9h.01M16 15h.01" />
-                          </svg>
-                        </div>
-                        <h3 className="text-lg font-bold">WhatsApp</h3>
-                      </div>
-                      <a
-                        href="https://wa.me/491634895658"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-foreground/60 dark:text-foreground-dark/60 hover:text-primary transition-colors font-['Nimbus_Mono']"
-                      >
-                        WhatsApp Chat öffnen
-                      </a>
-                      <p className="mt-2 text-xs text-foreground/40 dark:text-foreground-dark/40 font-['Nimbus_Mono']">
-                        Hinweis: Beim Kontakt via WhatsApp können Kosten durch die Nutzung des Internets entstehen, die abhängig von Ihrem persönlichen Netzanbieter sind.
-                      </p>
-                    </div>
-                  </motion.div>
-                </motion.div>
-
-                {/* Contact Form */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  className="lg:col-span-3"
-                >
-                  <form onSubmit={handleSubmit} className="space-y-6 bg-card p-8 rounded-xl border border-border dark:border-border-dark relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent" />
-
-                    <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: 0.1 }}
-                      >
-                        <label htmlFor="name" className="block text-sm font-['Nimbus_Mono'] text-foreground/80 dark:text-foreground-dark/80 mb-2">
-                          Name
-                        </label>
-                        <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          required
-                          className="w-full px-4 py-3 bg-background/50 dark:bg-background-dark/50 backdrop-blur-sm border border-border dark:border-border-dark rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
-                        />
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: 0.2 }}
-                      >
-                        <label htmlFor="email" className="block text-sm font-['Nimbus_Mono'] text-foreground/80 dark:text-foreground-dark/80 mb-2">
-                          E-Mail
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          required
-                          className="w-full px-4 py-3 bg-background/50 dark:bg-background-dark/50 backdrop-blur-sm border border-border dark:border-border-dark rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
-                        />
-                      </motion.div>
-                    </div>
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: 0.3 }}
-                    >
-                      <label htmlFor="subject" className="block text-sm font-['Nimbus_Mono'] text-foreground/80 dark:text-foreground-dark/80 mb-2">
-                        Betreff
-                      </label>
-                      <input
-                        type="text"
-                        id="subject"
-                        name="subject"
-                        required
-                        className="w-full px-4 py-3 bg-background/50 dark:bg-background-dark/50 backdrop-blur-sm border border-border dark:border-border-dark rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
-                      />
-                    </motion.div>
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: 0.4 }}
-                    >
-                      <label htmlFor="message" className="block text-sm font-['Nimbus_Mono'] text-foreground/80 dark:text-foreground-dark/80 mb-2">
-                        Nachricht
-                      </label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        rows={6}
-                        required
-                        className="w-full px-4 py-3 bg-background/50 dark:bg-background-dark/50 backdrop-blur-sm border border-border dark:border-border-dark rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none"
-                      ></textarea>
-                    </motion.div>
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: 0.5 }}
-                    >
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="group w-full sm:w-auto px-8 py-3 bg-primary text-white rounded-lg relative overflow-hidden transition-all hover:shadow-lg hover:shadow-primary/25"
-                      >
-                        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                        <span className="relative font-['Nimbus_Mono']">
-                          {isSubmitting ? 'Wird gesendet...' : 'Nachricht senden'}
-                        </span>
-                      </button>
-                    </motion.div>
-                    {formStatus.type && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className={`p-4 rounded-lg ${formStatus.type === 'success'
-                          ? 'bg-green-500/10 text-green-500'
-                          : 'bg-red-500/10 text-red-500'
-                          }`}
-                      >
-                        {formStatus.message}
-                      </motion.div>
-                    )}
-                  </form>
-                </motion.div>
               </div>
+            </div>
+
+            {/* Code Editor */}
+            <div className="p-6 font-mono text-sm bg-zinc-50 dark:bg-[#1E1E1E] border-b border-zinc-200 dark:border-zinc-800 h-[300px] overflow-y-auto">
+              <pre className="text-zinc-800 dark:text-[#D4D4D4] whitespace-pre-wrap">
+                {typedCode.split('\n').map((line, index, array) => (
+                  <div key={index}>
+                    {line.split(' ').map((word, wordIndex, wordArray) => {
+                      const isLastWordInLastLine = index === array.length - 1 && wordIndex === wordArray.length - 1;
+                      const wordContent = (
+                        <>
+                          {word.match(/^(async|function|try|catch|await|const|return)$/) ? (
+                            <span className="text-primary dark:text-[#569CD6]">{word}</span>
+                          ) : word.match(/^(createInnovation|fetch|json|log|error)$/) ? (
+                            <span className="text-primary/80 dark:text-[#DCDCAA]">{word}</span>
+                          ) : word.startsWith('//') ? (
+                            <span className="text-primary/60 dark:text-[#6A9955]">{word}</span>
+                          ) : word.match(/^'.*'$/) ? (
+                            <span className="text-primary/70 dark:text-[#CE9178]">{word}</span>
+                          ) : (
+                            word
+                          )}
+                          {isLastWordInLastLine ? (
+                            <span className={`inline-block w-[2px] h-[1.2em] align-middle ${showCursor ? 'bg-primary dark:bg-white' : 'bg-transparent'}`} />
+                          ) : ' '}
+                        </>
+                      );
+                      return <span key={wordIndex}>{wordContent}</span>;
+                    })}
+                  </div>
+                ))}
+              </pre>
+            </div>
+
+            {/* Terminal Output */}
+            <div className="p-6 font-mono text-sm bg-white dark:bg-[#1E1E1E] h-[200px] overflow-y-auto">
+              <div className="text-zinc-500 dark:text-gray-400 mb-2">$ node script.js</div>
+              {output ? (
+                <>
+                  <div className="text-primary dark:text-green-400">{'{'}"success": "Innovation created!"{'}'}</div>
+                  <div className="mt-2 text-zinc-500 dark:text-gray-400">To get your innovation, click on "Get Innovation"</div>
+                </>
+              ) : isRunning ? (
+                <div className="text-primary dark:text-blue-400">Running...</div>
+              ) : (
+                <div className="text-zinc-400 dark:text-gray-500">Click "Run Code" to execute</div>
+              )}
+            </div>
+
+            {/* Run Button Container */}
+            <div className="p-6 bg-white dark:bg-[#1E1E1E] border-t border-zinc-200 dark:border-zinc-800 flex justify-end">
+              <button
+                onClick={handleRunCode}
+                className="px-6 py-2.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 rounded-lg 
+                relative overflow-hidden group transition-all duration-300 ease-in-out
+                hover:text-white dark:hover:text-white
+                before:absolute before:content-[''] before:bg-primary 
+                before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2
+                before:w-0 before:h-0 before:rounded-full before:opacity-0
+                before:transition-all before:duration-500 before:ease-out
+                hover:before:w-[300px] hover:before:h-[300px] hover:before:opacity-100
+                active:scale-95"
+              >
+                <span className="relative z-10 font-medium">{isCompleted ? "Get Innovation" : isRunning ? "Running..." : "Run Code"}</span>
+              </button>
             </div>
           </div>
         </div>
@@ -1372,11 +950,11 @@ function getStepTitle(step: number) {
 
 function getStepDescription(step: number) {
   const descriptions = {
-    1: "In intensiven Gesprächen tauchen wir tief in Ihre Vision ein. Wir analysieren Ihre Zielgruppe, definieren Kernfunktionen und identifizieren technische Anforderungen. Hier entstehen die Grundpfeiler Ihres erfolgreichen digitalen Produkts.",
-    2: "Mit modernsten Tools entwickeln wir eine maßgeschneiderte Strategie. Die Systemarchitektur wird auf Skalierbarkeit und Zukunftssicherheit ausgelegt. Technologie-Stack und Entwicklungs-Roadmap werden präzise auf Ihre Anforderungen abgestimmt.",
-    3: "Ihr Projekt nimmt Gestalt an. Modernste Frameworks und eine zukunftssichere Architektur bilden das Fundament. Agile Entwicklungszyklen ermöglichen kontinuierliches Feedback. State-of-the-Art UI/UX-Design sorgt für begeisterte Nutzer.",
-    4: "Umfassende Tests garantieren höchste Qualität. Performance-Optimierung und Sicherheitsaudits schaffen eine robuste Basis. Usability-Tests mit echten Nutzern verfeinern die User Experience. Code-Reviews und automatisierte Tests sichern die technische Exzellenz.",
-    5: "Der Go-Live ist erst der Anfang. Kontinuierliche Updates, proaktives Monitoring und schneller Support halten Ihr Produkt an der Spitze. Analysen und Nutzer-Feedback treiben die stetige Evolution voran. Ihr Erfolg ist unser gemeinsames Ziel."
+    1: "In intensiven Gesprächen tauchen wir tief in Deine Vision ein. Wir analysieren Deine Zielgruppe, definieren Kernfunktionen und identifizieren technische Anforderungen. Hier entstehen die Grundpfeiler Deines erfolgreichen digitalen Produkts.",
+    2: "Mit modernsten Tools entwickeln wir eine maßgeschneiderte Strategie. Die Systemarchitektur wird auf Skalierbarkeit und Zukunftssicherheit ausgelegt. Technologie-Stack und Entwicklungs-Roadmap werden präzise auf Deine Anforderungen abgestimmt.",
+    3: "Dein Projekt nimmt Gestalt an. Modernste Frameworks und eine zukunftssichere Architektur bilden das Fundament. Agile Entwicklungszyklen ermöglichen kontinuierliches Feedback. State-of-the-Art UI/UX-Design sorgt für begeisterte Nutzer.",
+    4: "Umfassende Tests garantieren Dir höchste Qualität. Performance-Optimierung und Sicherheitsaudits schaffen eine robuste Basis. Usability-Tests mit echten Nutzern verfeinern Deine User Experience. Code-Reviews und automatisierte Tests sichern Deine technische Exzellenz.",
+    5: "Der Go-Live ist erst der Anfang. Kontinuierliche Updates, proaktives Monitoring und schneller Support halten Dein Produkt an der Spitze. Analysen und Nutzer-Feedback treiben die stetige Evolution voran. Dein Erfolg ist unser gemeinsames Ziel."
   };
   return descriptions[step as keyof typeof descriptions];
 }
@@ -1396,4 +974,128 @@ function getStepIcon(step: number) {
     </svg>
   );
 }
+
+// ... existing code ...
+{/* Technologie-Showcase Section */ }
+<section className="py-20 sm:py-32 section bg-gradient-to-b from-background to-background/50 dark:from-background-dark dark:to-background-dark/50">
+  <div className="w-[90%] max-w-[1600px] mx-auto">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="text-center mb-16"
+    >
+      <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-foreground dark:text-white">
+        Technologie-Stack
+      </h2>
+      <p className="text-foreground/70 dark:text-white max-w-2xl mx-auto font-['Nimbus_Mono']">
+        Moderne Technologien für moderne Lösungen. Hier sind einige der Tools und Frameworks, mit denen ich arbeite.
+      </p>
+    </motion.div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* Web Development Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        whileHover={{ y: -5 }}
+        className="group relative p-8 rounded-xl bg-white/50 dark:bg-foreground-dark/5 backdrop-blur-sm border border-primary/10 overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent dark:from-primary/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+        <div className="relative z-10">
+          <div className="w-16 h-16 mb-6">
+            <WebDevIcon />
+          </div>
+          <h3 className="text-xl font-bold mb-4 text-foreground dark:text-white">Web Development</h3>
+          <div className="space-y-2 text-foreground/70 dark:text-white/70 font-['Nimbus_Mono']">
+            <p>Next.js & React</p>
+            <p>TypeScript</p>
+            <p>Tailwind CSS</p>
+            <p>Node.js</p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Mobile Development Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        whileHover={{ y: -5 }}
+        className="group relative p-8 rounded-xl bg-white/50 dark:bg-foreground-dark/5 backdrop-blur-sm border border-primary/10 overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent dark:from-primary/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+        <div className="relative z-10">
+          <div className="w-16 h-16 mb-6">
+            <IOSIcon />
+          </div>
+          <h3 className="text-xl font-bold mb-4 text-foreground dark:text-white">Mobile Development</h3>
+          <div className="space-y-2 text-foreground/70 dark:text-white/70 font-['Nimbus_Mono']">
+            <p>iOS (Swift & SwiftUI)</p>
+            <p>React Native</p>
+            <p>Flutter</p>
+            <p>Native APIs</p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* AI & ML Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        whileHover={{ y: -5 }}
+        className="group relative p-8 rounded-xl bg-white/50 dark:bg-foreground-dark/5 backdrop-blur-sm border border-primary/10 overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent dark:from-primary/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+        <div className="relative z-10">
+          <div className="w-16 h-16 mb-6">
+            <AIIcon />
+          </div>
+          <h3 className="text-xl font-bold mb-4 text-foreground dark:text-white">KI & Machine Learning</h3>
+          <div className="space-y-2 text-foreground/70 dark:text-white/70 font-['Nimbus_Mono']">
+            <p>OpenAI & LangChain</p>
+            <p>TensorFlow & PyTorch</p>
+            <p>Computer Vision</p>
+            <p>NLP & LLMs</p>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8, delay: 0.4 }}
+      className="mt-16 text-center"
+    >
+      <Link
+        href="/vision"
+        className="group inline-flex items-center gap-2 text-foreground/70 dark:text-white/70 hover:text-primary dark:hover:text-primary transition-colors duration-300 font-['Nimbus_Mono']"
+      >
+        <span>Mehr über meine Vision erfahren</span>
+        <svg
+          className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 7l5 5m0 0l-5 5m5-5H6"
+          />
+        </svg>
+      </Link>
+    </motion.div>
+  </div>
+</section>
+// ... existing code ...
 

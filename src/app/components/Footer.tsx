@@ -21,7 +21,7 @@ export function Footer() {
           <div className="text-xs text-foreground/40 dark:text-foreground-dark/40">
             Made by
             <div className="relative w-fit group inline-block ml-1">
-              <Link href="/ueber-mich" className="text-foreground/60 dark:text-foreground-dark/60 group-hover:text-foreground dark:group-hover:text-foreground-dark transition-colors">
+              <Link href="/vision" className="text-foreground/60 dark:text-foreground-dark/60 group-hover:text-foreground dark:group-hover:text-foreground-dark transition-colors">
                 Tirlogy
               </Link>
               <div className="absolute bottom-0 left-0 w-full h-[1px]">
@@ -48,7 +48,7 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <Link href="/ueber-mich" className="text-xs text-foreground/60 dark:text-foreground-dark/60 hover:text-foreground dark:hover:text-foreground-dark transition-colors">
+            <Link href="/vision" className="text-xs text-foreground/60 dark:text-foreground-dark/60 hover:text-foreground dark:hover:text-foreground-dark transition-colors">
               Über mich
             </Link>
             <Link href="/support" className="text-xs text-foreground/60 dark:text-foreground-dark/60 hover:text-foreground dark:hover:text-foreground-dark transition-colors group inline-flex items-center">

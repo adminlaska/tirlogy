@@ -167,7 +167,7 @@
 }
 
 .animate-browserLine {
-  animation: browserLine 2s infinite linear;
+  animation: browserLine1 2s infinite linear;
 }
 
 .animate-appLine {

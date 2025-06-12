@@ -77,13 +77,13 @@ export function MainNav({ activePage }: { activePage?: string }) {
           <div className="flex-1 flex justify-center">
             <div className="hidden md:flex items-center space-x-6">
               <Link
-                href="/#vision"
+                href="/vision"
                 className={getNavLinkClass('vision')}
               >
                 VISION
               </Link>
               <Link
-                href="/#loesungen"
+                href="/loesungen"
                 className={getNavLinkClass('loesungen')}
               >
                 LÖSUNGEN
