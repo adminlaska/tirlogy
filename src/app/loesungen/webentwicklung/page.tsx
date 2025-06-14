@@ -81,33 +81,33 @@ export default function WebentwicklungDetail() {
                 </span>
               </motion.div>
             </div>
-            <p className="text-xl md:text-2xl text-foreground/80 max-w-2xl mx-auto">Von der individuellen Programmierung bis zu WordPress, Shopify & Afterbuy – wir entwickeln moderne, performante und skalierbare Weblösungen für dein Business.</p>
+            <p className="text-xl md:text-2xl text-foreground/80 dark:text-foreground-dark/80 max-w-2xl mx-auto">Von der individuellen Programmierung bis zu WordPress, Shopify & Afterbuy – wir entwickeln moderne, performante und skalierbare Weblösungen für dein Business.</p>
           </motion.div>
         </section>
 
         {/* Leistungen */}
         <section className="mb-20">
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10">
+            <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10 text-foreground">
               <div className="flex items-center gap-3 mb-3">
                 <CodeBracketIcon className="w-10 h-10 text-primary" />
-                <h3 className="text-xl font-semibold text-primary">Individuelle Webentwicklung</h3>
+                <h3 className="text-xl font-semibold text-primary dark:text-primary">Individuelle Webentwicklung</h3>
               </div>
-              <p className="text-foreground/80 mb-2">Maßgeschneiderte Webanwendungen und Websites mit modernen Frameworks wie <b>React</b>, <b>Next.js</b> und <b>TypeScript</b>. Perfekt für Startups, Unternehmen und digitale Produkte mit besonderen Anforderungen.</p>
-              <ul className="list-disc ml-5 text-foreground/70 text-sm space-y-1">
+              <p className="text-foreground/80 dark:text-foreground-dark mb-2">Maßgeschneiderte Webanwendungen und Websites mit modernen Frameworks wie <b>React</b>, <b>Next.js</b> und <b>TypeScript</b>. Perfekt für Startups, Unternehmen und digitale Produkte mit besonderen Anforderungen.</p>
+              <ul className="list-disc ml-5 text-foreground/70 dark:text-foreground-dark text-sm space-y-1">
                 <li>Single-Page-Apps & Portale</li>
                 <li>APIs & Backend-Integration</li>
                 <li>Performance & SEO-Optimierung</li>
                 <li>Responsives, barrierefreies Design</li>
               </ul>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10">
+            <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10 text-foreground">
               <div className="flex items-center gap-3 mb-3">
                 <WordPressIcon className="w-10 h-10 text-primary" />
-                <h3 className="text-xl font-semibold text-primary">WordPress, Shopify & Afterbuy</h3>
+                <h3 className="text-xl font-semibold text-primary dark:text-primary">WordPress, Shopify & Afterbuy</h3>
               </div>
-              <p className="text-foreground/80 mb-2">Schnelle, flexible und kosteneffiziente Lösungen für Content-Management, E-Commerce und Automatisierung. Wir holen das Maximum aus <b>WordPress</b>, <b>Shopify</b> und <b>Afterbuy</b> heraus – individuell angepasst auf dein Business.</p>
-              <ul className="list-disc ml-5 text-foreground/70 text-sm space-y-1">
+              <p className="text-foreground/80 dark:text-foreground-dark mb-2">Schnelle, flexible und kosteneffiziente Lösungen für Content-Management, E-Commerce und Automatisierung. Wir holen das Maximum aus <b>WordPress</b>, <b>Shopify</b> und <b>Afterbuy</b> heraus – individuell angepasst auf dein Business.</p>
+              <ul className="list-disc ml-5 text-foreground/70 dark:text-foreground-dark text-sm space-y-1">
                 <li>WordPress: Themes, Plugins, SEO, Wartung</li>
                 <li>Shopify: Store-Setup, Custom-Apps, Payment</li>
                 <li>Afterbuy: Automatisierung, Schnittstellen, Beratung</li>
@@ -176,21 +176,21 @@ export default function WebentwicklungDetail() {
         <section className="mb-20">
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-2xl font-bold mb-8 text-primary">Step by step kommen wir gemeinsam ans Ziel.</motion.h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">1. Beratung & Strategie</h4>
-              <p className="text-foreground/80">Wir analysieren deine Ziele, Zielgruppe und Anforderungen. Du erhältst eine ehrliche, individuelle Beratung und eine klare Roadmap für dein Projekt.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">1. Beratung & Strategie</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Wir analysieren deine Ziele, Zielgruppe und Anforderungen. Du erhältst eine ehrliche, individuelle Beratung und eine klare Roadmap für dein Projekt.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">2. Design & Prototyping</h4>
-              <p className="text-foreground/80">Modernes, responsives UI/UX-Design – auf Wunsch mit interaktiven Prototypen. Du bist in jeden Schritt eingebunden und gibst Feedback.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">2. Design & Prototyping</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Modernes, responsives UI/UX-Design – auf Wunsch mit interaktiven Prototypen. Du bist in jeden Schritt eingebunden und gibst Feedback.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">3. Entwicklung & Testing</h4>
-              <p className="text-foreground/80">Agile Entwicklung mit modernen Tools. Regelmäßige Demos, automatisierte Tests und höchste Code-Qualität sind Standard.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">3. Entwicklung & Testing</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Agile Entwicklung mit modernen Tools. Regelmäßige Demos, automatisierte Tests und höchste Code-Qualität sind Standard.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">4. Launch & Support</h4>
-              <p className="text-foreground/80">Sicherer Go-Live, Hosting, Monitoring und Support. Auch nach dem Launch sind wir für dich da – mit Updates, Wartung und Optimierung.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">4. Launch & Support</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Sicherer Go-Live, Hosting, Monitoring und Support. Auch nach dem Launch sind wir für dich da – mit Updates, Wartung und Optimierung.</p>
             </motion.div>
           </div>
         </section>
@@ -203,28 +203,28 @@ export default function WebentwicklungDetail() {
               <ChartBarIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Performance & SEO</h4>
-                <p className="text-foreground/80 text-sm">Schnelle Ladezeiten, Top-Rankings bei Google und optimale User Experience – von Anfang an mitgedacht.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Schnelle Ladezeiten, Top-Rankings bei Google und optimale User Experience – von Anfang an mitgedacht.</p>
               </div>
             </div>
             <div className="flex gap-4 items-start">
               <ShieldCheckIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Sicherheit & Skalierbarkeit</h4>
-                <p className="text-foreground/80 text-sm">Modernste Sicherheitsstandards, DSGVO-Konformität und Lösungen, die mit deinem Business wachsen.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Modernste Sicherheitsstandards, DSGVO-Konformität und Lösungen, die mit deinem Business wachsen.</p>
               </div>
             </div>
             <div className="flex gap-4 items-start">
               <Cog6ToothIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Wartung & Support</h4>
-                <p className="text-foreground/80 text-sm">Regelmäßige Updates, Monitoring und persönlicher Support – für einen sorgenfreien Betrieb deiner Website.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Regelmäßige Updates, Monitoring und persönlicher Support – für einen sorgenfreien Betrieb deiner Website.</p>
               </div>
             </div>
             <div className="flex gap-4 items-start">
               <ChatBubbleLeftRightIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Individuelle Beratung</h4>
-                <p className="text-foreground/80 text-sm">Du erhältst keine Lösung von der Stange, sondern ein Konzept, das exakt zu deinen Zielen passt.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Du erhältst keine Lösung von der Stange, sondern ein Konzept, das exakt zu deinen Zielen passt.</p>
               </div>
             </div>
           </div>
@@ -294,7 +294,7 @@ export default function WebentwicklungDetail() {
             </div>
             <div className="relative z-10">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Bereit für dein nächstes Projekt?</h2>
-              <p className="text-xl max-w-2xl mx-auto mb-8 text-foreground/80">
+              <p className="text-xl max-w-2xl mx-auto mb-8 text-foreground/80 dark:text-foreground-dark/80">
                 Lass uns gemeinsam deine Vision in die Realität umsetzen. Kontaktiere mich für ein unverbindliches Erstgespräch.
               </p>
               <motion.div

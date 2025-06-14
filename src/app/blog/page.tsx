@@ -102,67 +102,20 @@ const BlogCard = ({ post, index, featured = false }: {
   featured?: boolean
 }) => {
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className={`group relative bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 ${featured ? 'md:col-span-2 lg:col-span-2' : ''
-        }`}
+    <article
+      className={`group relative rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-black text-black dark:text-white transition-all hover:shadow-md hover:border-primary/80 ${featured ? 'p-6' : 'p-5'} flex flex-col gap-4 after:pointer-events-none after:absolute after:inset-0 after:rounded-xl after:transition-all after:duration-300 after:opacity-0 group-hover:after:opacity-100 group-hover:after:shadow-[0_0_0_4px_rgba(0,212,255,0.15)]`}
+      style={{ minWidth: featured ? 0 : undefined, maxWidth: featured ? 560 : 380 }}
     >
-      {/* Hintergrund-Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-      {/* Bild */}
-      <div className={`relative overflow-hidden ${featured ? 'h-64 md:h-80' : 'h-48'}`}>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent z-10" />
-        <Image
-          src={post.image || '/blog/placeholder.jpg'}
-          alt={post.title}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
-          onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-            const target = e.target as HTMLImageElement;
-            target.src = '/tiryaki_it_hintergrund_bild.jpg';
-          }}
-        />
-
-        {/* Featured Badge */}
-        {post.featured && (
-          <div className="absolute top-4 left-4 z-20">
-            <span className="px-3 py-1 bg-primary text-white text-xs font-medium rounded-full">
-              Featured
-            </span>
+      <div className="flex flex-col gap-2 flex-1">
+        <h2 className={`font-bold group-hover:text-primary transition-colors duration-300 mb-2 ${featured ? 'text-xl md:text-2xl' : 'text-lg'}`}>{post.title}</h2>
+        <p className="mb-3 line-clamp-3 text-gray-600 dark:text-gray-300">{post.excerpt}</p>
+        <div className="flex items-center gap-3 mt-auto">
+          <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center text-sm font-bold">
+            {post.author.split(' ').map(n => n[0]).join('').toUpperCase()}
           </div>
-        )}
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 p-6">
-        {/* Meta-Informationen */}
-        <div className="flex items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400 mb-3">
-          <div className="flex items-center gap-1">
-            <CalendarIcon className="w-4 h-4" />
-            <span>{new Date(post.date).toLocaleDateString('de-DE')}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <ClockIcon className="w-4 h-4" />
-            <span>{post.readTime}</span>
-          </div>
+          <span className="text-sm text-neutral-400">{post.author}</span>
+          <span className="text-xs text-neutral-500 ml-2">{post.readTime}</span>
         </div>
-
-        {/* Titel */}
-        <h2 className={`font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-primary transition-colors duration-300 mb-3 ${featured ? 'text-xl md:text-2xl' : 'text-lg'
-          }`}>
-          {post.title}
-        </h2>
-
-        {/* Excerpt */}
-        <p className="text-zinc-600 dark:text-zinc-400 mb-4 line-clamp-3">
-          {post.excerpt}
-        </p>
-
-        {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
           {post.tags.slice(0, 3).map((tag, tagIndex) => (
             <span
@@ -174,8 +127,6 @@ const BlogCard = ({ post, index, featured = false }: {
             </span>
           ))}
         </div>
-
-        {/* Read More */}
         <Link
           href={`/blog/${post.id}`}
           className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium text-sm group-hover:gap-3 transition-all duration-300"
@@ -184,7 +135,7 @@ const BlogCard = ({ post, index, featured = false }: {
           <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
         </Link>
       </div>
-    </motion.article>
+    </article>
   );
 };
 
@@ -197,13 +148,26 @@ const BlogCategory = ({ name, count, active, onClick }: {
   <button
     onClick={onClick}
     className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${active
-        ? 'bg-primary text-white shadow-lg shadow-primary/25'
-        : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-primary/10 hover:text-primary'
+      ? 'bg-primary text-white shadow-lg shadow-primary/25'
+      : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-primary/10 hover:text-primary'
       }`}
   >
     {name} ({count})
   </button>
 );
+
+// Hilfs-Hook für zufällige Partikel-Positionen (Hydration Bugfix)
+function useRandomParticles(count: number) {
+  const [positions, setPositions] = React.useState<{ top: number, left: number }[]>([]);
+  React.useEffect(() => {
+    const newPositions = Array.from({ length: count }, () => ({
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+    }));
+    setPositions(newPositions);
+  }, [count]);
+  return positions;
+}
 
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState('Alle');
@@ -234,94 +198,25 @@ export default function Blog() {
   const featuredPosts = filteredPosts.filter((post: BlogPost) => post.featured);
   const regularPosts = filteredPosts.filter((post: BlogPost) => !post.featured);
 
+  // Partikel-Positionen für animierte Partikel (Hydration Bugfix)
+  const particlePositions = useRandomParticles(12);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-background/90 dark:from-background-dark dark:via-background-dark/95 dark:to-background-dark/90">
       <MainNav activePage="blog" />
 
-      <main className="min-h-screen w-full px-6 py-24 md:py-32">
-        {/* Hero Section */}
-        <motion.section
-          style={{ y }}
-          className="container mx-auto max-w-7xl mb-16"
-        >
-          <div className="text-center mb-12">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70"
-            >
-              Tech Blog
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-              className="text-xl md:text-2xl max-w-3xl mx-auto text-foreground/80 dark:text-foreground-dark/80"
-            >
-              Insights, Trends und praktische Tipps aus der Welt der Softwareentwicklung und KI
-            </motion.p>
-          </div>
-
-          {/* Animierte Partikel */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-2 h-2 rounded-full bg-primary/20"
-                style={{
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                }}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{
-                  scale: [0, 1, 1.5, 1, 0],
-                  opacity: [0, 0.8, 1, 0.8, 0],
-                  transition: {
-                    duration: 6,
-                    delay: i * 0.3,
-                    repeat: Infinity,
-                    repeatType: "loop"
-                  }
-                }}
-              />
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Kategorien Filter */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="container mx-auto max-w-7xl mb-12"
-        >
-          <div className="flex flex-wrap gap-3 justify-center">
-            {categories.map((category) => (
-              <BlogCategory
-                key={category}
-                name={category}
-                count={getCategoryCount(category)}
-                active={selectedCategory === category}
-                onClick={() => setSelectedCategory(category)}
-              />
-            ))}
-          </div>
-        </motion.section>
+      <main className="min-h-screen w-full px-4 py-24 md:py-32">
+        {/* Header-Bereich wie bei Cursor */}
+        <section className="flex flex-col gap-2 text-left max-w-6xl mx-auto mb-12">
+          <h1 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">Blog</h1>
+          <p className="text-lg md:text-xl text-brand-neutrals-600 dark:text-brand-neutrals-200 max-w-2xl">Insights, Trends und praktische Tipps aus der Welt der Softwareentwicklung</p>
+          <h2 className="mt-10 text-[2rem] leading-[2.625rem] font-semibold -tracking-4">Empfohlen</h2>
+        </section>
 
         {/* Featured Posts */}
         {featuredPosts.length > 0 && (
-          <motion.section
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="container mx-auto max-w-7xl mb-16"
-          >
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center text-foreground dark:text-foreground-dark">
-              Featured Articles
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <section className="max-w-6xl mx-auto mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {featuredPosts.map((post: BlogPost, index: number) => (
                 <BlogCard
                   key={post.id}
@@ -331,99 +226,112 @@ export default function Blog() {
                 />
               ))}
             </div>
-          </motion.section>
+          </section>
         )}
 
         {/* Regular Posts */}
         {regularPosts.length > 0 && (
-          <motion.section
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="container mx-auto max-w-7xl"
-          >
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center text-foreground dark:text-foreground-dark">
-              Alle Artikel
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <section className="max-w-6xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-left text-foreground dark:text-foreground-dark">Alle Beiträge</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {regularPosts.map((post: BlogPost, index: number) => (
                 <BlogCard
                   key={post.id}
                   post={post}
                   index={index}
+                  featured={false}
                 />
               ))}
             </div>
-          </motion.section>
+          </section>
         )}
 
-        {/* Newsletter Section */}
+        {/* Newsletter Section (ersetzt durch CTA von Lösungen) */}
         <motion.section
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="container mx-auto max-w-7xl mt-24"
+          transition={{ duration: 1 }}
+          className="container mx-auto max-w-7xl mt-32"
         >
-          <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">
-            {/* Hintergrund-Animationen */}
+          <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-2xl p-12 text-center relative overflow-hidden">
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern"></div>
+            </div>
+            {/* Technische Animationen im Hintergrund */}
             <div className="absolute inset-0 overflow-hidden">
-              <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                {[...Array(3)].map((_, i) => (
+              {/* Animierte Linien */}
+              <svg className="w-full h-full text-primary/20 dark:text-primary/30" viewBox="0 0 100 100" preserveAspectRatio="none">
+                {[...Array(5)].map((_, i) => (
                   <motion.path
                     key={i}
-                    d={`M${10 + i * 30},0 Q${50},${50 + i * 10} ${90 - i * 30},100`}
-                    stroke="url(#newsletterGradient)"
+                    d={`M${10 + i * 20},0 Q${50},${50 + i * 10} ${90 - i * 20},100`}
+                    stroke="currentColor"
                     strokeWidth="0.2"
-                    strokeDasharray="2,2"
+                    strokeDasharray="1,1"
                     fill="none"
                     initial={{ pathLength: 0, opacity: 0 }}
                     animate={{
                       pathLength: 1,
                       opacity: 0.6,
                       transition: {
-                        duration: 3,
-                        delay: i * 0.5,
+                        duration: 2.5,
+                        delay: i * 0.2,
                         repeat: Infinity,
                         repeatType: "loop",
-                        repeatDelay: 2
+                        repeatDelay: 1
                       }
                     }}
                   />
                 ))}
-                <defs>
-                  <linearGradient id="newsletterGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.2" />
-                    <stop offset="50%" stopColor="var(--color-primary)" stopOpacity="1" />
-                    <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0.2" />
-                  </linearGradient>
-                </defs>
               </svg>
-            </div>
-
-            <div className="relative z-10">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4 text-foreground dark:text-foreground-dark">
-                Bleib auf dem Laufenden
-              </h3>
-              <p className="text-lg max-w-2xl mx-auto mb-8 text-foreground/80 dark:text-foreground-dark/80">
-                Erhalte die neuesten Artikel und Tech-Updates direkt in dein Postfach.
-              </p>
-
-              <div className="max-w-md mx-auto flex gap-4">
-                <input
-                  type="email"
-                  placeholder="Deine E-Mail-Adresse"
-                  className="flex-1 px-4 py-3 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-primary focus:border-primary"
+              {/* Digitale Partikel */}
+              {particlePositions.map((pos, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-2 h-2 rounded-full bg-primary/30"
+                  style={{
+                    top: `${pos.top}%`,
+                    left: `${pos.left}%`,
+                  }}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{
+                    scale: [0, 1, 1.5, 1, 0],
+                    opacity: [0, 0.8, 1, 0.8, 0],
+                    transition: {
+                      duration: 4,
+                      delay: i * 0.3,
+                      repeat: Infinity,
+                      repeatType: "loop"
+                    }
+                  }}
                 />
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors duration-300"
+              ))}
+            </div>
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Bereit für dein nächstes Projekt?</h2>
+              <p className="text-xl max-w-2xl mx-auto mb-8 text-foreground/80 dark:text-foreground-dark/80">
+                Lass uns gemeinsam deine Vision in die Realität umsetzen. Kontaktiere mich für ein unverbindliches Erstgespräch.
+              </p>
+              <motion.div
+                initial={{ scale: 1 }}
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <a
+                  href="/#kontakt"
+                  className="group relative inline-flex items-center justify-center px-10 py-5 overflow-hidden font-medium transition-all bg-primary rounded-full hover:bg-primary/90"
                 >
-                  Abonnieren
-                </motion.button>
-              </div>
+                  {/* Animierter Hintergrund-Effekt */}
+                  <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-primary group-hover:translate-x-0 ease">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </span>
+                  <span className="absolute flex items-center justify-center w-full h-full text-white transition-all duration-300 transform group-hover:translate-x-full ease">Kreiere deine Innovation</span>
+                  <span className="relative invisible">Kreiere deine Innovation</span>
+                </a>
+              </motion.div>
             </div>
           </div>
         </motion.section>

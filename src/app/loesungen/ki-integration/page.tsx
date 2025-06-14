@@ -70,32 +70,32 @@ export default function KIIntegrationDetail() {
                 </span>
               </motion.div>
             </div>
-            <p className="text-xl md:text-2xl text-foreground/80 max-w-2xl mx-auto">Wir integrieren KI-Lösungen, die deine Prozesse automatisieren, Daten nutzbar machen und neue Möglichkeiten für dein Business schaffen.</p>
+            <p className="text-xl md:text-2xl text-foreground/80 dark:text-foreground-dark/80 max-w-2xl mx-auto">Wir integrieren KI-Lösungen, die deine Prozesse automatisieren, Daten nutzbar machen und neue Möglichkeiten für dein Business schaffen.</p>
           </motion.div>
         </section>
 
         {/* Leistungen */}
         <section className="mb-20">
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10">
+            <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10 text-foreground">
               <div className="flex items-center gap-3 mb-3">
                 <LightBulbIcon className="w-10 h-10 text-primary" />
-                <h3 className="text-xl font-semibold text-primary">KI-Strategie & Beratung</h3>
+                <h3 className="text-xl font-semibold text-primary dark:text-primary">KI-Strategie & Beratung</h3>
               </div>
-              <p className="text-foreground/80 mb-2">Entwicklung einer individuellen KI-Strategie für dein Unternehmen. Wir analysieren deine Prozesse und identifizieren KI-Potenziale.</p>
-              <ul className="list-disc ml-5 text-foreground/70 text-sm space-y-1">
+              <p className="text-foreground/80 dark:text-foreground-dark mb-2">Entwicklung einer individuellen KI-Strategie für dein Unternehmen. Wir analysieren deine Prozesse und identifizieren KI-Potenziale.</p>
+              <ul className="list-disc ml-5 text-foreground/70 dark:text-foreground-dark text-sm space-y-1">
                 <li>Potenzialanalyse & Use Cases</li>
                 <li>Machbarkeitsstudien & Roadmap</li>
                 <li>Workshops & Schulungen</li>
               </ul>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10">
+            <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10 text-foreground">
               <div className="flex items-center gap-3 mb-3">
                 <PuzzlePieceIcon className="w-10 h-10 text-primary" />
-                <h3 className="text-xl font-semibold text-primary">KI-Integration & Implementierung</h3>
+                <h3 className="text-xl font-semibold text-primary dark:text-primary">KI-Integration & Implementierung</h3>
               </div>
-              <p className="text-foreground/80 mb-2">Nahtlose Integration von KI-Lösungen in deine Systeme. Von Machine Learning bis Natural Language Processing.</p>
-              <ul className="list-disc ml-5 text-foreground/70 text-sm space-y-1">
+              <p className="text-foreground/80 dark:text-foreground-dark mb-2">Nahtlose Integration von KI-Lösungen in deine Systeme. Von Machine Learning bis Natural Language Processing.</p>
+              <ul className="list-disc ml-5 text-foreground/70 dark:text-foreground-dark text-sm space-y-1">
                 <li>Automatisierung & Prozessoptimierung</li>
                 <li>Chatbots, Sprach- & Bilderkennung</li>
                 <li>Individuelle KI-Modelle & APIs</li>
@@ -163,21 +163,21 @@ export default function KIIntegrationDetail() {
         <section className="mb-20">
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-2xl font-bold mb-8 text-primary">Step by step zur KI-Lösung</motion.h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">1. Analyse & Strategie</h4>
-              <p className="text-foreground/80">Wir analysieren deine Ziele, Daten und Prozesse. Du erhältst eine individuelle Beratung und eine klare Roadmap für deine KI-Integration.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">1. Analyse & Strategie</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Wir analysieren deine Ziele, Daten und Prozesse. Du erhältst eine individuelle Beratung und eine klare Roadmap für deine KI-Integration.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">2. Konzeption & Prototyping</h4>
-              <p className="text-foreground/80">Gemeinsam entwickeln wir ein maßgeschneidertes Konzept und erstellen auf Wunsch Prototypen für deine KI-Lösung.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">2. Konzeption & Prototyping</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Gemeinsam entwickeln wir ein maßgeschneidertes Konzept und erstellen auf Wunsch Prototypen für deine KI-Lösung.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">3. Entwicklung & Implementierung</h4>
-              <p className="text-foreground/80">Agile Entwicklung, Integration und Anpassung der KI-Lösungen an deine Anforderungen.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">3. Entwicklung & Implementierung</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Agile Entwicklung, Integration und Anpassung der KI-Lösungen an deine Anforderungen.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">4. Rollout & Support</h4>
-              <p className="text-foreground/80">Sicherer Go-Live, Monitoring und kontinuierliche Optimierung – für nachhaltigen KI-Erfolg.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">4. Rollout & Support</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Sicherer Go-Live, Monitoring und kontinuierliche Optimierung – für nachhaltigen KI-Erfolg.</p>
             </motion.div>
           </div>
         </section>
@@ -190,21 +190,21 @@ export default function KIIntegrationDetail() {
               <ChartBarIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Effizienzsteigerung</h4>
-                <p className="text-foreground/80 text-sm">Automatisierung von Prozessen und Optimierung von Arbeitsabläufen durch KI.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Automatisierung von Prozessen und Optimierung von Arbeitsabläufen durch KI.</p>
               </div>
             </div>
             <div className="flex gap-4 items-start">
               <ShieldCheckIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Datenbasierte Entscheidungen</h4>
-                <p className="text-foreground/80 text-sm">Präzise Analysen und Vorhersagen für bessere Entscheidungen.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Präzise Analysen und Vorhersagen für bessere Entscheidungen.</p>
               </div>
             </div>
             <div className="flex gap-4 items-start">
               <Cog6ToothIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Innovationsvorsprung</h4>
-                <p className="text-foreground/80 text-sm">Setze auf modernste KI-Technologien und sichere dir einen Vorsprung im Wettbewerb.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Setze auf modernste KI-Technologien und sichere dir einen Vorsprung im Wettbewerb.</p>
               </div>
             </div>
             <div className="flex gap-4 items-start">

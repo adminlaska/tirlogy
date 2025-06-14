@@ -82,19 +82,19 @@ export default function MobileAppsDetail() {
                 </span>
               </motion.div>
             </div>
-            <p className="text-xl md:text-2xl text-foreground/80 max-w-2xl mx-auto">Wir entwickeln moderne, performante und nutzerzentrierte Apps für Apple und Android – von der Idee bis zum Launch im App Store & Play Store.</p>
+            <p className="text-xl md:text-2xl text-foreground/80 dark:text-foreground-dark/80 max-w-2xl mx-auto">Wir entwickeln moderne, performante und nutzerzentrierte Apps für Apple und Android – von der Idee bis zum Launch im App Store & Play Store.</p>
           </motion.div>
         </section>
 
         {/* Leistungsübersicht: iOS & Android */}
         <section className="mb-20 grid md:grid-cols-2 gap-8">
           {/* iOS */}
-          <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10 flex flex-col h-full">
+          <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10 flex flex-col h-full text-foreground">
             <div className="flex items-center gap-3 mb-3">
               <AppStoreIcon className="w-10 h-10 text-primary" />
-              <h3 className="text-xl font-semibold text-primary">Apple (iOS) Entwicklung</h3>
+              <h3 className="text-xl font-semibold text-primary dark:text-primary">Apple (iOS) Entwicklung</h3>
             </div>
-            <ul className="list-disc ml-5 text-foreground/70 text-sm space-y-1 mb-2">
+            <ul className="list-disc ml-5 text-foreground/70 dark:text-foreground-dark text-sm space-y-1 mb-2">
               <li>Native Entwicklung mit Swift & SwiftUI</li>
               <li>Unterstützung für iPhone, iPad, Apple Watch & Apple TV</li>
               <li>Widgets, App Clips, Push-Notifications, Siri-Integration</li>
@@ -105,12 +105,12 @@ export default function MobileAppsDetail() {
             </ul>
           </motion.div>
           {/* Android */}
-          <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10 flex flex-col h-full">
+          <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10 flex flex-col h-full text-foreground">
             <div className="flex items-center gap-3 mb-3">
               <PlayStoreIcon className="w-10 h-10 text-primary" />
-              <h3 className="text-xl font-semibold text-primary">Android Entwicklung</h3>
+              <h3 className="text-xl font-semibold text-primary dark:text-primary">Android Entwicklung</h3>
             </div>
-            <ul className="list-disc ml-5 text-foreground/70 text-sm space-y-1 mb-2">
+            <ul className="list-disc ml-5 text-foreground/70 dark:text-foreground-dark text-sm space-y-1 mb-2">
               <li>Native Entwicklung mit Kotlin & Java</li>
               <li>Unterstützung für Smartphones, Tablets, Wearables & TV</li>
               <li>Widgets, Material Design, Push-Notifications, Google Services</li>
@@ -126,13 +126,13 @@ export default function MobileAppsDetail() {
         <section className="mb-20">
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-2xl font-bold mb-8 text-primary">Cross-Platform Entwicklung</motion.h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">React Native</h4>
-              <p className="text-foreground/80">Schnelle Entwicklung für iOS & Android mit einer Codebasis. Native Performance, große Community, viele Integrationen.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">React Native</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Schnelle Entwicklung für iOS & Android mit einer Codebasis. Native Performance, große Community, viele Integrationen.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">Flutter</h4>
-              <p className="text-foreground/80">Moderne UI-Entwicklung mit Dart. Hohe Flexibilität, schnelle Animationen, für iOS & Android.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">Flutter</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Moderne UI-Entwicklung mit Dart. Hohe Flexibilität, schnelle Animationen, für iOS & Android.</p>
             </motion.div>
           </div>
         </section>
@@ -196,19 +196,19 @@ export default function MobileAppsDetail() {
         <section className="mb-20">
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-2xl font-bold mb-8 text-primary">Step by step zur erfolgreichen App</motion.h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
               <h4 className="font-semibold text-lg mb-2">1. Beratung & Strategie</h4>
               <p className="text-foreground/80">Wir analysieren deine Ziele, Zielgruppe und Anforderungen. Du erhältst eine ehrliche, individuelle Beratung und eine klare Roadmap für dein App-Projekt.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
               <h4 className="font-semibold text-lg mb-2">2. UI/UX-Design & Prototyping</h4>
               <p className="text-foreground/80">Modernes, responsives App-Design – auf Wunsch mit interaktiven Prototypen. Du bist in jeden Schritt eingebunden und gibst Feedback.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
               <h4 className="font-semibold text-lg mb-2">3. Entwicklung & Testing</h4>
               <p className="text-foreground/80">Agile Entwicklung mit modernen Tools. Regelmäßige Demos, automatisierte Tests und höchste Code-Qualität sind Standard.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
               <h4 className="font-semibold text-lg mb-2">4. Launch & Support</h4>
               <p className="text-foreground/80">Sicherer Go-Live im App Store & Play Store, Hosting, Monitoring und Support. Auch nach dem Launch sind wir für dich da – mit Updates, Wartung und Optimierung.</p>
             </motion.div>
@@ -223,28 +223,28 @@ export default function MobileAppsDetail() {
               <DevicePhoneMobileIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Plattformübergreifend & nativ</h4>
-                <p className="text-foreground/80 text-sm">Ob iOS, Android oder Cross-Platform – wir finden die beste Lösung für dein Projekt.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Ob iOS, Android oder Cross-Platform – wir finden die beste Lösung für dein Projekt.</p>
               </div>
             </div>
             <div className="flex gap-4 items-start">
               <ChartBarIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Performance & User Experience</h4>
-                <p className="text-foreground/80 text-sm">Schnelle Ladezeiten, intuitive Bedienung und modernes Design – für begeisterte Nutzer.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Schnelle Ladezeiten, intuitive Bedienung und modernes Design – für begeisterte Nutzer.</p>
               </div>
             </div>
             <div className="flex gap-4 items-start">
               <Cog6ToothIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Wartung & Support</h4>
-                <p className="text-foreground/80 text-sm">Regelmäßige Updates, Monitoring und persönlicher Support – für einen sorgenfreien Betrieb deiner App.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Regelmäßige Updates, Monitoring und persönlicher Support – für einen sorgenfreien Betrieb deiner App.</p>
               </div>
             </div>
             <div className="flex gap-4 items-start">
               <ChatBubbleLeftRightIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Individuelle Beratung</h4>
-                <p className="text-foreground/80 text-sm">Du erhältst keine Lösung von der Stange, sondern ein Konzept, das exakt zu deinen Zielen passt.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Du erhältst keine Lösung von der Stange, sondern ein Konzept, das exakt zu deinen Zielen passt.</p>
               </div>
             </div>
           </div>

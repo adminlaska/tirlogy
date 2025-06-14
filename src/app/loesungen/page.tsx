@@ -180,7 +180,7 @@ export default function Loesungen() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-xl md:text-2xl max-w-3xl mx-auto text-foreground/80"
+              className="text-xl md:text-2xl max-w-3xl mx-auto text-foreground/80 dark:text-foreground-dark/80"
             >
               Digitale Lösungen, die dein Business auf das nächste Level bringen.
             </motion.p>
@@ -195,7 +195,7 @@ export default function Loesungen() {
             {solutions.map((solution, index) => (
               <motion.div
                 key={index}
-                className="solution-card bg-white/5 dark:bg-black/5 backdrop-blur-md rounded-2xl border border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 overflow-hidden"
+                className="solution-card bg-white/5 dark:bg-black/5 backdrop-blur-md rounded-2xl border border-primary/10 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 overflow-hidden text-foreground"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
@@ -209,10 +209,10 @@ export default function Loesungen() {
                     <div className="flex items-center gap-4">
                       {solution.icon}
                       <div>
-                        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                        <h3 className="text-xl font-bold text-foreground dark:text-foreground-dark group-hover:text-primary transition-colors duration-300">
                           {solution.title}
                         </h3>
-                        <p className="text-foreground/70 text-sm mt-1">
+                        <p className="text-foreground/70 dark:text-foreground-dark text-sm mt-1">
                           {solution.shortDescription}
                         </p>
                       </div>
@@ -222,7 +222,7 @@ export default function Loesungen() {
                       {expandedCard === index ? (
                         <ChevronUpIcon className="w-6 h-6 text-primary" />
                       ) : (
-                        <ChevronDownIcon className="w-6 h-6 text-foreground/50 group-hover:text-primary transition-colors" />
+                        <ChevronDownIcon className="w-6 h-6 text-foreground/50 dark:text-foreground-dark/70 group-hover:text-primary transition-colors" />
                       )}
                     </div>
                   </div>
@@ -242,7 +242,7 @@ export default function Loesungen() {
                     <div className="pt-6 space-y-6">
                       {/* Detailed Description */}
                       <div>
-                        <p className="text-foreground/80 leading-relaxed">
+                        <p className="text-foreground/80 dark:text-foreground-dark leading-relaxed">
                           {solution.fullDescription}
                         </p>
                       </div>
@@ -257,7 +257,7 @@ export default function Loesungen() {
                             {solution.features.map((feature, idx) => (
                               <li key={idx} className="flex items-start gap-3">
                                 <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></span>
-                                <span className="text-sm text-foreground/80">{feature}</span>
+                                <span className="text-sm text-foreground/80 dark:text-foreground-dark">{feature}</span>
                               </li>
                             ))}
                           </ul>
@@ -381,7 +381,7 @@ export default function Loesungen() {
 
             <div className="relative z-10">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Bereit für dein nächstes Projekt?</h2>
-              <p className="text-xl max-w-2xl mx-auto mb-8 text-foreground/80">
+              <p className="text-xl max-w-2xl mx-auto mb-8 text-foreground/80 dark:text-foreground-dark/80">
                 Lass uns gemeinsam deine Vision in die Realität umsetzen. Kontaktiere mich für ein unverbindliches Erstgespräch.
               </p>
 

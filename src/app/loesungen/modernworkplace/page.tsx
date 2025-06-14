@@ -71,26 +71,26 @@ export default function ModernWorkplaceDetail() {
                 </span>
               </motion.div>
             </div>
-            <p className="text-xl md:text-2xl text-foreground/80 max-w-2xl mx-auto">Effiziente, sichere und flexible Arbeitsplätze für dein Team – mit Microsoft 365, Cloud, Collaboration & Automatisierung.</p>
+            <p className="text-xl md:text-2xl text-foreground/80 dark:text-foreground-dark/80 max-w-2xl mx-auto">Effiziente, sichere und flexible Arbeitsplätze für dein Team – mit Microsoft 365, Cloud, Collaboration & Automatisierung.</p>
           </motion.div>
         </section>
 
         {/* Leistungsübersicht (Platzhalter) */}
         <section className="mb-20">
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10">
+            <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10 text-foreground">
               <div className="flex items-center gap-3 mb-3">
                 <OneDriveIcon className="w-10 h-10 text-primary" />
-                <h3 className="text-xl font-semibold text-primary">Microsoft 365 & Cloud</h3>
+                <h3 className="text-xl font-semibold text-primary dark:text-primary">Microsoft 365 & Cloud</h3>
               </div>
-              <p className="text-foreground/80 mb-2">Alle Tools für produktives Arbeiten: Teams, SharePoint, OneDrive, Exchange, Azure und mehr. Sicher, skalierbar und überall verfügbar.</p>
+              <p className="text-foreground/80 dark:text-foreground-dark mb-2">Alle Tools für produktives Arbeiten: Teams, SharePoint, OneDrive, Exchange, Azure und mehr. Sicher, skalierbar und überall verfügbar.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10">
+            <motion.div whileHover={{ scale: 1.03 }} className="rounded-2xl bg-white/10 dark:bg-black/10 p-6 shadow-lg border border-primary/10 text-foreground">
               <div className="flex items-center gap-3 mb-3">
                 <Microsoft365Icon className="w-10 h-10 text-primary" />
-                <h3 className="text-xl font-semibold text-primary">Digitale Workflows & Automatisierung</h3>
+                <h3 className="text-xl font-semibold text-primary dark:text-primary">Digitale Workflows & Automatisierung</h3>
               </div>
-              <p className="text-foreground/80 mb-2">Nahtlose Integration von Microsoft Power Platform, SharePoint, Teams und weiteren Microsoft 365 Tools für optimierte Geschäftsprozesse und effiziente Teamarbeit.</p>
+              <p className="text-foreground/80 dark:text-foreground-dark mb-2">Nahtlose Integration von Microsoft Power Platform, SharePoint, Teams und weiteren Microsoft 365 Tools für optimierte Geschäftsprozesse und effiziente Teamarbeit.</p>
             </motion.div>
           </div>
         </section>
@@ -154,21 +154,21 @@ export default function ModernWorkplaceDetail() {
         <section className="mb-20">
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-2xl font-bold mb-8 text-primary">Step by step zum Modern Workplace</motion.h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">1. Beratung & Analyse</h4>
-              <p className="text-foreground/80">Wir analysieren deine Arbeitsweise, Ziele und Anforderungen. Du erhältst eine individuelle Beratung und eine klare Roadmap für deinen Modern Workplace.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">1. Beratung & Analyse</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Wir analysieren deine Arbeitsweise, Ziele und Anforderungen. Du erhältst eine individuelle Beratung und eine klare Roadmap für deinen Modern Workplace.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">2. Konzept & Planung</h4>
-              <p className="text-foreground/80">Gemeinsam entwickeln wir ein maßgeschneidertes Konzept für die digitale Zusammenarbeit und wählen die passenden Tools aus.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">2. Konzept & Planung</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Gemeinsam entwickeln wir ein maßgeschneidertes Konzept für die digitale Zusammenarbeit und wählen die passenden Tools aus.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">3. Umsetzung & Integration</h4>
-              <p className="text-foreground/80">Wir implementieren die Lösungen, schulen dein Team und sorgen für eine reibungslose Integration in den Arbeitsalltag.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">3. Umsetzung & Integration</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Wir implementieren die Lösungen, schulen dein Team und sorgen für eine reibungslose Integration in den Arbeitsalltag.</p>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10">
-              <h4 className="font-semibold text-lg mb-2">4. Rollout & Support</h4>
-              <p className="text-foreground/80">Sicherer Rollout, Support und kontinuierliche Optimierung – für einen nachhaltigen Modern Workplace.</p>
+            <motion.div whileHover={{ scale: 1.02 }} className="rounded-xl bg-white/5 dark:bg-black/5 p-6 border border-primary/10 text-foreground">
+              <h4 className="font-semibold text-lg mb-2 dark:text-foreground-dark">4. Rollout & Support</h4>
+              <p className="text-foreground/80 dark:text-foreground-dark">Sicherer Rollout, Support und kontinuierliche Optimierung – für einen nachhaltigen Modern Workplace.</p>
             </motion.div>
           </div>
         </section>
@@ -181,14 +181,14 @@ export default function ModernWorkplaceDetail() {
               <ChartBarIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Effizienz & Produktivität</h4>
-                <p className="text-foreground/80 text-sm">Digitale Tools und Automatisierung steigern die Effizienz und erleichtern die Zusammenarbeit im Team.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Digitale Tools und Automatisierung steigern die Effizienz und erleichtern die Zusammenarbeit im Team.</p>
               </div>
             </div>
             <div className="flex gap-4 items-start">
               <ShieldCheckIcon className="w-16 h-16 text-primary mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Sicherheit & Compliance</h4>
-                <p className="text-foreground/80 text-sm">Modernste Sicherheitsstandards, DSGVO-Konformität und zuverlässiger Datenschutz für dein Unternehmen.</p>
+                <p className="text-foreground/80 text-sm dark:text-foreground-dark/80">Modernste Sicherheitsstandards, DSGVO-Konformität und zuverlässiger Datenschutz für dein Unternehmen.</p>
               </div>
             </div>
             <div className="flex gap-4 items-start">
