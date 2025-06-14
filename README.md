@@ -2,7 +2,7 @@
 
 Eine moderne, responsive Website für IT-Dienstleistungen, entwickelt mit Next.js 14, TypeScript und Tailwind CSS. Inklusive KI-gestütztem Chat-Support.
 
-## 🆕 Neueste Updates (Juni 2024)
+## 🆕 Neueste Updates (Juni 2025)
 
 - **Komplett überarbeitete Lösungen-Seite & Detailseiten**
   - Einheitliches, modernes Design für alle Lösungen (Webentwicklung, Mobile Apps, ModernWorkplace, KI-Integration)
