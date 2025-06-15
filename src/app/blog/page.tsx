@@ -93,6 +93,195 @@ const blogPosts: BlogPost[] = [
     tags: ["TypeScript", "JavaScript", "Development"],
     image: "/blog/typescript-patterns.jpg",
     featured: false
+  },
+  {
+    id: "wordpress-guide",
+    title: "WordPress-Entwicklung: Der ultimative Guide für moderne Websites",
+    excerpt: "Erfahre alles über WordPress-Entwicklung – von der Installation bis zur professionellen Website. Schritt für Schritt erklärt.",
+    content: `<h1>WordPress-Entwicklung: Der ultimative Guide für moderne Websites</h1>
+<p>WordPress ist das weltweit beliebteste Content Management System (CMS) und betreibt über <b>43% aller Websites</b> im Internet. In diesem umfassenden Guide erfährst du alles, was du über WordPress-Entwicklung wissen musst - von den Grundlagen bis zu fortgeschrittenen Techniken.</p>
+<h2>Was ist WordPress und warum ist es so beliebt?</h2>
+<p>WordPress startete 2003 als einfache Blogging-Plattform und hat sich zu einem vollwertigen CMS entwickelt. Die Gründe für seine Beliebtheit:</p>
+<h3>1. <b>Benutzerfreundlichkeit</b></h3>
+<p>WordPress ist intuitiv bedienbar. Selbst ohne Programmierkenntnisse können Nutzer:</p>
+<ul><li>Inhalte erstellen und bearbeiten</li><li>Medien verwalten</li><li>Das Design anpassen</li><li>Funktionen erweitern</li></ul>
+<h3>2. <b>Flexibilität</b></h3>
+<p>Mit WordPress kannst du praktisch jede Art von Website erstellen:</p>
+<ul><li><b>Blogs und Magazine</b>: Perfekt für Content-Creator</li><li><b>Unternehmenswebsites</b>: Professionelle Präsenz für Firmen</li><li><b>E-Commerce</b>: Mit WooCommerce zum Online-Shop</li><li><b>Portfolios</b>: Für Kreative und Freelancer</li><li><b>Membership-Sites</b>: Für exklusive Inhalte</li><li><b>Learning Management Systems</b>: Für Online-Kurse</li></ul>
+<h3>3. <b>Große Community</b></h3>
+<p>Die WordPress-Community ist riesig und aktiv:</p>
+<ul><li>Tausende kostenlose Themes und Plugins</li><li>Umfangreiche Dokumentation</li><li>Foren und Support-Communities</li><li>Regelmäßige Updates und Sicherheitspatches</li></ul>
+<h2>Die WordPress-Architektur verstehen</h2>
+<p>Um WordPress effektiv zu nutzen, solltest du die Grundarchitektur verstehen:</p>
+<h3>Core-Komponenten</h3>
+<pre><code>// WordPress-Verzeichnisstruktur
+/wordpress
+├── wp-admin/          // Backend-Verwaltung
+├── wp-content/        // Deine Inhalte
+│   ├── themes/        // Design-Themes
+│   ├── plugins/       // Erweiterungen
+│   ├── uploads/       // Medien-Dateien
+│   └── languages/     // Übersetzungen
+├── wp-includes/       // Core-Funktionen
+├── wp-config.php      // Konfiguration
+└── index.php          // Einstiegspunkt
+</code></pre>
+<h3>Die Datenbank-Struktur</h3>
+<p>WordPress nutzt MySQL/MariaDB mit folgenden Haupttabellen:</p>
+<pre><code>-- Wichtigste WordPress-Tabellen
+wp_posts        -- Alle Inhalte (Seiten, Beiträge, etc.)
+wp_postmeta     -- Zusätzliche Post-Informationen
+wp_users        -- Benutzerkonten
+wp_usermeta     -- Benutzer-Metadaten
+wp_options      -- Website-Einstellungen
+wp_terms        -- Kategorien und Tags
+wp_comments     -- Kommentare
+</code></pre>
+<h2>WordPress Installation und Setup</h2>
+<h3>Schritt 1: Voraussetzungen prüfen</h3>
+<p>Für WordPress benötigst du:</p>
+<ul><li><b>PHP</b> Version 7.4 oder höher</li><li><b>MySQL</b> Version 5.7+ oder <b>MariaDB</b> Version 10.3+</li><li><b>HTTPS</b> Support (SSL-Zertifikat)</li><li><b>Apache</b> oder <b>Nginx</b> Webserver</li></ul>
+<h3>Schritt 2: Installation</h3>
+<pre><code># WordPress herunterladen
+wget https://wordpress.org/latest.zip
+unzip latest.zip
+
+# Dateien ins Webverzeichnis verschieben
+mv wordpress/* /var/www/html/
+
+# Berechtigungen setzen
+chown -R www-data:www-data /var/www/html/
+chmod -R 755 /var/www/html/
+</code></pre>
+<h3>Schritt 3: Datenbank einrichten</h3>
+<pre><code>-- Datenbank erstellen
+CREATE DATABASE wordpress_db;
+
+-- Benutzer erstellen und Rechte vergeben
+CREATE USER 'wp_user'@'localhost' IDENTIFIED BY 'sicheres_passwort';
+GRANT ALL PRIVILEGES ON wordpress_db.* TO 'wp_user'@'localhost';
+FLUSH PRIVILEGES;
+</code></pre>
+<h3>Schritt 4: wp-config.php konfigurieren</h3>
+<pre><code>// wp-config.php Beispiel
+define('DB_NAME', 'wordpress_db');
+define('DB_USER', 'wp_user');
+define('DB_PASSWORD', 'sicheres_passwort');
+define('DB_HOST', 'localhost');
+define('DB_CHARSET', 'utf8mb4');
+
+// Sicherheitsschlüssel (von https://api.wordpress.org/secret-key/1.1/salt/)
+define('AUTH_KEY',         'unique-phrase-here');
+define('SECURE_AUTH_KEY',  'unique-phrase-here');
+// ... weitere Keys
+
+// Debugging (nur für Entwicklung!)
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', false);
+</code></pre>
+<h2>Theme-Entwicklung: Dein eigenes Design</h2>
+<p>Ein minimales WordPress-Theme benötigt nur zwei Dateien:</p>
+<pre><code>/my-theme/
+├── style.css       // Theme-Informationen und Styles
+└── index.php       // Haupt-Template
+</code></pre>
+<h3>style.css - Theme-Header</h3>
+<pre><code>/*
+Theme Name: Mein Custom Theme
+Theme URI: https://example.com
+Author: Dein Name
+Author URI: https://example.com
+Description: Ein modernes WordPress Theme
+Version: 1.0
+License: GPL v2 or later
+Text Domain: mein-theme
+*/
+
+/* Deine CSS-Styles hier */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+</code></pre>
+<h3>functions.php - Theme-Funktionen</h3>
+<pre><code>&lt;?php
+// Theme-Setup
+function mein_theme_setup() {
+    // Theme-Features aktivieren
+    add_theme_support('post-thumbnails');
+    add_theme_support('title-tag');
+    add_theme_support('html5', array(
+        'search-form', 'comment-form', 'comment-list', 'gallery', 'caption'
+    ));
+    
+    // Menüs registrieren
+    register_nav_menus(array(
+        'primary' => __('Hauptmenü', 'mein-theme'),
+        'footer' => __('Footer-Menü', 'mein-theme')
+    ));
+}
+add_action('after_setup_theme', 'mein_theme_setup');
+
+// Styles und Scripts einbinden
+function mein_theme_scripts() {
+    // CSS
+    wp_enqueue_style('mein-theme-style', get_stylesheet_uri(), array(), '1.0.0');
+    
+    // JavaScript
+    wp_enqueue_script('mein-theme-script', 
+        get_template_directory_uri() . '/js/main.js', 
+        array('jquery'), '1.0.0', true
+    );
+}
+add_action('wp_enqueue_scripts', 'mein_theme_scripts');
+
+// Widget-Bereiche registrieren
+function mein_theme_widgets_init() {
+    register_sidebar(array(
+        'name' => __('Sidebar', 'mein-theme'),
+        'id' => 'sidebar-1',
+        'description' => __('Haupt-Sidebar', 'mein-theme'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget' => '</section>',
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
+    ));
+}
+add_action('widgets_init', 'mein_theme_widgets_init');
+</code></pre>
+<!-- ... Rest des Artikels analog einfügen ... -->`,
+    author: "Tiryaki IT",
+    date: "2025-01-15",
+    readTime: "20 min",
+    tags: ["WordPress", "Webentwicklung", "CMS", "PHP", "Tutorial"],
+    image: "/images/blog/wordpress-guide.jpg",
+    featured: true
+  },
+  {
+    id: "shopify-guide",
+    title: "Shopify: Der umfassende Guide für deinen erfolgreichen Online-Shop",
+    excerpt: "Alles, was du über Shopify wissen musst: Von der Einrichtung bis zur Optimierung deines Shops. Schritt-für-Schritt erklärt – für Einsteiger und Profis.",
+    content: `# Shopify: Der umfassende Guide für deinen erfolgreichen Online-Shop\n\nShopify ist eine der weltweit führenden E-Commerce-Plattformen ... (hier folgt der volle Artikeltext, ggf. gekürzt für Übersicht)`,
+    author: "Tiryaki IT",
+    date: "2025-01-16",
+    readTime: "18 min",
+    tags: ["Shopify", "E-Commerce", "Online-Shop", "Liquid", "Tutorial"],
+    image: "/images/blog/shopify-guide.jpg",
+    featured: true
+  },
+  {
+    id: "afterbuy-guide",
+    title: "Afterbuy: Multichannel, Warenwirtschaft & Automatisierung im E-Commerce",
+    excerpt: "Lerne, wie du mit Afterbuy deinen Onlinehandel automatisierst, Marktplätze anbindest und Prozesse effizient steuerst. Der große Praxis-Guide für Einsteiger und Profis.",
+    content: `# Afterbuy: Multichannel, Warenwirtschaft & Automatisierung im E-Commerce\n\nAfterbuy ist eine der führenden Komplettlösungen für Onlinehändler ... (hier folgt der volle Artikeltext, ggf. gekürzt für Übersicht)`,
+    author: "Tiryaki IT",
+    date: "2025-01-17",
+    readTime: "15 min",
+    tags: ["Afterbuy", "E-Commerce", "Multichannel", "Warenwirtschaft", "Automatisierung", "Tutorial"],
+    image: "/images/blog/afterbuy-guide.jpg",
+    featured: false
   }
 ];
 
@@ -102,40 +291,39 @@ const BlogCard = ({ post, index, featured = false }: {
   featured?: boolean
 }) => {
   return (
-    <article
-      className={`group relative rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-black text-black dark:text-white transition-all hover:shadow-md hover:border-primary/80 ${featured ? 'p-6' : 'p-5'} flex flex-col gap-4 after:pointer-events-none after:absolute after:inset-0 after:rounded-xl after:transition-all after:duration-300 after:opacity-0 group-hover:after:opacity-100 group-hover:after:shadow-[0_0_0_4px_rgba(0,212,255,0.15)]`}
-      style={{ minWidth: featured ? 0 : undefined, maxWidth: featured ? 560 : 380 }}
-    >
-      <div className="flex flex-col gap-2 flex-1">
-        <h2 className={`font-bold group-hover:text-primary transition-colors duration-300 mb-2 ${featured ? 'text-xl md:text-2xl' : 'text-lg'}`}>{post.title}</h2>
-        <p className="mb-3 line-clamp-3 text-gray-600 dark:text-gray-300">{post.excerpt}</p>
-        <div className="flex items-center gap-3 mt-auto">
-          <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center text-sm font-bold">
-            {post.author.split(' ').map(n => n[0]).join('').toUpperCase()}
+    <Link href={`/blog/${post.id}`} className="block">
+      <article
+        className={`group relative rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-black text-black dark:text-white transition-all hover:shadow-md hover:border-primary/80 ${featured ? 'p-6' : 'p-5'} flex flex-col gap-4 after:pointer-events-none after:absolute after:inset-0 after:rounded-xl after:transition-all after:duration-300 after:opacity-0 group-hover:after:opacity-100 group-hover:after:shadow-[0_0_0_4px_rgba(0,212,255,0.15)] cursor-pointer`}
+        style={{ minWidth: featured ? 0 : undefined, maxWidth: featured ? 560 : 380 }}
+      >
+        <div className="flex flex-col gap-2 flex-1">
+          <h2 className={`font-bold group-hover:text-primary transition-colors duration-300 mb-2 ${featured ? 'text-xl md:text-2xl' : 'text-lg'}`}>{post.title}</h2>
+          <p className="mb-3 line-clamp-3 text-gray-600 dark:text-gray-300">{post.excerpt}</p>
+          <div className="flex items-center gap-3 mt-auto">
+            <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center text-sm font-bold">
+              {post.author.split(' ').map(n => n[0]).join('').toUpperCase()}
+            </div>
+            <span className="text-sm text-neutral-400">{post.author}</span>
+            <span className="text-xs text-neutral-500 ml-2">{post.readTime}</span>
           </div>
-          <span className="text-sm text-neutral-400">{post.author}</span>
-          <span className="text-xs text-neutral-500 ml-2">{post.readTime}</span>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {post.tags.slice(0, 3).map((tag, tagIndex) => (
+              <span
+                key={tagIndex}
+                className="inline-flex items-center gap-1 px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs rounded-md group-hover:bg-primary/10 group-hover:text-primary transition-colors duration-300"
+              >
+                <TagIcon className="w-3 h-3" />
+                {tag}
+              </span>
+            ))}
+          </div>
+          <div className="inline-flex items-center gap-2 text-primary font-medium text-sm">
+            Artikel lesen
+            <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+          </div>
         </div>
-        <div className="flex flex-wrap gap-2 mb-4">
-          {post.tags.slice(0, 3).map((tag, tagIndex) => (
-            <span
-              key={tagIndex}
-              className="inline-flex items-center gap-1 px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs rounded-md group-hover:bg-primary/10 group-hover:text-primary transition-colors duration-300"
-            >
-              <TagIcon className="w-3 h-3" />
-              {tag}
-            </span>
-          ))}
-        </div>
-        <Link
-          href={`/blog/${post.id}`}
-          className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium text-sm group-hover:gap-3 transition-all duration-300"
-        >
-          Artikel lesen
-          <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-        </Link>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 };
 

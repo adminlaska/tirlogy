@@ -2,7 +2,7 @@ import { defineDocumentType, makeSource } from 'contentlayer/source-files'
 
 export const Blog = defineDocumentType(() => ({
   name: 'Blog',
-  filePathPattern: `blog/*.mdx`,
+  filePathPattern: ['blog/*.mdx', 'content/posts/*.mdx'],
   contentType: 'mdx',
   fields: {
     title: { type: 'string', required: true },
@@ -14,7 +14,7 @@ export const Blog = defineDocumentType(() => ({
   computedFields: {
     slug: {
       type: 'string',
-      resolve: (doc) => doc._raw.sourceFileName.replace(/\.mdx$/, ''),
+      resolve: (doc: any) => doc._raw.sourceFileName.replace(/\.mdx$/, ''),
     },
   },
 }))

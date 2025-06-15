@@ -1,0 +1,1126 @@
+---
+title: "WordPress-Entwicklung: Der ultimative Guide für moderne Websites"
+date: "2025-01-15"
+excerpt: "Erfahre alles über WordPress-Entwicklung - von der Installation bis zur professionellen Website. Dieser umfassende Guide erklärt dir Schritt für Schritt, wie du mit WordPress erfolgreiche Projekte umsetzt."
+author: "Tiryaki IT"
+tags: ["WordPress", "Webentwicklung", "CMS", "PHP", "Tutorial"]
+image: "/images/blog/wordpress-guide.jpg"
+featured: true
+---
+
+# WordPress-Entwicklung: Der ultimative Guide für moderne Websites
+
+WordPress ist das weltweit beliebteste Content Management System (CMS) und betreibt über **43% aller Websites** im Internet. In diesem umfassenden Guide erfährst du alles, was du über WordPress-Entwicklung wissen musst - von den Grundlagen bis zu fortgeschrittenen Techniken.
+
+## Was ist WordPress und warum ist es so beliebt?
+
+WordPress startete 2003 als einfache Blogging-Plattform und hat sich zu einem vollwertigen CMS entwickelt. Die Gründe für seine Beliebtheit:
+
+### 1. **Benutzerfreundlichkeit**
+WordPress ist intuitiv bedienbar. Selbst ohne Programmierkenntnisse können Nutzer:
+- Inhalte erstellen und bearbeiten
+- Medien verwalten
+- Das Design anpassen
+- Funktionen erweitern
+
+### 2. **Flexibilität**
+Mit WordPress kannst du praktisch jede Art von Website erstellen:
+- **Blogs und Magazine**: Perfekt für Content-Creator
+- **Unternehmenswebsites**: Professionelle Präsenz für Firmen
+- **E-Commerce**: Mit WooCommerce zum Online-Shop
+- **Portfolios**: Für Kreative und Freelancer
+- **Membership-Sites**: Für exklusive Inhalte
+- **Learning Management Systems**: Für Online-Kurse
+
+### 3. **Große Community**
+Die WordPress-Community ist riesig und aktiv:
+- Tausende kostenlose Themes und Plugins
+- Umfangreiche Dokumentation
+- Foren und Support-Communities
+- Regelmäßige Updates und Sicherheitspatches
+
+## Die WordPress-Architektur verstehen
+
+Um WordPress effektiv zu nutzen, solltest du die Grundarchitektur verstehen:
+
+### Core-Komponenten
+
+```php
+// WordPress-Verzeichnisstruktur
+/wordpress
+├── wp-admin/          // Backend-Verwaltung
+├── wp-content/        // Deine Inhalte
+│   ├── themes/        // Design-Themes
+│   ├── plugins/       // Erweiterungen
+│   ├── uploads/       // Medien-Dateien
+│   └── languages/     // Übersetzungen
+├── wp-includes/       // Core-Funktionen
+├── wp-config.php      // Konfiguration
+└── index.php          // Einstiegspunkt
+```
+
+### Die Datenbank-Struktur
+
+WordPress nutzt MySQL/MariaDB mit folgenden Haupttabellen:
+
+```sql
+-- Wichtigste WordPress-Tabellen
+wp_posts        -- Alle Inhalte (Seiten, Beiträge, etc.)
+wp_postmeta     -- Zusätzliche Post-Informationen
+wp_users        -- Benutzerkonten
+wp_usermeta     -- Benutzer-Metadaten
+wp_options      -- Website-Einstellungen
+wp_terms        -- Kategorien und Tags
+wp_comments     -- Kommentare
+```
+
+## WordPress Installation und Setup
+
+### Schritt 1: Voraussetzungen prüfen
+
+Für WordPress benötigst du:
+- **PHP** Version 7.4 oder höher
+- **MySQL** Version 5.7+ oder **MariaDB** Version 10.3+
+- **HTTPS** Support (SSL-Zertifikat)
+- **Apache** oder **Nginx** Webserver
+
+### Schritt 2: Installation
+
+```bash
+# WordPress herunterladen
+wget https://wordpress.org/latest.zip
+unzip latest.zip
+
+# Dateien ins Webverzeichnis verschieben
+mv wordpress/* /var/www/html/
+
+# Berechtigungen setzen
+chown -R www-data:www-data /var/www/html/
+chmod -R 755 /var/www/html/
+```
+
+### Schritt 3: Datenbank einrichten
+
+```sql
+-- Datenbank erstellen
+CREATE DATABASE wordpress_db;
+
+-- Benutzer erstellen und Rechte vergeben
+CREATE USER 'wp_user'@'localhost' IDENTIFIED BY 'sicheres_passwort';
+GRANT ALL PRIVILEGES ON wordpress_db.* TO 'wp_user'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+### Schritt 4: wp-config.php konfigurieren
+
+```php
+// wp-config.php Beispiel
+define('DB_NAME', 'wordpress_db');
+define('DB_USER', 'wp_user');
+define('DB_PASSWORD', 'sicheres_passwort');
+define('DB_HOST', 'localhost');
+define('DB_CHARSET', 'utf8mb4');
+
+// Sicherheitsschlüssel (von https://api.wordpress.org/secret-key/1.1/salt/)
+define('AUTH_KEY',         'unique-phrase-here');
+define('SECURE_AUTH_KEY',  'unique-phrase-here');
+// ... weitere Keys
+
+// Debugging (nur für Entwicklung!)
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', false);
+```
+
+## Theme-Entwicklung: Dein eigenes Design
+
+### Die Theme-Struktur
+
+Ein minimales WordPress-Theme benötigt nur zwei Dateien:
+
+```php
+/my-theme/
+├── style.css       // Theme-Informationen und Styles
+└── index.php       // Haupt-Template
+```
+
+### style.css - Theme-Header
+
+```css
+/*
+Theme Name: Mein Custom Theme
+Theme URI: https://example.com
+Author: Dein Name
+Author URI: https://example.com
+Description: Ein modernes WordPress Theme
+Version: 1.0
+License: GPL v2 or later
+Text Domain: mein-theme
+*/
+
+/* Deine CSS-Styles hier */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+```
+
+### functions.php - Theme-Funktionen
+
+```php
+<?php
+// Theme-Setup
+function mein_theme_setup() {
+    // Theme-Features aktivieren
+    add_theme_support('post-thumbnails');
+    add_theme_support('title-tag');
+    add_theme_support('html5', array(
+        'search-form', 'comment-form', 'comment-list', 'gallery', 'caption'
+    ));
+    
+    // Menüs registrieren
+    register_nav_menus(array(
+        'primary' => __('Hauptmenü', 'mein-theme'),
+        'footer' => __('Footer-Menü', 'mein-theme')
+    ));
+}
+add_action('after_setup_theme', 'mein_theme_setup');
+
+// Styles und Scripts einbinden
+function mein_theme_scripts() {
+    // CSS
+    wp_enqueue_style('mein-theme-style', get_stylesheet_uri(), array(), '1.0.0');
+    
+    // JavaScript
+    wp_enqueue_script('mein-theme-script', 
+        get_template_directory_uri() . '/js/main.js', 
+        array('jquery'), '1.0.0', true
+    );
+}
+add_action('wp_enqueue_scripts', 'mein_theme_scripts');
+
+// Widget-Bereiche registrieren
+function mein_theme_widgets_init() {
+    register_sidebar(array(
+        'name' => __('Sidebar', 'mein-theme'),
+        'id' => 'sidebar-1',
+        'description' => __('Haupt-Sidebar', 'mein-theme'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget' => '</section>',
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
+    ));
+}
+add_action('widgets_init', 'mein_theme_widgets_init');
+```
+
+### Template-Hierarchie verstehen
+
+WordPress verwendet eine spezifische Hierarchie für Templates:
+
+```
+Startseite: front-page.php → home.php → index.php
+Einzelner Beitrag: single-{post-type}.php → single.php → index.php
+Seite: page-{slug}.php → page-{id}.php → page.php → index.php
+Kategorie: category-{slug}.php → category-{id}.php → category.php → archive.php → index.php
+```
+
+### Ein vollständiges Page-Template
+
+```php
+<?php
+/**
+ * Template Name: Volle Breite
+ * 
+ * @package MeinTheme
+ */
+
+get_header(); ?>
+
+<main id="primary" class="site-main">
+    <div class="container">
+        <?php
+        while (have_posts()) :
+            the_post();
+            ?>
+            <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                <header class="entry-header">
+                    <?php the_title('<h1 class="entry-title">', '</h1>'); ?>
+                </header>
+
+                <?php if (has_post_thumbnail()) : ?>
+                    <div class="post-thumbnail">
+                        <?php the_post_thumbnail('large'); ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="entry-content">
+                    <?php
+                    the_content();
+                    
+                    wp_link_pages(array(
+                        'before' => '<div class="page-links">' . __('Seiten:', 'mein-theme'),
+                        'after'  => '</div>',
+                    ));
+                    ?>
+                </div>
+
+                <?php if (get_edit_post_link()) : ?>
+                    <footer class="entry-footer">
+                        <?php
+                        edit_post_link(
+                            sprintf(
+                                wp_kses(
+                                    __('Bearbeite <span class="screen-reader-text">%s</span>', 'mein-theme'),
+                                    array('span' => array('class' => array()))
+                                ),
+                                get_the_title()
+                            ),
+                            '<span class="edit-link">',
+                            '</span>'
+                        );
+                        ?>
+                    </footer>
+                <?php endif; ?>
+            </article>
+        <?php
+        endwhile;
+        ?>
+    </div>
+</main>
+
+<?php
+get_sidebar();
+get_footer();
+```
+
+## Plugin-Entwicklung: Funktionen erweitern
+
+### Die Grundstruktur eines Plugins
+
+```php
+<?php
+/**
+ * Plugin Name: Mein Erstes Plugin
+ * Plugin URI: https://example.com/plugins/mein-plugin
+ * Description: Ein Beispiel-Plugin für WordPress
+ * Version: 1.0.0
+ * Author: Dein Name
+ * Author URI: https://example.com
+ * License: GPL v2 or later
+ * Text Domain: mein-plugin
+ */
+
+// Direkten Zugriff verhindern
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+// Plugin-Konstanten definieren
+define('MEIN_PLUGIN_VERSION', '1.0.0');
+define('MEIN_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('MEIN_PLUGIN_URL', plugin_dir_url(__FILE__));
+
+// Plugin-Klasse
+class MeinPlugin {
+    
+    private static $instance = null;
+    
+    public static function get_instance() {
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+    
+    private function __construct() {
+        $this->init_hooks();
+    }
+    
+    private function init_hooks() {
+        // Aktivierung und Deaktivierung
+        register_activation_hook(__FILE__, array($this, 'activate'));
+        register_deactivation_hook(__FILE__, array($this, 'deactivate'));
+        
+        // Actions und Filters
+        add_action('init', array($this, 'init'));
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+        add_shortcode('mein_shortcode', array($this, 'render_shortcode'));
+    }
+    
+    public function activate() {
+        // Datenbank-Tabellen erstellen, Optionen setzen, etc.
+        $this->create_database_tables();
+        flush_rewrite_rules();
+    }
+    
+    public function deactivate() {
+        // Aufräumen
+        flush_rewrite_rules();
+    }
+    
+    public function init() {
+        // Custom Post Types, Taxonomien, etc. registrieren
+        $this->register_post_types();
+    }
+    
+    public function enqueue_scripts() {
+        wp_enqueue_style(
+            'mein-plugin-style',
+            MEIN_PLUGIN_URL . 'assets/css/style.css',
+            array(),
+            MEIN_PLUGIN_VERSION
+        );
+        
+        wp_enqueue_script(
+            'mein-plugin-script',
+            MEIN_PLUGIN_URL . 'assets/js/script.js',
+            array('jquery'),
+            MEIN_PLUGIN_VERSION,
+            true
+        );
+        
+        // Daten an JavaScript übergeben
+        wp_localize_script('mein-plugin-script', 'meinPluginAjax', array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('mein-plugin-nonce')
+        ));
+    }
+    
+    public function render_shortcode($atts) {
+        $atts = shortcode_atts(array(
+            'title' => 'Standard-Titel',
+            'count' => 5
+        ), $atts);
+        
+        ob_start();
+        ?>
+        <div class="mein-plugin-shortcode">
+            <h3><?php echo esc_html($atts['title']); ?></h3>
+            <p>Anzahl: <?php echo intval($atts['count']); ?></p>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+    
+    private function create_database_tables() {
+        global $wpdb;
+        
+        $table_name = $wpdb->prefix . 'mein_plugin_data';
+        $charset_collate = $wpdb->get_charset_collate();
+        
+        $sql = "CREATE TABLE $table_name (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+            name tinytext NOT NULL,
+            text text NOT NULL,
+            PRIMARY KEY  (id)
+        ) $charset_collate;";
+        
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
+    }
+    
+    private function register_post_types() {
+        register_post_type('mein_cpt', array(
+            'labels' => array(
+                'name' => __('Meine Posts', 'mein-plugin'),
+                'singular_name' => __('Mein Post', 'mein-plugin')
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'supports' => array('title', 'editor', 'thumbnail'),
+            'menu_icon' => 'dashicons-star-filled'
+        ));
+    }
+}
+
+// Plugin initialisieren
+MeinPlugin::get_instance();
+```
+
+## WordPress Security: Best Practices
+
+### 1. Grundlegende Sicherheitsmaßnahmen
+
+```php
+// In wp-config.php
+
+// Tabellen-Präfix ändern
+$table_prefix = 'wp_xyz123_';
+
+// Datei-Bearbeitung deaktivieren
+define('DISALLOW_FILE_EDIT', true);
+
+// SSL im Admin erzwingen
+define('FORCE_SSL_ADMIN', true);
+
+// Automatische Updates aktivieren
+define('WP_AUTO_UPDATE_CORE', true);
+```
+
+### 2. Eingaben validieren und säubern
+
+```php
+// Niemals ungeprüfte Daten verwenden!
+
+// Sanitization
+$title = sanitize_text_field($_POST['title']);
+$content = wp_kses_post($_POST['content']);
+$url = esc_url($_POST['website']);
+$email = sanitize_email($_POST['email']);
+
+// Validation
+if (!is_email($email)) {
+    wp_die('Ungültige E-Mail-Adresse');
+}
+
+// Escaping bei der Ausgabe
+echo esc_html($title);
+echo esc_attr($attribute);
+echo esc_url($url);
+echo wp_kses_post($content); // Erlaubt sichere HTML-Tags
+```
+
+### 3. Nonces für Formulare
+
+```php
+// Formular mit Nonce
+<form method="post">
+    <?php wp_nonce_field('meine_aktion', 'mein_nonce'); ?>
+    <input type="text" name="data" />
+    <input type="submit" value="Senden" />
+</form>
+
+// Verarbeitung
+if (isset($_POST['mein_nonce']) && wp_verify_nonce($_POST['mein_nonce'], 'meine_aktion')) {
+    // Sicher - verarbeite die Daten
+} else {
+    // Unsicher - blockiere die Anfrage
+    wp_die('Sicherheitsprüfung fehlgeschlagen');
+}
+```
+
+### 4. Datenbankabfragen absichern
+
+```php
+global $wpdb;
+
+// Schlecht - SQL Injection möglich!
+$results = $wpdb->get_results("SELECT * FROM {$wpdb->posts} WHERE ID = " . $_GET['id']);
+
+// Gut - Prepared Statement
+$results = $wpdb->get_results(
+    $wpdb->prepare(
+        "SELECT * FROM {$wpdb->posts} WHERE ID = %d",
+        intval($_GET['id'])
+    )
+);
+
+// Mehrere Parameter
+$results = $wpdb->get_results(
+    $wpdb->prepare(
+        "SELECT * FROM {$wpdb->posts} WHERE post_type = %s AND post_status = %s",
+        'page',
+        'publish'
+    )
+);
+```
+
+## Performance-Optimierung
+
+### 1. Caching implementieren
+
+```php
+// Transients API für temporäre Daten
+function get_expensive_data() {
+    $cache_key = 'meine_expensive_data';
+    $data = get_transient($cache_key);
+    
+    if (false === $data) {
+        // Daten sind nicht im Cache
+        $data = perform_expensive_operation();
+        
+        // Für 12 Stunden cachen
+        set_transient($cache_key, $data, 12 * HOUR_IN_SECONDS);
+    }
+    
+    return $data;
+}
+
+// Object Cache für häufig genutzte Daten
+wp_cache_set('mein_key', $data, 'meine_gruppe', 3600);
+$data = wp_cache_get('mein_key', 'meine_gruppe');
+```
+
+### 2. Datenbankabfragen optimieren
+
+```php
+// Schlecht - N+1 Problem
+$posts = get_posts(array('numberposts' => 10));
+foreach ($posts as $post) {
+    $meta = get_post_meta($post->ID, 'custom_field', true);
+    // Führt zu 10 zusätzlichen Queries
+}
+
+// Gut - Eager Loading
+$posts = get_posts(array(
+    'numberposts' => 10,
+    'meta_key' => 'custom_field'
+));
+// Lädt Metadaten in einer Query
+```
+
+### 3. Assets optimieren
+
+```php
+// Nur laden wenn benötigt
+function conditional_scripts() {
+    if (is_page('kontakt')) {
+        wp_enqueue_script('google-maps', '...', array(), null, true);
+    }
+    
+    if (is_singular() && comments_open()) {
+        wp_enqueue_script('comment-reply');
+    }
+}
+add_action('wp_enqueue_scripts', 'conditional_scripts');
+
+// Kritisches CSS inline
+add_action('wp_head', function() {
+    ?>
+    <style>
+        /* Kritisches CSS für Above-the-Fold Content */
+        body { margin: 0; font-family: sans-serif; }
+        .header { background: #333; color: white; }
+    </style>
+    <?php
+});
+```
+
+## WooCommerce: E-Commerce mit WordPress
+
+### Grundlegende WooCommerce-Integration
+
+```php
+// Prüfen ob WooCommerce aktiv ist
+if (class_exists('WooCommerce')) {
+    // WooCommerce-spezifischer Code
+}
+
+// Theme-Support für WooCommerce
+function mytheme_add_woocommerce_support() {
+    add_theme_support('woocommerce', array(
+        'thumbnail_image_width' => 300,
+        'single_image_width' => 600,
+        'product_grid' => array(
+            'default_rows' => 3,
+            'min_rows' => 2,
+            'max_rows' => 8,
+            'default_columns' => 4,
+            'min_columns' => 2,
+            'max_columns' => 5,
+        ),
+    ));
+    
+    add_theme_support('wc-product-gallery-zoom');
+    add_theme_support('wc-product-gallery-lightbox');
+    add_theme_support('wc-product-gallery-slider');
+}
+add_action('after_setup_theme', 'mytheme_add_woocommerce_support');
+```
+
+### Custom Product Type erstellen
+
+```php
+// Neuen Produkttyp registrieren
+class WC_Product_Custom extends WC_Product {
+    
+    public function __construct($product) {
+        $this->product_type = 'custom';
+        parent::__construct($product);
+    }
+    
+    public function get_type() {
+        return 'custom';
+    }
+    
+    // Custom Logik hier
+    public function add_to_cart_url() {
+        return apply_filters('woocommerce_product_add_to_cart_url', 
+            get_permalink($this->get_id()), $this);
+    }
+}
+
+// Produkttyp registrieren
+add_filter('product_type_selector', function($types) {
+    $types['custom'] = __('Custom Product', 'textdomain');
+    return $types;
+});
+
+add_filter('woocommerce_product_class', function($classname, $product_type) {
+    if ($product_type === 'custom') {
+        return 'WC_Product_Custom';
+    }
+    return $classname;
+}, 10, 2);
+```
+
+## REST API: Headless WordPress
+
+### Custom Endpoints erstellen
+
+```php
+// REST API Route registrieren
+add_action('rest_api_init', function() {
+    register_rest_route('myplugin/v1', '/posts/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'myplugin_get_post',
+        'permission_callback' => '__return_true',
+        'args' => array(
+            'id' => array(
+                'validate_callback' => function($param, $request, $key) {
+                    return is_numeric($param);
+                }
+            ),
+        ),
+    ));
+    
+    register_rest_route('myplugin/v1', '/posts', array(
+        'methods' => 'POST',
+        'callback' => 'myplugin_create_post',
+        'permission_callback' => function() {
+            return current_user_can('edit_posts');
+        },
+    ));
+});
+
+function myplugin_get_post($request) {
+    $post_id = $request['id'];
+    $post = get_post($post_id);
+    
+    if (!$post) {
+        return new WP_Error('no_post', 'Post nicht gefunden', array('status' => 404));
+    }
+    
+    return array(
+        'id' => $post->ID,
+        'title' => $post->post_title,
+        'content' => $post->post_content,
+        'author' => get_the_author_meta('display_name', $post->post_author),
+        'date' => $post->post_date,
+        'featured_image' => get_the_post_thumbnail_url($post->ID, 'full'),
+        'categories' => wp_get_post_categories($post->ID, array('fields' => 'names')),
+    );
+}
+
+function myplugin_create_post($request) {
+    $params = $request->get_json_params();
+    
+    $post_id = wp_insert_post(array(
+        'post_title' => sanitize_text_field($params['title']),
+        'post_content' => wp_kses_post($params['content']),
+        'post_status' => 'draft',
+        'post_author' => get_current_user_id(),
+    ));
+    
+    if (is_wp_error($post_id)) {
+        return $post_id;
+    }
+    
+    return array(
+        'id' => $post_id,
+        'message' => 'Post erfolgreich erstellt',
+    );
+}
+```
+
+### REST API mit JavaScript nutzen
+
+```javascript
+// Fetch API
+async function getPosts() {
+    try {
+        const response = await fetch('/wp-json/wp/v2/posts?per_page=10');
+        const posts = await response.json();
+        
+        posts.forEach(post => {
+            console.log(post.title.rendered);
+        });
+    } catch (error) {
+        console.error('Fehler beim Laden der Posts:', error);
+    }
+}
+
+// Mit Authentication
+async function createPost(title, content) {
+    try {
+        const response = await fetch('/wp-json/wp/v2/posts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-WP-Nonce': wpApiSettings.nonce // Aus wp_localize_script
+            },
+            body: JSON.stringify({
+                title: title,
+                content: content,
+                status: 'publish'
+            })
+        });
+        
+        const result = await response.json();
+        console.log('Post erstellt:', result);
+    } catch (error) {
+        console.error('Fehler beim Erstellen:', error);
+    }
+}
+```
+
+## Gutenberg Block-Entwicklung
+
+### Einen Custom Block erstellen
+
+```javascript
+// block.js
+import { registerBlockType } from '@wordpress/blocks';
+import { useBlockProps, RichText, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, TextControl, ToggleControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+
+registerBlockType('myplugin/custom-block', {
+    title: __('Mein Custom Block', 'myplugin'),
+    description: __('Ein Beispiel Custom Block', 'myplugin'),
+    category: 'common',
+    icon: 'star-filled',
+    attributes: {
+        content: {
+            type: 'string',
+            source: 'html',
+            selector: 'p',
+        },
+        title: {
+            type: 'string',
+            source: 'html',
+            selector: 'h2',
+        },
+        showTitle: {
+            type: 'boolean',
+            default: true,
+        },
+        backgroundColor: {
+            type: 'string',
+            default: '#f0f0f0',
+        },
+    },
+    
+    edit: ({ attributes, setAttributes }) => {
+        const blockProps = useBlockProps({
+            style: {
+                backgroundColor: attributes.backgroundColor,
+                padding: '20px',
+            },
+        });
+        
+        return (
+            <>
+                <InspectorControls>
+                    <PanelBody title={__('Einstellungen', 'myplugin')}>
+                        <ToggleControl
+                            label={__('Titel anzeigen', 'myplugin')}
+                            checked={attributes.showTitle}
+                            onChange={(showTitle) => setAttributes({ showTitle })}
+                        />
+                        <TextControl
+                            label={__('Hintergrundfarbe', 'myplugin')}
+                            value={attributes.backgroundColor}
+                            onChange={(backgroundColor) => setAttributes({ backgroundColor })}
+                        />
+                    </PanelBody>
+                </InspectorControls>
+                
+                <div {...blockProps}>
+                    {attributes.showTitle && (
+                        <RichText
+                            tagName="h2"
+                            value={attributes.title}
+                            onChange={(title) => setAttributes({ title })}
+                            placeholder={__('Titel eingeben...', 'myplugin')}
+                        />
+                    )}
+                    <RichText
+                        tagName="p"
+                        value={attributes.content}
+                        onChange={(content) => setAttributes({ content })}
+                        placeholder={__('Inhalt eingeben...', 'myplugin')}
+                    />
+                </div>
+            </>
+        );
+    },
+    
+    save: ({ attributes }) => {
+        const blockProps = useBlockProps.save({
+            style: {
+                backgroundColor: attributes.backgroundColor,
+                padding: '20px',
+            },
+        });
+        
+        return (
+            <div {...blockProps}>
+                {attributes.showTitle && (
+                    <RichText.Content tagName="h2" value={attributes.title} />
+                )}
+                <RichText.Content tagName="p" value={attributes.content} />
+            </div>
+        );
+    },
+});
+```
+
+### Block in PHP registrieren
+
+```php
+function myplugin_register_blocks() {
+    // Build-Prozess vorausgesetzt (wp-scripts)
+    $asset_file = include(plugin_dir_path(__FILE__) . 'build/index.asset.php');
+    
+    wp_register_script(
+        'myplugin-blocks',
+        plugins_url('build/index.js', __FILE__),
+        $asset_file['dependencies'],
+        $asset_file['version']
+    );
+    
+    wp_register_style(
+        'myplugin-blocks',
+        plugins_url('build/index.css', __FILE__),
+        array(),
+        $asset_file['version']
+    );
+    
+    register_block_type('myplugin/custom-block', array(
+        'editor_script' => 'myplugin-blocks',
+        'editor_style' => 'myplugin-blocks',
+        'style' => 'myplugin-blocks',
+    ));
+}
+add_action('init', 'myplugin_register_blocks');
+```
+
+## WordPress Multisite
+
+### Multisite aktivieren
+
+```php
+// In wp-config.php
+define('WP_ALLOW_MULTISITE', true);
+
+// Nach der Installation im Netzwerk-Setup:
+define('MULTISITE', true);
+define('SUBDOMAIN_INSTALL', false); // oder true für Subdomains
+define('DOMAIN_CURRENT_SITE', 'example.com');
+define('PATH_CURRENT_SITE', '/');
+define('SITE_ID_CURRENT_SITE', 1);
+define('BLOG_ID_CURRENT_SITE', 1);
+```
+
+### Multisite-spezifische Funktionen
+
+```php
+// Aktuelle Blog-ID
+$blog_id = get_current_blog_id();
+
+// Zu einem anderen Blog wechseln
+switch_to_blog(2);
+// Code für Blog 2
+restore_current_blog();
+
+// Alle Blogs abrufen
+$sites = get_sites();
+foreach ($sites as $site) {
+    switch_to_blog($site->blog_id);
+    // Code für jeden Blog
+    restore_current_blog();
+}
+
+// Netzwerkweite Aktivierung prüfen
+if (is_plugin_active_for_network('plugin-dir/plugin-file.php')) {
+    // Plugin ist netzwerkweit aktiv
+}
+```
+
+## Debugging und Troubleshooting
+
+### Debug-Modus konfigurieren
+
+```php
+// In wp-config.php für Entwicklung
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', false);
+define('SCRIPT_DEBUG', true);
+define('SAVEQUERIES', true);
+
+// Custom Debug-Funktion
+function debug_log($message) {
+    if (WP_DEBUG === true) {
+        if (is_array($message) || is_object($message)) {
+            error_log(print_r($message, true));
+        } else {
+            error_log($message);
+        }
+    }
+}
+
+// Verwendung
+debug_log('Checkpoint erreicht');
+debug_log(array('user_id' => $user_id, 'action' => 'login'));
+```
+
+### Performance-Analyse
+
+```php
+// Query-Monitor
+function analyze_queries() {
+    if (defined('SAVEQUERIES') && SAVEQUERIES) {
+        global $wpdb;
+        
+        echo '<div style="background: #f1f1f1; padding: 20px; margin: 20px;">';
+        echo '<h3>Database Queries</h3>';
+        echo '<p>Total Queries: ' . count($wpdb->queries) . '</p>';
+        
+        $total_time = 0;
+        foreach ($wpdb->queries as $query) {
+            $total_time += $query[1];
+        }
+        echo '<p>Total Query Time: ' . round($total_time, 4) . ' seconds</p>';
+        
+        // Langsamste Queries
+        usort($wpdb->queries, function($a, $b) {
+            return $b[1] - $a[1];
+        });
+        
+        echo '<h4>Slowest Queries:</h4>';
+        echo '<ol>';
+        for ($i = 0; $i < min(5, count($wpdb->queries)); $i++) {
+            echo '<li>' . round($wpdb->queries[$i][1], 4) . 's: ' . 
+                 esc_html($wpdb->queries[$i][0]) . '</li>';
+        }
+        echo '</ol>';
+        echo '</div>';
+    }
+}
+// Nur für Admins im Footer anzeigen
+if (current_user_can('manage_options')) {
+    add_action('wp_footer', 'analyze_queries');
+}
+```
+
+## Deployment und Wartung
+
+### Deployment-Checkliste
+
+```bash
+# 1. Backup erstellen
+wp db export backup-$(date +%Y%m%d).sql
+
+# 2. Wartungsmodus aktivieren
+wp maintenance-mode activate
+
+# 3. Updates durchführen
+wp core update
+wp plugin update --all
+wp theme update --all
+
+# 4. Cache leeren
+wp cache flush
+
+# 5. Datenbank optimieren
+wp db optimize
+
+# 6. Wartungsmodus deaktivieren
+wp maintenance-mode deactivate
+```
+
+### Automatisiertes Deployment
+
+```php
+// deployment.php
+class WordPressDeployment {
+    
+    private $environments = array(
+        'development' => array(
+            'url' => 'http://dev.example.com',
+            'path' => '/var/www/dev',
+            'db_name' => 'wp_dev',
+        ),
+        'staging' => array(
+            'url' => 'https://staging.example.com',
+            'path' => '/var/www/staging',
+            'db_name' => 'wp_staging',
+        ),
+        'production' => array(
+            'url' => 'https://example.com',
+            'path' => '/var/www/production',
+            'db_name' => 'wp_prod',
+        ),
+    );
+    
+    public function deploy($from_env, $to_env) {
+        // Backup erstellen
+        $this->backup($to_env);
+        
+        // Dateien synchronisieren
+        $this->sync_files($from_env, $to_env);
+        
+        // Datenbank migrieren
+        $this->migrate_database($from_env, $to_env);
+        
+        // URLs ersetzen
+        $this->search_replace_urls($from_env, $to_env);
+        
+        // Cache leeren
+        $this->clear_cache($to_env);
+    }
+    
+    private function backup($env) {
+        $timestamp = date('Y-m-d-H-i-s');
+        $backup_dir = "/backups/{$env}/{$timestamp}";
+        
+        // Dateien sichern
+        exec("mkdir -p {$backup_dir}");
+        exec("rsync -av {$this->environments[$env]['path']}/ {$backup_dir}/files/");
+        
+        // Datenbank sichern
+        exec("mysqldump {$this->environments[$env]['db_name']} > {$backup_dir}/database.sql");
+    }
+    
+    // Weitere Methoden...
+}
+```
+
+## Fazit und Best Practices
+
+### Die wichtigsten Takeaways:
+
+1. **Sicherheit first**: Validiere immer Eingaben, nutze Nonces und escape Ausgaben
+2. **Performance matters**: Implementiere Caching, optimiere Queries und lade Assets bedingt
+3. **Code-Qualität**: Folge WordPress Coding Standards und dokumentiere deinen Code
+4. **Testing**: Teste in verschiedenen Umgebungen und mit verschiedenen Plugins
+5. **Updates**: Halte WordPress, Themes und Plugins aktuell
+6. **Backups**: Erstelle regelmäßige Backups vor Updates und Änderungen
+
+### Weiterführende Ressourcen:
+
+- [WordPress Codex](https://codex.wordpress.org/)
+- [WordPress Developer Handbook](https://developer.wordpress.org/)
+- [WordPress Coding Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/)
+- [WordPress Security Whitepaper](https://wordpress.org/about/security/)
+
+WordPress ist ein mächtiges Werkzeug, das dir unendliche Möglichkeiten bietet. Mit dem Wissen aus diesem Guide bist du bestens gerüstet, um professionelle WordPress-Projekte umzusetzen. Viel Erfolg bei deinen Projekten!
+
+---
+
+*Hast du Fragen zu WordPress-Entwicklung? Kontaktiere uns für professionelle WordPress-Lösungen!* 

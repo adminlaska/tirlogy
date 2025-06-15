@@ -1,0 +1,128 @@
+---
+title: "Afterbuy: Multichannel, Warenwirtschaft & Automatisierung im E-Commerce"
+date: "2025-01-17"
+excerpt: "Lerne, wie du mit Afterbuy deinen Onlinehandel automatisierst, Marktplätze anbindest und Prozesse effizient steuerst. Der große Praxis-Guide für Einsteiger und Profis."
+author: "Tiryaki IT"
+tags: ["Afterbuy", "E-Commerce", "Multichannel", "Warenwirtschaft", "Automatisierung", "Tutorial"]
+image: "/images/blog/afterbuy-guide.jpg"
+featured: true
+---
+
+# Afterbuy: Multichannel, Warenwirtschaft & Automatisierung im E-Commerce
+
+Afterbuy ist eine der führenden Komplettlösungen für Onlinehändler, die mehrere Marktplätze und Shops zentral steuern möchten. In diesem Guide erfährst du, wie du Afterbuy optimal für deinen E-Commerce-Erfolg einsetzt.
+
+## Was ist Afterbuy und für wen eignet es sich?
+
+Afterbuy ist ein cloudbasiertes Warenwirtschafts- und Multichannel-System. Es richtet sich an:
+- Onlinehändler mit mehreren Vertriebskanälen (z.B. eBay, Amazon, eigener Shop)
+- Unternehmen, die Prozesse automatisieren und zentral steuern möchten
+- Händler, die Lager, Versand und Auftragsabwicklung effizient managen wollen
+
+**Vorteile:**
+- Zentrale Verwaltung aller Produkte, Bestellungen und Kunden
+- Automatisierte Prozesse (z.B. Rechnungsstellung, Versand)
+- Anbindung an zahlreiche Marktplätze und Shopsysteme
+- Umfangreiche Auswertungen und Statistiken
+
+## Schritt 1: Afterbuy-Account einrichten
+
+1. Registriere dich auf [afterbuy.de](https://www.afterbuy.de/) für einen Test-Account.
+2. Nach dem Login gelangst du ins Afterbuy Cockpit (Dashboard).
+3. Lege deine Firmendaten, Steuersätze und Versandarten an.
+
+## Schritt 2: Marktplätze & Shops anbinden
+
+Afterbuy unterstützt u.a.:
+- eBay, Amazon, Kaufland, Otto, Hood, real.de
+- Eigene Shops (Shopware, Shopify, WooCommerce, Magento, etc.)
+
+**Anbindung Beispiel: eBay**
+1. Gehe zu **Einstellungen > Marktplätze > eBay**
+2. Klicke auf **eBay-Konto verbinden** und folge dem OAuth-Login
+3. Wähle, welche eBay-Shops und -Länder angebunden werden sollen
+
+**Tipp:** Für jeden Marktplatz gibt es eigene Konfigurationsmöglichkeiten (z.B. Preisregeln, Versandprofile, Templates).
+
+## Schritt 3: Produkte & Lager verwalten
+
+- Produkte können manuell, per CSV-Import oder über die API angelegt werden
+- Zentrale Verwaltung von Lagerbeständen, Varianten, Preisen und Beschreibungen
+- Automatische Synchronisation der Bestände auf allen Kanälen
+
+**Beispiel: Produktimport per CSV**
+
+```csv
+Artikelnummer;Bezeichnung;Preis;Bestand;Beschreibung
+10001;T-Shirt Blau;19.99;50;Blaues T-Shirt aus Baumwolle
+10002;T-Shirt Rot;19.99;30;Rotes T-Shirt aus Baumwolle
+```
+
+## Schritt 4: Auftragsabwicklung & Versand
+
+- Alle Bestellungen laufen zentral in Afterbuy ein (egal von welchem Marktplatz)
+- Automatische Rechnungserstellung und Versandlabel-Generierung (z.B. DHL, DPD, GLS)
+- Statusänderungen (z.B. "versendet") werden automatisch an die Marktplätze zurückgemeldet
+- Trackingnummern werden automatisch übermittelt
+
+**Workflow-Beispiel:**
+1. Bestellung kommt von Amazon
+2. Afterbuy erstellt automatisch eine Rechnung und ein Versandlabel
+3. Lagerbestand wird reduziert
+4. Kunde erhält Versandbestätigung mit Trackingnummer
+
+## Schritt 5: Automatisierung & Workflows
+
+Afterbuy bietet zahlreiche Automatisierungen:
+- Preisregeln (z.B. automatische Preisanpassung bei Konkurrenz)
+- E-Mail-Benachrichtigungen (z.B. Versand, Zahlungseingang)
+- Automatische Statuswechsel (z.B. "bezahlt" → "versendet")
+- Regelbasierte Aktionen (z.B. Rabatt bei bestimmten Produkten)
+
+**Tipp:** Mit dem Workflow-Editor kannst du eigene Regeln und Automatisierungen erstellen.
+
+## Schritt 6: Schnittstellen & API
+
+Afterbuy bietet eine umfangreiche REST-API für individuelle Integrationen:
+- Produkte, Bestellungen, Kunden, Lager, Versand, Rechnungen
+- Webhooks für Echtzeit-Benachrichtigungen
+- Anbindung an externe Systeme (z.B. Buchhaltung, ERP)
+
+**Beispiel: Bestellung per API abrufen**
+
+```http
+GET /api/orders?status=paid HTTP/1.1
+Host: api.afterbuy.de
+Authorization: Bearer <API-Token>
+```
+
+**Antwort:**
+```json
+[
+  {
+    "OrderID": 12345,
+    "Customer": "Max Mustermann",
+    "Items": [
+      { "SKU": "10001", "Name": "T-Shirt Blau", "Qty": 2 }
+    ],
+    "Status": "paid",
+    "Total": 39.98
+  }
+]
+```
+
+## Best Practices & Tipps
+
+- Nutze die umfangreichen Filter- und Suchfunktionen im Cockpit
+- Teste Automatisierungen zuerst mit Testdaten
+- Halte Produktdaten und Lagerbestände immer aktuell
+- Nutze die Auswertungen für Umsatz, Retouren und Topseller
+- Regelmäßige Backups und API-Token-Sicherheit beachten
+
+## Fazit
+
+Afterbuy ist die ideale Lösung für Händler, die viele Kanäle und Prozesse zentral steuern wollen. Mit den richtigen Einstellungen und Automatisierungen sparst du Zeit, reduzierst Fehler und steigerst deinen Umsatz.
+
+---
+
+*Du hast Fragen zu Afterbuy oder brauchst Unterstützung bei der Integration? Kontaktiere uns für eine unverbindliche Beratung!* 
